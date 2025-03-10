@@ -13,6 +13,7 @@ namespace Selu383.SP25.P03.Api.Data
                 if (context.Theaters.Any())
                 {
                     return;   // DB has been seeded
+                    //testing deployment
                 }
                 context.Theaters.AddRange(
                     new Theater
