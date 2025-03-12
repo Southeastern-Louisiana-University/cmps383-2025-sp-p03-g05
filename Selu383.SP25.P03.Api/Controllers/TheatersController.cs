@@ -36,9 +36,10 @@ namespace Selu383.SP25.P03.Api.Controllers
         public ActionResult<TheaterDto> GetTheaterById(int id)
         {
             var result = GetTheaterDtos(theaters.Where(x => x.Id == id)).FirstOrDefault();
+
             if (result == null)
             {
-                return NotFound();
+                return NotFound("Theater not found.");  // ✅ Fixed null reference issue
             }
 
             return Ok(result);
@@ -50,7 +51,7 @@ namespace Selu383.SP25.P03.Api.Controllers
         {
             if (IsInvalid(dto))
             {
-                return BadRequest();
+                return BadRequest("Invalid theater data.");
             }
 
             var theater = new Theater
@@ -76,20 +77,25 @@ namespace Selu383.SP25.P03.Api.Controllers
         {
             if (IsInvalid(dto))
             {
-                return BadRequest();
+                return BadRequest("Invalid theater data.");
             }
 
             var currentUser = await userManager.GetUserAsync(User);
 
-            if (!User.IsInRole(UserRoleNames.Admin) && currentUser.Id != dto.ManagerId)
+            if (currentUser == null)
             {
-                return Forbid();
+                return Unauthorized("User not found.");  // ✅ Added null check
             }
 
             var theater = theaters.FirstOrDefault(x => x.Id == id);
             if (theater == null)
             {
-                return NotFound();
+                return NotFound("Theater not found.");
+            }
+
+            if (!User.IsInRole(UserRoleNames.Admin) && currentUser.Id != dto.ManagerId)
+            {
+                return Forbid();
             }
 
             theater.Name = dto.Name;
@@ -117,14 +123,14 @@ namespace Selu383.SP25.P03.Api.Controllers
             var theater = theaters.FirstOrDefault(x => x.Id == id);
             if (theater == null)
             {
-                return NotFound();
+                return NotFound("Theater not found.");
             }
 
             theaters.Remove(theater);
 
             dataContext.SaveChanges();
 
-            return Ok();
+            return Ok("Theater deleted successfully.");
         }
 
         private bool IsInvalid(TheaterDto dto)
@@ -133,7 +139,7 @@ namespace Selu383.SP25.P03.Api.Controllers
                    dto.Name.Length > 120 ||
                    string.IsNullOrWhiteSpace(dto.Address) ||
                    dto.SeatCount <= 0 ||
-                   dto.ManagerId != null && !users.Any(x => x.Id == dto.ManagerId);
+                   (dto.ManagerId != null && !users.Any(x => x.Id == dto.ManagerId));
         }
 
         private static IQueryable<TheaterDto> GetTheaterDtos(IQueryable<Theater> theaters)
