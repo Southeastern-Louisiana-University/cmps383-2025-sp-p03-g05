@@ -14,7 +14,7 @@ namespace Selu383.SP25.P03.Api.Controllers
         private readonly UserManager<User> userManager;
         private readonly RoleManager<Role> roleManager;
         private readonly DataContext dataContext;
-        private DbSet<Role> roles;
+        private readonly DbSet<Role> roles;
 
         public UsersController(
             RoleManager<Role> roleManager,
@@ -31,25 +31,38 @@ namespace Selu383.SP25.P03.Api.Controllers
         [Authorize]
         public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUserDto dto)
         {
-            if (!dto.Roles.Any() || !dto.Roles.All(x => roles.Any(y => x == y.Name)))
+            if (dto.Roles == null || !dto.Roles.Any() || !dto.Roles.All(x => roles.Any(y => x == y.Name)))
             {
-                return BadRequest();
+                return BadRequest("Invalid roles provided.");
             }
 
-            var result = await userManager.CreateAsync(new User { UserName = dto.Username }, dto.Password);
-            if (result.Succeeded)
-            {
-                await userManager.AddToRolesAsync(await userManager.FindByNameAsync(dto.Username), dto.Roles);
+            var newUser = new User { UserName = dto.Username };
 
-                var user = await userManager.FindByNameAsync(dto.Username);
-                return new UserDto
-                {
-                    Id = user.Id,
-                    UserName = dto.Username,
-                    Roles = dto.Roles
-                };
+            var result = await userManager.CreateAsync(newUser, dto.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest("Failed to create user.");
             }
-            return BadRequest();
+
+          
+            var user = await userManager.FindByNameAsync(dto.Username);
+            if (user == null)
+            {
+                return BadRequest("User not found after creation.");
+            }
+
+            var roleResult = await userManager.AddToRolesAsync(user, dto.Roles);
+            if (!roleResult.Succeeded)
+            {
+                return BadRequest("Failed to assign roles.");
+            }
+
+            return new UserDto
+            {
+                Id = user.Id,
+                UserName = user.UserName!,
+                Roles = dto.Roles
+            };
         }
     }
 }
