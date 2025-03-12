@@ -5,6 +5,7 @@ using Selu383.SP25.P03.Api.Features.Users;
 using Selu383.SP25.P03.Api.Features.Theaters;
 using Selu383.SP25.P03.Api.Features.Seats;
 using Selu383.SP25.P03.Api.Features.Tickets;
+using Selu383.SP25.P03.Api.Features.Showtimes;
 
 
 namespace Selu383.SP25.P03.Api.Data
@@ -19,6 +20,7 @@ namespace Selu383.SP25.P03.Api.Data
 
         public DbSet<Seat> Seats { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Showtime> Showtimes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
