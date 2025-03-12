@@ -12,58 +12,96 @@ namespace Selu383.SP25.P03.Api.Data
                 // Look for any theaters.
                 if (context.Theaters.Any())
                 {
-                    return;   // DB has been seeded
+                    return; // DB has been seeded
                 }
+
                 context.Theaters.AddRange(
                     new Theater
                     {
-                        Id = 1,
                         Name = "AMC Palace 10",
                         Address = "123 Main St, Springfield",
-                        City = "Springfield",
-                        State = "IL",
-                        SeatCount = 150,
-                        HasIMAX = true,
-                        Has3D = false,
-                        HasReclinerSeats = true
+                        SeatCount = 150
                     },
                     new Theater
                     {
-                        Id = 2,
                         Name = "Regal Cinema",
                         Address = "456 Elm St, Shelbyville",
-                        City = "Shelbyville",
-                        State = "TX",
-                        SeatCount = 200,
-                        HasIMAX = false,
-                        Has3D = true,
-                        HasReclinerSeats = false
+                        SeatCount = 200
                     },
                     new Theater
                     {
-                        Id = 3,
                         Name = "Grand Theater",
                         Address = "789 Broadway Ave, Metropolis",
-                        City = "Metropolis",
-                        State = "NY",
-                        SeatCount = 300,
-                        HasIMAX = true,
-                        Has3D = true,
-                        HasReclinerSeats = true
+                        SeatCount = 300
                     },
                     new Theater
                     {
-                        Id = 4,
                         Name = "Vintage Drive-In",
                         Address = "101 Retro Rd, Smallville",
-                        City = "Smallville",
-                        State = "KS",
-                        SeatCount = 75,
-                        HasIMAX = false,
-                        Has3D = false,
-                        HasReclinerSeats = true
+                        SeatCount = 75
+                    },
+                    new Theater
+                    {
+                        Name = "Baton Rouge Grand",
+                        Address = "123 Main St, Baton Rouge, LA",
+                        SeatCount = 250
+                    },
+                    new Theater
+                    {
+                        Name = "New Orleans Cineplex",
+                        Address = "456 Canal St, New Orleans, LA",
+                        SeatCount = 300
+                    },
+                    new Theater
+                    {
+                        Name = "Lafayette Movie House",
+                        Address = "789 University Ave, Lafayette, LA",
+                        SeatCount = 200
+                    },
+                    new Theater
+                    {
+                        Name = "Shreveport Cinemas",
+                        Address = "101 Red River Rd, Shreveport, LA",
+                        SeatCount = 275
+                    },
+                    new Theater
+                    {
+                        Name = "Lake Charles Theater",
+                        Address = "222 Bayou Rd, Lake Charles, LA",
+                        SeatCount = 180
+                    },
+                    new Theater
+                    {
+                        Name = "Monroe Film Center",
+                        Address = "333 Cypress St, Monroe, LA",
+                        SeatCount = 220
+                    },
+                    new Theater
+                    {
+                        Name = "Alexandria Premier",
+                        Address = "444 Downtown Blvd, Alexandria, LA",
+                        SeatCount = 240
+                    },
+                    new Theater
+                    {
+                        Name = "Houma Screenhouse",
+                        Address = "555 Bayou Dr, Houma, LA",
+                        SeatCount = 190
+                    },
+                    new Theater
+                    {
+                        Name = "Slidell Cineworld",
+                        Address = "666 Lakeshore Dr, Slidell, LA",
+                        SeatCount = 210
+                    },
+                    new Theater
+                    {
+                        Name = "Bossier City Multiplex",
+                        Address = "777 Riverfront St, Bossier City, LA",
+                        SeatCount = 260
                     }
                 );
+
                 context.SaveChanges();
             }
         }
