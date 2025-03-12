@@ -17,27 +17,51 @@ namespace Selu383.SP25.P03.Api.Data
                 context.Theaters.AddRange(
                     new Theater
                     {
+                        Id = 1,
                         Name = "AMC Palace 10",
                         Address = "123 Main St, Springfield",
-                        SeatCount = 150
+                        City = "Springfield",
+                        State = "IL",
+                        SeatCount = 150,
+                        HasIMAX = true,
+                        Has3D = false,
+                        HasReclinerSeats = true
                     },
                     new Theater
                     {
+                        Id = 2,
                         Name = "Regal Cinema",
                         Address = "456 Elm St, Shelbyville",
-                        SeatCount = 200
+                        City = "Shelbyville",
+                        State = "TX",
+                        SeatCount = 200,
+                        HasIMAX = false,
+                        Has3D = true,
+                        HasReclinerSeats = false
                     },
                     new Theater
                     {
+                        Id = 3,
                         Name = "Grand Theater",
                         Address = "789 Broadway Ave, Metropolis",
-                        SeatCount = 300
+                        City = "Metropolis",
+                        State = "NY",
+                        SeatCount = 300,
+                        HasIMAX = true,
+                        Has3D = true,
+                        HasReclinerSeats = true
                     },
                     new Theater
                     {
+                        Id = 4,
                         Name = "Vintage Drive-In",
                         Address = "101 Retro Rd, Smallville",
-                        SeatCount = 75
+                        City = "Smallville",
+                        State = "KS",
+                        SeatCount = 75,
+                        HasIMAX = false,
+                        Has3D = false,
+                        HasReclinerSeats = true
                     }
                 );
                 context.SaveChanges();
