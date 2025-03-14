@@ -42,6 +42,7 @@ namespace Selu383.SP25.P03.Api.Data
                 .HasForeignKey(e => e.RoleId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }
