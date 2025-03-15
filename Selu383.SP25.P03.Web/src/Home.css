@@ -1,0 +1,20 @@
+.topBanner{
+    display: flex;
+    height: 100px;
+    width:100px;
+    background-color:aqua;
+}
+
+.middleBanner{
+    display: flex;
+    height: 300px;
+    width: 300px;
+    background-color:black;
+
+}
+.bottomBanner{
+    display: flex;
+    height: 200px;
+    width: 300px;
+    background-color:blueviolet;
+}
