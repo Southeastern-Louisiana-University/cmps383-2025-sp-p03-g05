@@ -24,6 +24,42 @@ namespace Selu383.SP25.P03.Api.Controllers
         }
 
         [HttpPost]
+        [Route("register")]
+        public async Task<ActionResult<UserDto>> Register([FromBody] RegisterDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingUser = await userManager.FindByNameAsync(dto.UserName);
+            if (existingUser != null)
+            {
+                return BadRequest("Username is already taken.");
+            }
+
+            var user = new User
+            {
+                UserName = dto.UserName,
+                Email = dto.Email
+            };
+
+            var result = await userManager.CreateAsync(user, dto.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return new UserDto
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Roles = (await userManager.GetRolesAsync(user)).ToArray()
+            };
+        }
+
+
+        [HttpPost]
         [Route("login")]
         public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto dto)
         {
