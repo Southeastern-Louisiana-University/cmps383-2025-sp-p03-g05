@@ -48,23 +48,24 @@ namespace Selu383.SP25.P03.Api
 
             builder.Services.ConfigureApplicationCookie(options =>
             {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.Cookie.HttpOnly = true; 
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; 
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.SlidingExpiration = true;
+
+                // Return 401 
                 options.Events.OnRedirectToLogin = context =>
                 {
                     context.Response.StatusCode = 401;
                     return Task.CompletedTask;
                 };
-
                 options.Events.OnRedirectToAccessDenied = context =>
                 {
                     context.Response.StatusCode = 403;
                     return Task.CompletedTask;
                 };
-
-                options.SlidingExpiration = true;
             });
+
 
             var app = builder.Build();
 

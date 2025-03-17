@@ -20,7 +20,7 @@ namespace Selu383.SP25.P03.Api.Features.Users
         [Required]
         [Compare("Password", ErrorMessage = "Passwords do not match.")]
         public string ConfirmPassword { get; set; }
-    }S
+    }
 }
 
 

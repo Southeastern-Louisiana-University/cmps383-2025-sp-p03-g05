@@ -63,22 +63,25 @@ namespace Selu383.SP25.P03.Api.Controllers
         [Route("login")]
         public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto dto)
         {
-            var result = await signInManager.PasswordSignInAsync(dto.UserName, dto.Password, false, false);
-            if (result.Succeeded)
+            var user = await userManager.FindByNameAsync(dto.UserName);
+
+            if (user == null)
             {
-                var user = await userManager.FindByNameAsync(dto.UserName);
-                if (user == null)
-                {
-                    return BadRequest();
-                }
-                return new UserDto
-                {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    Roles = (await userManager.GetRolesAsync(user)).ToArray()
-                };
+                return BadRequest(new { message = "User not found." });
             }
-            return BadRequest();
+
+            var result = await signInManager.PasswordSignInAsync(dto.UserName, dto.Password, false, false);
+            if (!result.Succeeded)
+            {
+                return BadRequest(new { message = "Invalid username or password." });
+            }
+
+            return new UserDto
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Roles = (await userManager.GetRolesAsync(user)).ToArray()
+            };
         }
 
         [HttpGet]
