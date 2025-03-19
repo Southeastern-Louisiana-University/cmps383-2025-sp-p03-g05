@@ -82,6 +82,10 @@ namespace Selu383.SP25.P03.Api
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.UseSwaggerUi(option =>
+                {
+                    option.DocumentPath = "openapi/v1.json";
+                });
             }
 
             app.UseHttpsRedirection();
