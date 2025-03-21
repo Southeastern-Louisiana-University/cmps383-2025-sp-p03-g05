@@ -7,6 +7,7 @@ using Selu383.SP25.P03.Api.Features.Users;
 
 namespace Selu383.SP25.P03.Api.Controllers
 {
+    [ApiController]
     [Route("api/authentication")]
     public class AuthenticationController : ControllerBase
     {
