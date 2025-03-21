@@ -177,3 +177,133 @@ input:focus {
     width: 90%;
   }
 }
+
+/*****register page*****/
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+/* Register Page Background */
+/* Make the register page a full-screen flex container */
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: #121212;
+}
+
+/* Ensure the register card is centered */
+.register-card {
+  background: rgba(30, 30, 30, 0.95);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0px 8px 24px rgba(168, 0, 183, 0.4);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+
+/* Title */
+.register-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+.register-form input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  transition: border 0.3s ease-in-out, background 0.3s;
+}
+
+/* Focus effect */
+.register-form input:focus {
+  border-color: #a800b7;
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  box-shadow: 0px 0px 8px rgba(168, 0, 183, 0.6);
+}
+
+/* Submit Button */
+.register-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background: linear-gradient(90deg, #a800b7, #d400ff);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.register-button:hover {
+  background: linear-gradient(90deg, #d400ff, #a800b7);
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 12px rgba(168, 0, 183, 0.5);
+}
+
+.register-button:active {
+  transform: scale(0.98);
+}
+
+/* Login Link */
+.register-footer {
+  margin-top: 15px;
+  color: white;
+}
+
+.register-link {
+  color: #a800b7;
+  font-weight: bold;
+  text-decoration: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.register-link:hover {
+  opacity: 0.8;
+}
+
+/* Form Row */
+.register-row {
+  display: flex;
+  gap: 10px;
+}
+
+.register-row input {
+  flex: 1;
+}
+
+/* Error/Success Messages */
+.register-message {
+  color: #ff4d4d;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .register-card {
+    width: 90%;
+  }
+}
