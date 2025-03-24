@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
 using Selu383.SP25.P03.Api.Features.Movies;
-namespace Selu383.SP25.P03.Api.Controllers
+
+namespace Selu383.SP25.P03.Api.Data
 {
-
-    public class MovieSelectionController
+    public class SeedMovies
     {
-        private List<Movie> movies;
-        private Movie selectedMovie;
-
-        public MovieSelectionController()
+        public static void Initialize(IServiceProvider serviceProvider)
         {
-            movies = new List<Movie>
-        {
-            new Movie { Id = 1, Title = "Inception", Genre = "Sci-Fi", Year = 2010, AgeRating = "PG-13" },
+            using (var context = new DataContext(serviceProvider.GetRequiredService<DbContextOptions<DataContext>>()))
+            {
+                // Look for any Movies.
+                if (context.Movies.Any())
+                {
+                    return;   // DB has been seeded
+                }
+                context.Movies.AddRange(
+                    new Movie { Id = 1, Title = "Inception", Genre = "Sci-Fi", Year = 2010, AgeRating = "PG-13" },
             new Movie { Id = 2, Title = "The Dark Knight", Genre = "Action", Year = 2008, AgeRating = "PG-13" },
             new Movie { Id = 3, Title = "Interstellar", Genre = "Sci-Fi", Year = 2014, AgeRating = "PG-13" },
             new Movie { Id = 4, Title = "Gladiator", Genre = "Historical Drama", Year = 2000, AgeRating = "R" },
@@ -42,45 +43,11 @@ namespace Selu383.SP25.P03.Api.Controllers
             new Movie { Id = 26, Title = "The Incredibles", Genre = "Animation", Year = 2004, AgeRating = "PG" },
             new Movie { Id = 27, Title = "Frozen", Genre = "Animation", Year = 2013, AgeRating = "PG" },
             new Movie { Id = 28, Title = "WALL-E", Genre = "Animation", Year = 2008, AgeRating = "G" }
-        };
-        }
-
-        public void DisplayMovies()
-        {
-            Console.WriteLine("Available Movies:");
-            foreach (var movie in movies)
-            {
-                Console.WriteLine(movie);
-            }
-        }
-
-        public bool SelectMovie(int movieId)
-        {
-            var movie = movies.FirstOrDefault(m => m.Id == movieId);
-            if (movie != null)
-            {
-                selectedMovie = movie;
-                Console.WriteLine($"You selected: {selectedMovie.Title}");
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("Invalid movie selection. Try again.");
-                return false;
-            }
-        }
-
-        public void ShowSelectedMovieDetails()
-        {
-            if (selectedMovie != null)
-            {
-                Console.WriteLine($"Selected Movie Details:\n{selectedMovie}");
-            }
-            else
-            {
-                Console.WriteLine("No movie selected yet.");
+                );
+                context.SaveChanges();
             }
         }
     }
 }
+    
 
