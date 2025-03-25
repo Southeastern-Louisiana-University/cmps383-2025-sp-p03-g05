@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage onClose={() => console.log("Login closed")} />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="seats" element={<SeatSelector />} />
+        <Route path="/seats" element={<SeatSelector />} /> 
       </Routes>
     </Router>
   );
