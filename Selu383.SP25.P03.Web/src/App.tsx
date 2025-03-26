@@ -1,11 +1,11 @@
 import React from "react";
-import CitySelector from "./CitySelector"; 
-import "./App.css"; 
-// App component
+import LocationPopup from "./LocationPopup";
+import "./App.css"; // Make sure this includes your updated Poppins CSS
+
 const App: React.FC = () => {
   return (
     <div className="App">
-      <CitySelector />
+      <LocationPopup />
     </div>
   );
 };
