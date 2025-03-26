@@ -1,0 +1,194 @@
+/* ==========================
+   Modal Overlay (Glassmorphism Effect)
+========================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+  }
+  
+  /* ==========================
+     Login Modal (Neon Glow & Smooth UI)
+  ========================== */
+  .modal {
+    background: rgba(43, 15, 82, 0.9);
+    padding: 40px;
+    border-radius: 14px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Add a smooth modal entry effect */
+  @keyframes fadeInSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-modal {
+    animation: fadeInSlide 0.4s ease-out;
+  }
+  
+  /* ==========================
+     Close Button
+  ========================== */
+  .close-button {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 22px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out, transform 0.2s;
+  }
+  
+  .close-button:hover {
+    color: #ff4d4d;
+    transform: scale(1.1);
+  }
+  
+  /* ==========================
+     Sign In Form
+  ========================== */
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+  }
+  
+  /* Form Group */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Input Fields */
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    font-size: 1rem;
+    transition: border 0.3s ease-in-out, background 0.3s;
+  }
+  
+  /* Add a glowing effect on focus */
+  input:focus {
+    border-color: #bb86fc;
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(187, 134, 252, 0.6);
+  }
+  
+  /* Password Field with Show/Hide Button */
+  .password-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: opacity 0.2s ease-in-out, transform 0.2s;
+  }
+  
+  .toggle-password:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+  
+  /* ==========================
+     Sign-in Button (Cooler Animations)
+  ========================== */
+  .modal-sign-in {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, #7b2cbf, #9d4edd);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+  }
+  
+  .modal-sign-in:hover {
+    background: linear-gradient(90deg, #9d4edd, #bb86fc);
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 12px rgba(187, 134, 252, 0.5);
+  }
+  
+  .modal-sign-in:active {
+    transform: scale(0.98);
+  }
+  
+  /* ==========================
+     Forgot Password & Register Links
+  ========================== */
+  .forgot-password {
+    color: #64b5f6;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .forgot-password:hover {
+    opacity: 0.8;
+  }
+  
+  .signup-text {
+    margin-top: 15px;
+    color: white;
+  }
+  
+  .bold-link {
+    color: #64b5f6;
+    font-weight: bold;
+    text-decoration: none;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .bold-link:hover {
+    opacity: 0.8;
+  }
+  
+  /* ==========================
+     Responsive Fixes
+  ========================== */
+  @media (max-width: 768px) {
+    .modal {
+      width: 90%;
+    }
+  }
+  

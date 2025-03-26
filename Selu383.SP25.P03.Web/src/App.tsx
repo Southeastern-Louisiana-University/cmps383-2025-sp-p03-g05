@@ -1,17 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
-import HomePage from "./Home"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
+import "./App.css"; 
+import SeatSelector from "./SeatSelector";
+import "./SeatSelector.css"
 
 function App() {
-  
   return (
-    <>
-      {HomePage()}
-
-
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage onClose={() => console.log("Login closed")} />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/seats" element={<SeatSelector />} /> 
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
