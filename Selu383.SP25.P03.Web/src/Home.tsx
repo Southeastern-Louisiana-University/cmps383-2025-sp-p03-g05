@@ -10,6 +10,8 @@ function Home() {
 
     return(
         <>
+        <div className="background">
+
         <div className="topBanner">
             <div style={{width: "70px", height: "50px"}}>
 
@@ -45,8 +47,7 @@ function Home() {
 
         </div>
         
-        
-        
+        </div>
         </>
 
     )

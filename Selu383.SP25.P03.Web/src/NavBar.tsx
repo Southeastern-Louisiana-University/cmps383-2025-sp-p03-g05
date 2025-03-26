@@ -7,9 +7,9 @@ const NavBar = () => {
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         
         {/* Logo or Website Title */}
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+        {/* <Typography variant="h6" sx={{ fontWeight: "bold" }}>
           My Website
-        </Typography>
+        </Typography> */}
 
         {/* Menu Items (No Links) */}
         <Box>

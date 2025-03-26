@@ -4,6 +4,7 @@ import RegisterPage from "./RegisterPage";
 import "./App.css"; 
 import SeatSelector from "./SeatSelector";
 import "./SeatSelector.css"
+import HomePage from "./Home"
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<LoginPage onClose={() => console.log("Login closed")} />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/seats" element={<SeatSelector />} /> 
+        <Route path="/home" element={HomePage()}/>
       </Routes>
     </Router>
   );
