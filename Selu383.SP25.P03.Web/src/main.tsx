@@ -6,8 +6,9 @@ import App from './App.tsx'
 //import RegisterPage from './RegisterPage'
 
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(
+  <React.StrictMode>
     <App />
-  </StrictMode>,
-)
+  </React.StrictMode>
+);
