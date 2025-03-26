@@ -1,74 +1,93 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const { width } = Dimensions.get('window');
+const CARD_WIDTH = width * 0.38; // tighter for mobile
+const CARD_SPACING = 12;
+const POSTER_HEIGHT = 160;
+
+const movies = [
+  {
+    id: '1',
+    title: 'Oppenheimer',
+    poster: 'https://picsum.photos/id/1003/400/600',
+  },
+  {
+    id: '2',
+    title: 'Dune: Part Two',
+    poster: 'https://picsum.photos/id/1018/400/600',
+  },
+  {
+    id: '3',
+    title: 'Inside Out 2',
+    poster: 'https://picsum.photos/id/1025/400/600',
+  },
+];
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <Text style={styles.heading}>Now Showing</Text>
+      <FlatList
+        data={movies}
+        keyExtractor={(item) => item.id}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: CARD_SPACING }}
+        renderItem={({ item }) => (
+          <TouchableOpacity style={styles.card}>
+            <Image
+              source={{ uri: item.poster }}
+              style={styles.poster}
+              resizeMode="cover"
+            />
+            <Text style={styles.title}>{item.title}</Text>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   );
 }
 
+const PURPLE = '#a800b7';
+
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingTop: 40,
+  },
+  heading: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: PURPLE,
+    marginBottom: 12,
+    marginLeft: 16,
+  },
+  card: {
+    width: CARD_WIDTH,
+    marginRight: CARD_SPACING,
     alignItems: 'center',
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  poster: {
+    width: '100%',
+    height: POSTER_HEIGHT,
+    borderRadius: 10,
+    backgroundColor: '#eee',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  title: {
+    marginTop: 8,
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#333',
+    textAlign: 'center',
   },
 });
