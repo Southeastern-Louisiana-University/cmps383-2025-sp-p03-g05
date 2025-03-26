@@ -5,15 +5,17 @@ import "./App.css";
 import SeatSelector from "./SeatSelector";
 import "./SeatSelector.css"
 import HomePage from "./Home"
+import LocationPopup from "./LocationPopup";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage onClose={() => console.log("Login closed")} />} />
+        <Route path="/login" element={<LoginPage onClose={() => console.log("Login closed")} />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/seats" element={<SeatSelector />} /> 
-        <Route path="/home" element={HomePage()}/>
+        <Route path="/" element={HomePage()}/>
+        <Route path="/location" element={<LocationPopup/>} />
       </Routes>
     </Router>
   );
