@@ -15,8 +15,8 @@
     "@mui/icons-material": "^6.4.8",
     "@mui/material": "^6.4.8",
     "@swc/core": "^1.11.8",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-router-dom": "^7.4.0"
   },
   "devDependencies": {
