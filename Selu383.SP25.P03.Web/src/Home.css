@@ -1,0 +1,38 @@
+.background{
+    background-color: #121212;
+}
+
+
+
+.topBanner{
+    width: 100vw; /* Full viewport width */
+    height: 70px; 
+    display: flex;
+    align-items: center;
+    
+    /* position: fixed;  */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensures it stays on top of other elements */
+    background-color:#a800b7;
+    /* opacity: 0.5; */
+    color: black;
+    justify-content: space-between
+}
+
+.middleBanner{
+    height: 50vh;
+    width: 100vw;
+    margin: 25px 0px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    /* background-color:black; */
+
+}
+.bottomBanner{
+    display: flex;
+    height: 200px;
+    width: 100%;
+    /* background-color:blueviolet; */
+}
