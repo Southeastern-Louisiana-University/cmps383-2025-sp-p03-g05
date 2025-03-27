@@ -13,12 +13,15 @@ namespace Selu383.SP25.P03.Api.Data
                 {
                     return;
                 }
+                    //context.Theaters.First(x => x.Name =="mytheatername").Id
+                    //Instead of hard-coding theater ids, find the ids of the seeded theaters using the code above
+                    //and placing them where 'TheaterId' is in the seeded showtimes
                 context.Showtimes.AddRange(
                     new Showtime
                     {
                         Time = new TimeOnly(14, 30),
                         ShowDate = new DateOnly(2025, 3, 12),
-                        TheaterId = 1,
+                        TheaterId = context.Theaters.First(x => x.Name == "Grand Theater").Id,
                         Format = "2D",
                         Available = true,
 
@@ -28,7 +31,7 @@ namespace Selu383.SP25.P03.Api.Data
                     {
                         Time = new TimeOnly(20, 00),
                         ShowDate = new DateOnly(2025, 3, 13),
-                        TheaterId = 2,
+                        TheaterId = context.Theaters.First(x => x.Name == "Regal Cinema").Id,
                         Format = "IMAX",
                         Available = true
                     },
@@ -36,7 +39,7 @@ namespace Selu383.SP25.P03.Api.Data
                     {
                         Time = new TimeOnly(13, 30),
                         ShowDate = new DateOnly(2025, 3, 12),
-                        TheaterId = 3,
+                        TheaterId = context.Theaters.First(x => x.Name == "Vintage Drive-In").Id,
                         Format = "3D",
                         Available = false
                     }
