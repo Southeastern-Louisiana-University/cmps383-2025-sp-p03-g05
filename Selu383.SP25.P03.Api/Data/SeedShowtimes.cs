@@ -33,7 +33,7 @@ namespace Selu383.SP25.P03.Api.Data
                         Time = new TimeOnly(09, 30),
                         ShowDate = new DateOnly(2025, 3, 27),
                         TheaterId = context.Theaters.First(x => x.Name == "Grand Theater").Id,
-                        Format = "",
+                        Format = "IMAX",
                         Available = true,
 
                     },
