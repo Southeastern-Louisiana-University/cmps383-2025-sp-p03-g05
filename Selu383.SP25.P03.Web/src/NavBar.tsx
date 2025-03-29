@@ -1,5 +1,5 @@
-import React from "react";
-import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
+//import React from "react";
+import { AppBar, Toolbar, Box, Button, Link } from "@mui/material";
 
 const NavBar = () => {
   return (
@@ -14,7 +14,7 @@ const NavBar = () => {
         {/* Menu Items (No Links) */}
         <Box>
           <Button sx={{ color: "white", mx: 1 }}>See a Movie</Button>
-          <Button sx={{ color: "white", mx: 1 }}>Find a Theater</Button>
+          <Link href="/location"><Button sx={{ color: "white", mx: 1 }}>Find a Theater</Button></Link>
           <Button sx={{ color: "white", mx: 1 }}>Food and Drinks</Button>
           <Button sx={{ color: "white", mx: 1 }}>More</Button>
         </Box>
