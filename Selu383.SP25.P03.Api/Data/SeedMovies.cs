@@ -10,9 +10,9 @@ namespace Selu383.SP25.P03.Api.Data
             using (var context = new DataContext(serviceProvider.GetRequiredService<DbContextOptions<DataContext>>()))
             {
                 // Look for any Movies.
-                if (context.Movies.Any())
+               if (context.Movies.Any())
                 {
-                    return;   // DB has been seeded
+                  return;   // DB has been seeded
                 }
 
                 context.Movies.AddRange(
