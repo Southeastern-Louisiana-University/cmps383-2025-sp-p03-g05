@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Selu383.SP25.P03.Api.Data;
+using Selu383.SP25.P03.Api.Features.Showtimes;
 using Selu383.SP25.P03.Api.Features.Theaters;
 using Selu383.SP25.P03.Api.Features.Users;
 
@@ -16,6 +17,7 @@ namespace Selu383.SP25.P03.Api.Controllers
         private readonly DataContext dataContext;
         private readonly DbSet<User> users;
         private readonly UserManager<User> userManager;
+        private readonly DbSet<Showtime> showtimes;
 
         public TheatersController(DataContext dataContext, UserManager<User> userManager)
         {
@@ -23,6 +25,7 @@ namespace Selu383.SP25.P03.Api.Controllers
             theaters = dataContext.Set<Theater>();
             users = dataContext.Set<User>();
             this.userManager = userManager;
+            this.showtimes = dataContext.Set<Showtime>();
         }
 
         [HttpGet]
@@ -145,7 +148,8 @@ namespace Selu383.SP25.P03.Api.Controllers
                     Name = x.Name,
                     Address = x.Address,
                     SeatCount = x.SeatCount,
-                    ManagerId = x.ManagerId
+                    ManagerId = x.ManagerId,
+                    Showtimes = x.Showtimes
                 });
         }
     }
