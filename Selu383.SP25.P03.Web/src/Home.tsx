@@ -1,4 +1,4 @@
-import { Button, Divider, Typography } from "@mui/material";
+import { Button, Divider, Link, Typography } from "@mui/material";
 import "./Home.css";
 import MovieCarousel from "./MovieCarousel";
 import NavBar from "./NavBar";
@@ -25,6 +25,7 @@ function Home() {
           </div>
           <div>{NavBar()}</div>
           <div>
+            <Link href="/register">
             <Button style={{ margin: "30px" }}>
               <AccountCircleIcon style={{ color: "black" }}></AccountCircleIcon>
               <Typography
@@ -35,6 +36,7 @@ function Home() {
                 Profile
               </Typography>
             </Button>
+            </Link>
           </div>
         </div>
         <div className="middleBanner">
@@ -44,7 +46,7 @@ function Home() {
             sx={{ fontWeight: "bold" }}
             style={{ color: "white", margin: "50px" }}
           >
-            Movies Out
+            Now Showing
           </Typography>
           <Divider sx={{ "--Divider-childPosition": `50%` }}></Divider>
           {MovieCarousel()}
