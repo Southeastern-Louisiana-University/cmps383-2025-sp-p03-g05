@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
@@ -12,6 +12,8 @@ const movies = [
 
 const MovieCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const Movie = 
+  const [movies, setMovies] = useState<Movie[]>([]);
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % movies.length);
@@ -21,11 +23,20 @@ const MovieCarousel = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + movies.length) % movies.length);
   };
 
+  useEffect(() => {
+    fetch("/api/movies")
+      .then((response) => response.json())
+      .then((data) => setMovies(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
   return (
     <Box sx={{ position: "relative", width: "300px", height: "450px", margin: "auto", overflow: "hidden" }}>
       
       {/* Movie Poster Display */}
       {movies.map((movie, index) => (
+        <div>
+
         <Box
           key={index}
           sx={{
@@ -62,6 +73,7 @@ const MovieCarousel = () => {
             {movie.title}
           </Typography>
         </Box>
+        </div>
       ))}
 
       {/* Left Button */}
