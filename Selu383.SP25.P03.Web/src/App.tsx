@@ -6,6 +6,8 @@ import SeatSelector from "./SeatSelector";
 import "./SeatSelector.css"
 import HomePage from "./Home"
 import LocationPopup from "./LocationPopup";
+import TheaterList from "./TheatersList";
+import TheaterDetails from "./TheaterPage";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/seats" element={<SeatSelector />} /> 
         <Route path="/" element={HomePage()}/>
         <Route path="/location" element={<LocationPopup/>} />
+        <Route path="/theaters" element={<TheaterList/>}/>
+        <Route path= "/theaters/:id" element={<TheaterDetails/>}/>
       </Routes>
     </Router>
   );

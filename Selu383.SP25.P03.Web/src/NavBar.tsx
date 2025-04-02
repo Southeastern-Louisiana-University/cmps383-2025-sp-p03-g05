@@ -1,27 +1,97 @@
 //import React from "react";
-import { AppBar, Toolbar, Box, Button, Link } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  Button,
+  Link,
+  Container,
+  Typography,
+  Stack,
+} from "@mui/material";
+import { useState } from "react";
+
+const menuItems = (
+  <>
+    <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
+      See a Movie
+    </Typography>
+
+    <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
+      Find a Theatre
+    </Typography>
+
+    <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
+      Food & Drinks
+    </Typography>
+    <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
+      Sign In
+    </Typography>
+  </>
+);
 
 const NavBar = () => {
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#333" }}>
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        
-        {/* Logo or Website Title */}
-        {/* <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          My Website
-        </Typography> */}
+    <Stack>
+      <Box
+        sx={{
+          backgroundColor: "#121212",
+          boxShadow: "0px 4px 4px rgba(0,0,0,0.1)",
+          padding: "20px 0px",
+          "& a": { textDecoration: "none" },
+        }}
+      >
+        <Container>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{
+              padding: "8px 0",
+            }}
+          >
+            {/* logo*/}
+            <Box component={Link} href="/" color="#a800b7">
+              <Typography fontWeight={600} variant="h5">
+                Lions Den Cinemas
+              </Typography>
+            </Box>
 
-        {/* Menu Items (No Links) */}
-        <Box>
-          <Button sx={{ color: "white", mx: 1 }}>See a Movie</Button>
-          <Link href="/location"><Button sx={{ color: "white", mx: 1 }}>Find a Theater</Button></Link>
-          <Button sx={{ color: "white", mx: 1 }}>Food and Drinks</Button>
-          <Button sx={{ color: "white", mx: 1 }}>More</Button>
-        </Box>
-
-      </Toolbar>
-    </AppBar>
+            <Stack
+              direction="row"
+              gap={4}
+              alignItems="center"
+              sx={{
+                "& a:hover": {
+                  textDecoration: "underline",
+                  transition: "ease-in-out 0.2s",
+                },
+                display: {
+                  xs: "none",
+                  sm: "none",
+                  md: "none",
+                  lg: "flex",
+                  xl: "flex",
+                },
+              }}
+            >
+              {menuItems}
+            </Stack>
+            
+          </Stack>
+        </Container>
+      </Box>
+    </Stack>
   );
 };
-
 export default NavBar;
