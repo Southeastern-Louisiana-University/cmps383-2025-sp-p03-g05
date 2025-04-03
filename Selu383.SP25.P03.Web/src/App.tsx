@@ -9,7 +9,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage onClose={() => console.log("Login closed")} />} />
+        <Route path="/login" element={<LoginPage onClose={() => console.log("Login closed")} />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/seats" element={<SeatSelector />} /> 
       </Routes>
