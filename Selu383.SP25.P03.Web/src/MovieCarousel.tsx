@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import Movie from "./types"
 
 const movies = [
   { title: "Monster House", image: "https://th.bing.com/th/id/OIP.1umjRUVLTbPQCPVU_q1HPgHaK-?rs=1&pid=ImgDetMain" },
