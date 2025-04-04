@@ -28,6 +28,8 @@ namespace Selu383.SP25.P03.Api.Features.Movies
         [StringLength(10)]
         public string AgeRating { get; set; } // G, PG, PG-13, R
 
+        public string Poster { get; set; }
+
         public override string ToString()
         {
             return $"{Id}. {Title} ({Year}) - {Genre} | Age Rating: {AgeRating}";

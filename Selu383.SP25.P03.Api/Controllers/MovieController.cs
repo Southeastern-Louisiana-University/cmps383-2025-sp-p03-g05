@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Selu383.SP25.P03.Api.Data;
 using Selu383.SP25.P03.Api.Features.Users;
 using Selu383.SP25.P03.Api.Features.Movies;
+using Selu383.SP25.P03.Api.Features.Theaters;
 namespace Selu383.SP25.P03.Api.Controllers
 {
 
-    [Route("api/Movies")]
+    [Route("api/movies")]
     [ApiController]
     public class MovieController : ControllerBase
     {
@@ -25,6 +26,26 @@ namespace Selu383.SP25.P03.Api.Controllers
             this.userManager = userManager;
         }
 
+        [HttpGet]
+        public IQueryable<MovieDto> GetAllMovies()
+        {
+            return GetMovieDtos(movies);
+        }
+
+        private static IQueryable<MovieDto> GetMovieDtos(IQueryable<Movie> movies)
+        {
+            return movies
+                .Select(x => new MovieDto
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Genre = x.Genre,
+                    Year = x.Year,
+                    AgeRating = x.AgeRating,
+                    Poster = x.Poster
+                });
+        }
+
 
         [HttpPost]
 
@@ -35,7 +56,8 @@ namespace Selu383.SP25.P03.Api.Controllers
                 Title = dto.Title,
                 Id = dto.Id,
                 Genre = dto.Genre,
-                AgeRating = dto.AgeRating
+                AgeRating = dto.AgeRating,
+                Poster = dto.Poster
             };
 
 
