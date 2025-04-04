@@ -1,19 +1,15 @@
 //import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Box,
-  Button,
-  Link,
-  Container,
-  Typography,
-  Stack,
-} from "@mui/material";
+import { Box, Link, Container, Typography, Stack } from "@mui/material";
 import { useState } from "react";
 
 const menuItems = (
   <>
-    <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
+    <Typography
+      component={Link}
+      href="/movies"
+      fontWeight={600}
+      color="#a800b7"
+    >
       See a Movie
     </Typography>
 
@@ -87,7 +83,6 @@ const NavBar = () => {
             >
               {menuItems}
             </Stack>
-            
           </Stack>
         </Container>
       </Box>
