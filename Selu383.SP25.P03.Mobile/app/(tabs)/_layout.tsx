@@ -1,12 +1,19 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { Platform } from 'react-native';
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        tabBarStyle: {
+          backgroundColor: '#000',
+          borderTopColor: '#111',
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+        },
         tabBarActiveTintColor: '#a800b7',
-        tabBarLabelStyle: { fontSize: 12 },
         headerShown: false,
       }}
     >
@@ -20,20 +27,29 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="offers"
+        name="coming-soon"
         options={{
-          title: 'Offers',
+          title: 'Coming Soon',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="pricetags-outline" size={size} color={color} />
+            <Ionicons name="time-outline" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="login"
+        name="food"
         options={{
-          title: 'Login',
+          title: 'Food',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="log-in-outline" size={size} color={color} />
+            <Ionicons name="fast-food-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person-outline" size={size} color={color} />
           ),
         }}
       />
