@@ -8,6 +8,7 @@ import HomePage from "./Home"
 import LocationPopup from "./LocationPopup";
 import TheaterList from "./TheatersList";
 import TheaterDetails from "./TheaterPage";
+import MoviesList from "./MovieSelections";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/location" element={<LocationPopup/>} />
         <Route path="/theaters" element={<TheaterList/>}/>
         <Route path= "/theaters/:id" element={<TheaterDetails/>}/>
+        <Route path="/movies" element={MoviesList()}/>
       </Routes>
     </Router>
   );
