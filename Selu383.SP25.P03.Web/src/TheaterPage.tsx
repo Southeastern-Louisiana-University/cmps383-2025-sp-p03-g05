@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 type Showtime = {
-    id: number;
-    time: string;
-    showDate: string;
-    format: string;
-    available: boolean;
-
+  id: number;
+  time: string;
+  startTime: string;
+  format: string;
+  available: boolean;
 };
 
 type Theater = {
@@ -18,7 +17,6 @@ type Theater = {
   managerId: number;
   showtimes: Array<Showtime>;
 };
-
 
 function TheaterDetails() {
   const { id } = useParams();
@@ -35,17 +33,19 @@ function TheaterDetails() {
     console.log("Showtimes: ", theater?.showtimes);
     console.log("Theater data: ", theater);
     return (
-        <>
+      <>
         <h1>{theater.name}</h1>
         <h3>Showtimes</h3>
-        
+
         <ul>
-            {theater?.showtimes?.map((showtime) =>(
-                <><li key={showtime.id}>{showtime.showDate}</li><li key={showtime.id}>{showtime.time}</li></>
-            ))}
+          {theater?.showtimes?.map((showtime) => (
+            <>
+              <li key={showtime.id}>{showtime.startTime}</li>
+            </>
+          ))}
         </ul>
-        </>
-    )
+      </>
+    );
   }
 }
 export default TheaterDetails;
