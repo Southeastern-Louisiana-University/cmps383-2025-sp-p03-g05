@@ -1,17 +1,17 @@
 .popup-content {
-  background-color: #a800b7;
+  background-color: #1a1a1a;
   color: #fff;
   padding: 2rem;
   border-radius: 16px;
   max-width: 600px;
   margin: 4rem auto;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
   font-family: 'Poppins', sans-serif;
   animation: fadeIn 0.5s ease-in-out;
 }
 
 .popup-content h2 {
-  color: #ffffff; /* changed to white */
+  color: #a800b7;
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2rem;
@@ -22,32 +22,33 @@
 }
 
 .popup-content h2::before {
-  
   font-size: 1.5rem;
 }
 
 .theater-card {
-  background-color: #3a0049;
+  background-color: #2a2a2a;
   padding: 1.2rem 1.5rem;
   margin-bottom: 1.2rem;
   border-radius: 12px;
+  border-left: 6px solid #a800b7;
   transition: transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
 }
 
 .theater-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(168, 0, 183, 0.4);
 }
 
 .theater-card h3 {
   margin-bottom: 0.4rem;
-  color: #ffccff;
+  color: #ffffff;
   font-size: 1.25rem;
 }
 
 .theater-card p {
-  font-size: 1rem;
+  font-size: 0.95rem;
+  color: #cccccc;
   margin: 0.3rem 0;
 }
 
@@ -55,7 +56,7 @@
   content: "📍";
   margin-right: 0.4rem;
   font-size: 1.1rem;
-  color: #ff99ff;
+  color: #a800b7;
 }
 
 @keyframes fadeIn {
