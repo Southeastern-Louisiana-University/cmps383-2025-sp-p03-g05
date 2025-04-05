@@ -5,9 +5,7 @@ namespace Selu383.SP25.P03.Api.Features.Showtimes
     public class ShowtimeDto
     {
         public int Id { get; set; }
-        public TimeOnly Time { get; set; }
-        //the actual time (8:00 pm, 2:00 pm)
-        public DateOnly ShowDate { get; set; }
+        public DateTime StartTime { get; set; }
         public int MovieId { get; set; }
         public int TheaterId { get; set; }
         public string Format { get; set; }
@@ -19,9 +17,7 @@ namespace Selu383.SP25.P03.Api.Features.Showtimes
     public class ShowtimesGetDto
     {
         public int Id { get; set; }
-        public TimeOnly Time { get; set; }
-        //the actual time (8:00 pm, 2:00 pm)
-        public DateOnly ShowDate { get; set; }
+        public DateTime StartTime { get; set; }
         public int MovieId { get; set; }
         public int TheaterId { get; set; }
         public string Format { get; set; }
@@ -32,8 +28,7 @@ namespace Selu383.SP25.P03.Api.Features.Showtimes
 
     public class ShowtimeCreateDto
     {
-        public TimeOnly Time { get; set; }
-        public DateOnly ShowDate { get; set; }
+        public DateTime StartTime { get; set; }
         public int MovieId { get; set; }
         public int TheaterId { get; set; }
         public string Format { get; set; }
@@ -45,8 +40,7 @@ namespace Selu383.SP25.P03.Api.Features.Showtimes
     public class ShowtimeUpdateDto
     {
         public int Id { get; set; }
-        public TimeOnly Time { get; set; }
-        public DateOnly ShowDate { get; set; }
+        public DateTime StartTime { get; set; }
         public int MovieId { get; set; }
         public int TheaterId { get; set; }
         public string Format { get; set; }

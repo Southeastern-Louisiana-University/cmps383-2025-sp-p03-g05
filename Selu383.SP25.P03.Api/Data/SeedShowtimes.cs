@@ -19,8 +19,7 @@ namespace Selu383.SP25.P03.Api.Data
                 context.Showtimes.AddRange(
                     new Showtime
                     {
-                        Time = new TimeOnly(14, 15),
-                        ShowDate = new DateOnly(2025, 4, 01),
+                        StartTime = new DateTime(2025,4,1,14,15,0),
                         TheaterId = context.Theaters.First(x => x.Name == "Grand Theater").Id,
                         MovieId = context.Movies.First(x => x.Title == "The Lord of the Rings: The Two Towers").Id,
                         Format = "2D",
@@ -28,8 +27,15 @@ namespace Selu383.SP25.P03.Api.Data
                     },
                     new Showtime
                     {
-                        Time = new TimeOnly(10, 30),
-                        ShowDate = new DateOnly(2025, 3, 27),
+                        StartTime = new DateTime(2025, 4, 5, 14, 15, 0),
+                        TheaterId = context.Theaters.First(x => x.Name == "Grand Theater").Id,
+                        MovieId = context.Movies.First(x => x.Title == "The Lord of the Rings: The Two Towers").Id,
+                        Format = "2D",
+                        Available = true
+                    },
+                    new Showtime
+                    {
+                        StartTime = new DateTime(2025,3,27,10,30,00),
                         TheaterId = context.Theaters.First(x => x.Name == "Grand Theater").Id,
                         MovieId = context.Movies.First(x => x.Title == "Frozen").Id,
                         Format = "IMAX",
@@ -38,18 +44,52 @@ namespace Selu383.SP25.P03.Api.Data
                     },
                     new Showtime
                     {
-                        Time = new TimeOnly(21, 00),
-                        ShowDate = new DateOnly(2025, 3, 28),
+                        StartTime = new DateTime(2025,3,28,21,00,00),
                         TheaterId = context.Theaters.First(x => x.Name == "Grand Theater").Id,
                         MovieId = context.Movies.First(x => x.Title == "Titanic").Id,
                         Format = "2D",
                         Available = true,
 
                     },
+                     new Showtime
+                     {
+                         StartTime = new DateTime(2025, 3, 28, 09, 00, 00),
+                         TheaterId = context.Theaters.First(x => x.Name == "Grand Theater").Id,
+                         MovieId = context.Movies.First(x => x.Title == "Titanic").Id,
+                         Format = "2D",
+                         Available = true,
+
+                     },
+                      new Showtime
+                      {
+                          StartTime = new DateTime(2025, 3, 28, 12, 00, 00),
+                          TheaterId = context.Theaters.First(x => x.Name == "Grand Theater").Id,
+                          MovieId = context.Movies.First(x => x.Title == "Titanic").Id,
+                          Format = "2D",
+                          Available = true,
+
+                      },
+                       new Showtime
+                       {
+                           StartTime = new DateTime(2025, 4, 4, 14, 00, 00),
+                           TheaterId = context.Theaters.First(x => x.Name == "Grand Theater").Id,
+                           MovieId = context.Movies.First(x => x.Title == "Pulp Fiction").Id,
+                           Format = "2D",
+                           Available = true,
+
+                       },
+                        new Showtime
+                        {
+                            StartTime = new DateTime(2025, 4, 4, 11, 00, 00),
+                            TheaterId = context.Theaters.First(x => x.Name == "Grand Theater").Id,
+                            MovieId = context.Movies.First(x => x.Title == "Pulp Fiction").Id,
+                            Format = "2D",
+                            Available = true,
+
+                        },
                     new Showtime
                     {
-                        Time = new TimeOnly(15, 00),
-                        ShowDate = new DateOnly(2025, 4, 02),
+                        StartTime = new DateTime(2025,4,2,15,00,00),
                         TheaterId = context.Theaters.First(x => x.Name == "Regal Cinema").Id,
                         MovieId = context.Movies.First(x => x.Title == "The Lord of the Rings: The Return of the King").Id,
                         Format = "3D",
@@ -57,8 +97,23 @@ namespace Selu383.SP25.P03.Api.Data
                     },
                     new Showtime
                     {
-                        Time = new TimeOnly(13, 30),
-                        ShowDate = new DateOnly(2025, 4, 03),
+                        StartTime = new DateTime(2025, 4, 2, 12, 00, 00),
+                        TheaterId = context.Theaters.First(x => x.Name == "Regal Cinema").Id,
+                        MovieId = context.Movies.First(x => x.Title == "The Lord of the Rings: The Return of the King").Id,
+                        Format = "3D",
+                        Available = true
+                    },
+                    new Showtime
+                    {
+                        StartTime = new DateTime(2025, 4, 2, 15, 00, 00),
+                        TheaterId = context.Theaters.First(x => x.Name == "Regal Cinema").Id,
+                        MovieId = context.Movies.First(x => x.Title == "The Lord of the Rings: The Return of the King").Id,
+                        Format = "3D",
+                        Available = true
+                    },
+                    new Showtime
+                    {
+                        StartTime = new DateTime(2025,4,03,13,30,00),
                         TheaterId = context.Theaters.First(x => x.Name == "Regal Cinema").Id,
                         MovieId = context.Movies.First(x => x.Title == "The Matrix").Id,
                         Format = "IMAX",
@@ -66,8 +121,7 @@ namespace Selu383.SP25.P03.Api.Data
                     },
                     new Showtime
                     {
-                        Time = new TimeOnly(19, 30),
-                        ShowDate = new DateOnly(2025, 4, 04),
+                        StartTime = new DateTime(2025,4,4,19,30,00),
                         TheaterId = context.Theaters.First(x => x.Name == "Regal Cinema").Id,
                         MovieId = context.Movies.First(x => x.Title == "The Lord of the Rings: The Fellowship of the Ring").Id,
                         Format = "IMAX",
@@ -75,8 +129,7 @@ namespace Selu383.SP25.P03.Api.Data
                     },
                     new Showtime
                     {
-                        Time = new TimeOnly(13, 30),
-                        ShowDate = new DateOnly(2025, 4, 01),
+                        StartTime = new DateTime(2025,4,01,13,30,00),
                         TheaterId = context.Theaters.First(x => x.Name == "Vintage Drive-In").Id,
                         MovieId = context.Movies.First(x => x.Title == "Shrek").Id,
                         Format = "3D",
@@ -84,8 +137,7 @@ namespace Selu383.SP25.P03.Api.Data
                     },
                     new Showtime
                     {
-                        Time = new TimeOnly(20, 30),
-                        ShowDate = new DateOnly(2025, 4, 01),
+                        StartTime = new DateTime(2025,4,1,20,30,00),
                         TheaterId = context.Theaters.First(x => x.Name == "Vintage Drive-In").Id,
                         MovieId = context.Movies.First(x => x.Title == "The Shawshank Redemption").Id,
                         Format = "3D",
@@ -93,8 +145,7 @@ namespace Selu383.SP25.P03.Api.Data
                     },
                     new Showtime
                     {
-                        Time = new TimeOnly(09, 30),
-                        ShowDate = new DateOnly(2025, 4, 02),
+                        StartTime = new DateTime(2025,4,2,9,30,00),
                         TheaterId = context.Theaters.First(x => x.Name == "Vintage Drive-In").Id,
                         MovieId = context.Movies.First(x => x.Title == "Avengers: Endgame").Id,
                         Format = "2D",
@@ -102,10 +153,33 @@ namespace Selu383.SP25.P03.Api.Data
                     },
                     new Showtime
                     {
-                        Time = new TimeOnly(12, 30),
-                        ShowDate = new DateOnly(2025, 4, 03),
+                        StartTime = new DateTime(2025,4,3,12,30,00),
                         TheaterId = context.Theaters.First(x => x.Name == "Vintage Drive-In").Id,
                         MovieId = context.Movies.First(x => x.Title == "Interstellar").Id,
+                        Format = "2D",
+                        Available = false
+                    },
+                    new Showtime
+                    {
+                        StartTime = new DateTime(2025, 4, 3, 15, 30, 00),
+                        TheaterId = context.Theaters.First(x => x.Name == "Vintage Drive-In").Id,
+                        MovieId = context.Movies.First(x => x.Title == "Interstellar").Id,
+                        Format = "2D",
+                        Available = true
+                    },
+                    new Showtime
+                    {
+                        StartTime = new DateTime(2025, 4, 3, 21, 30, 00),
+                        TheaterId = context.Theaters.First(x => x.Name == "Vintage Drive-In").Id,
+                        MovieId = context.Movies.First(x => x.Title == "Interstellar").Id,
+                        Format = "2D",
+                        Available = true
+                    },
+                    new Showtime
+                    {
+                        StartTime = new DateTime(2025, 4, 3, 12, 30, 00),
+                        TheaterId = context.Theaters.First(x => x.Name == "Vintage Drive-In").Id,
+                        MovieId = context.Movies.First(x => x.Title == "Inception").Id,
                         Format = "2D",
                         Available = false
                     }
