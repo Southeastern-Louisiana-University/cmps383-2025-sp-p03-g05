@@ -1,6 +1,5 @@
 //import React from "react";
 import { Box, Link, Container, Typography, Stack } from "@mui/material";
-import { useState } from "react";
 
 const menuItems = (
   <>
@@ -27,26 +26,15 @@ const menuItems = (
 );
 
 const NavBar = () => {
-  const [open, setOpen] = useState<boolean>(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
-    <Stack>
       <Box
         sx={{
+          width: '100%',
           backgroundColor: "#121212",
           boxShadow: "0px 4px 4px rgba(0,0,0,0.1)",
           padding: "20px 0px",
           "& a": { textDecoration: "none" },
-        }}
-      >
+        }}>
         <Container>
           <Stack
             direction="row"
@@ -86,7 +74,6 @@ const NavBar = () => {
           </Stack>
         </Container>
       </Box>
-    </Stack>
   );
 };
 export default NavBar;

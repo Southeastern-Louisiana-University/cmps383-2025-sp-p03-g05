@@ -32,6 +32,19 @@ namespace Selu383.SP25.P03.Api.Controllers
             return GetMovieDtos(movies);
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<MovieDto> GetMovieById(int id)
+        {
+            var result = GetMovieDtos(movies.Where(x => x.Id == id)).FirstOrDefault();
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
         private static IQueryable<MovieDto> GetMovieDtos(IQueryable<Movie> movies)
         {
             return movies
@@ -45,7 +58,6 @@ namespace Selu383.SP25.P03.Api.Controllers
                     Poster = x.Poster
                 });
         }
-
 
         [HttpPost]
 

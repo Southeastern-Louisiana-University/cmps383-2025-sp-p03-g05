@@ -31,7 +31,7 @@ namespace Selu383.SP25.P03.Api.Features.Movies
             public int Year { get; set; }
             public string AgeRating { get; set; }
             public string Poster { get; set; }
-        }
+    }
 
     }
 
