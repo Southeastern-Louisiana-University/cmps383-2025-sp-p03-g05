@@ -12,14 +12,14 @@ const menuItems = (
       See a Movie
     </Typography>
 
-    <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
+    <Typography component={Link} href="/location" fontWeight={600} color="#a800b7">
       Find a Theatre
     </Typography>
 
     <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
       Food & Drinks
     </Typography>
-    <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
+    <Typography component={Link} href="/login" fontWeight={600} color="#a800b7">
       Sign In
     </Typography>
   </>
