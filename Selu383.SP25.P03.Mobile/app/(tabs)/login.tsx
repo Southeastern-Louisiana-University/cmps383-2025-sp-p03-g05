@@ -1,23 +1,45 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
 
-export default function LoginScreen() {
+import ProfileScreen from '../profile';
+
+
+const PURPLE = '#a800b7';
+
+export default function LoginTab() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const stored = await AsyncStorage.getItem('user');
+      if (stored) {
+        setUser(JSON.parse(stored));
+      }
+      setLoading(false);
+    };
+    checkUser();
+  }, []);
 
   const handleLogin = async () => {
     try {
       const response = await fetch('http://10.0.2.2:5249/api/authentication/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userName: username,
-          password: password,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userName: username, password }),
       });
 
       if (!response.ok) {
@@ -27,21 +49,31 @@ export default function LoginScreen() {
       }
 
       const user = await response.json();
-      console.log('Logged in user:', user);
-
-      Alert.alert('Success', `Welcome, ${user.userName}! 🎉`);
-
-      router.replace('/profile');
-
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
     } catch (error) {
       console.error('Login error:', error);
       Alert.alert('Error', 'Something went wrong. Check backend connection.');
     }
   };
 
+  if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color={PURPLE} />
+      </View>
+    );
+  }
+
+  // ✅ Show Profile if user is logged in
+  if (user) {
+    return <ProfileScreen />;
+  }
+
+  // ✅ Otherwise, show login form
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>🔐 Welcome Back!</Text>
+      <Text style={styles.heading}>Welcome Back!</Text>
 
       <TextInput
         style={styles.input}
@@ -74,8 +106,6 @@ export default function LoginScreen() {
     </View>
   );
 }
-
-const PURPLE = '#a800b7';
 
 const styles = StyleSheet.create({
   container: {
@@ -118,5 +148,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 8,
     textDecorationLine: 'underline',
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
