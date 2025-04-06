@@ -7,13 +7,35 @@ export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Temporary dummy login check
-    if (username === 'user' && password === '1234') {
-      Alert.alert('Success', 'You are logged in!');
-      // Navigate to home or dashboard
-    } else {
-      Alert.alert('Error', 'Invalid username or password');
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://10.0.2.2:5249/api/authentication/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName: username,
+          password: password,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        Alert.alert('Login failed', error.message || 'Invalid username or password');
+        return;
+      }
+
+      const user = await response.json();
+      console.log('Logged in user:', user);
+
+      Alert.alert('Success', `Welcome, ${user.userName}! 🎉`);
+
+      router.replace('/profile');
+
+    } catch (error) {
+      console.error('Login error:', error);
+      Alert.alert('Error', 'Something went wrong. Check backend connection.');
     }
   };
 

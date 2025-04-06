@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 
-export default function MovieCard({ movie }) {
+export default function MovieCard({movie}) {
   const router = useRouter();
 
   return (
