@@ -55,7 +55,8 @@ namespace Selu383.SP25.P03.Api.Controllers
                     Genre = x.Genre,
                     Year = x.Year,
                     AgeRating = x.AgeRating,
-                    Poster = x.Poster
+                    Poster = x.Poster,
+                    Description = x.Description
                 });
         }
 
@@ -69,7 +70,8 @@ namespace Selu383.SP25.P03.Api.Controllers
                 Id = dto.Id,
                 Genre = dto.Genre,
                 AgeRating = dto.AgeRating,
-                Poster = dto.Poster
+                Poster = dto.Poster,
+                Description = dto.Description
             };
 
 
