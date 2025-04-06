@@ -1,8 +1,11 @@
-﻿public class Food
+﻿namespace Selu383.SP25.P03.Api.Features.Foods
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public string ImageUrl { get; set; }
-    public decimal Price { get; set; }
-}
+    public class Food
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+        public decimal Price { get; set; }
+    }
+
