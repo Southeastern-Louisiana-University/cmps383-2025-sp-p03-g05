@@ -1,17 +1,23 @@
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { comingSoonMovies } from "@/constants/comingSoonMovies";
-import { useRouter } from "expo-router";
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { comingSoonMovies } from '@/constants/comingSoonMovies';
+import { useRouter } from 'expo-router';
+import { useThemeContext } from '../ThemeContext';
 
 export default function ComingSoon() {
   const router = useRouter();
+  const { isDark } = useThemeContext();
 
   if (!Array.isArray(comingSoonMovies)) {
-    return <Text style={{ color: "white", padding: 20 }}>No upcoming movies</Text>;
+    return (
+      <Text style={{ color: isDark ? '#fff' : '#000', padding: 20 }}>
+        No upcoming movies
+      </Text>
+    );
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Coming Soon</Text>
+    <View style={[styles.container, { backgroundColor: isDark ? '#000' : '#f5f5f5' }]}>
+      <Text style={[styles.heading, { color: isDark ? '#fff' : '#000' }]}>Coming Soon</Text>
       <FlatList
         data={comingSoonMovies}
         keyExtractor={(item) => item.id}
@@ -19,10 +25,12 @@ export default function ComingSoon() {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => router.push(`/movie/${item.id}`)}
-            style={styles.card}
+            style={[styles.card, { backgroundColor: isDark ? '#111' : '#fff' }]}
           >
             <Image source={{ uri: item.image }} style={styles.image} />
-            <Text style={styles.title}>{item.title}</Text>
+            <Text style={[styles.title, { color: isDark ? '#fff' : '#000' }]}>
+              {item.title}
+            </Text>
           </TouchableOpacity>
         )}
       />
@@ -33,29 +41,30 @@ export default function ComingSoon() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
     padding: 16,
   },
   heading: {
     fontSize: 22,
-    fontWeight: "bold",
-    color: "white",
+    fontWeight: 'bold',
     marginBottom: 16,
   },
   card: {
     flex: 1,
-    backgroundColor: "#111",
     borderRadius: 12,
     margin: 8,
-    overflow: "hidden",
+    overflow: 'hidden',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   image: {
     height: 200,
-    width: "100%",
+    width: '100%',
   },
   title: {
-    color: "white",
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 14,
     padding: 8,
   },
