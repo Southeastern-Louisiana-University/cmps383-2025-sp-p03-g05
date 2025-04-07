@@ -51,5 +51,33 @@ namespace Selu383.SP25.P03.Api.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UpdateUserDto dto)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.UserName = dto.UserName;
+            user.Email = dto.Email;
+
+            var result = await userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return new UserDto
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Roles = (await userManager.GetRolesAsync(user)).ToArray()
+            };
+        }
     }
 }
+
