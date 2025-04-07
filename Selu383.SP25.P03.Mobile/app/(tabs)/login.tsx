@@ -55,7 +55,7 @@ export default function LoginTab() {
       await AsyncStorage.setItem('user', JSON.stringify(user));
       await AsyncStorage.setItem('userRole', role);
 
-      DeviceEventEmitter.emit('authChanged'); // 🔥 Key line for logout sync
+      DeviceEventEmitter.emit('authChanged'); 
 
       if (role === 'Admin') {
         router.replace('/admin-dashboard');
