@@ -7,12 +7,11 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
+  DeviceEventEmitter,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-
 import ProfileScreen from '../profile';
-
 
 const PURPLE = '#a800b7';
 
@@ -20,18 +19,19 @@ export default function LoginTab() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const checkUser = async () => {
+    const checkLogin = async () => {
       const stored = await AsyncStorage.getItem('user');
-      if (stored) {
-        setUser(JSON.parse(stored));
-      }
+      setIsLoggedIn(!!stored);
       setLoading(false);
     };
-    checkUser();
+
+    checkLogin();
+    const sub = DeviceEventEmitter.addListener('authChanged', checkLogin);
+    return () => sub.remove();
   }, []);
 
   const handleLogin = async () => {
@@ -40,6 +40,7 @@ export default function LoginTab() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userName: username, password }),
+        credentials: 'include',
       });
 
       if (!response.ok) {
@@ -49,8 +50,18 @@ export default function LoginTab() {
       }
 
       const user = await response.json();
+      const role = user.roles?.[0] || 'User';
+
       await AsyncStorage.setItem('user', JSON.stringify(user));
-      setUser(user);
+      await AsyncStorage.setItem('userRole', role);
+
+      DeviceEventEmitter.emit('authChanged'); // 🔥 Key line for logout sync
+
+      if (role === 'Admin') {
+        router.replace('/admin-dashboard');
+      } else {
+        setIsLoggedIn(true);
+      }
     } catch (error) {
       console.error('Login error:', error);
       Alert.alert('Error', 'Something went wrong. Check backend connection.');
@@ -65,12 +76,10 @@ export default function LoginTab() {
     );
   }
 
-  // ✅ Show Profile if user is logged in
-  if (user) {
+  if (isLoggedIn) {
     return <ProfileScreen />;
   }
 
-  // ✅ Otherwise, show login form
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Welcome Back!</Text>
