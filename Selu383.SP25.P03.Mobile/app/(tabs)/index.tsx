@@ -1,15 +1,16 @@
 // app/(tabs)/index.tsx
 
-import { View, FlatList, Text } from "react-native";
-import { movies } from "@/constants/mockMovies";
-import MovieCard from "@/components/MovieCard";
+import { View, FlatList, Text, StyleSheet } from 'react-native';
+import { movies } from '@/constants/mockMovies';
+import MovieCard from '@/components/MovieCard';
+import { useThemeContext } from '../ThemeContext';
 
 export default function HomePage() {
+  const { isDark } = useThemeContext();
+
   return (
-    <View style={{ backgroundColor: "#000", flex: 1, paddingHorizontal: 8, paddingTop: 16 }}>
-      <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold", marginBottom: 16 }}>
-        Now Showing
-      </Text>
+    <View style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}>
+      <Text style={[styles.title, { color: isDark ? '#fff' : '#000' }]}>Now Showing</Text>
       <FlatList
         data={movies}
         renderItem={({ item }) => <MovieCard movie={item} />}
@@ -20,3 +21,16 @@ export default function HomePage() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 8,
+    paddingTop: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+});

@@ -6,15 +6,17 @@ import {
   ScrollView,
   TouchableOpacity,
   Switch,
+  DeviceEventEmitter,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
+import { useThemeContext } from './ThemeContext'; 
 
 export default function ProfileScreen() {
   const router = useRouter();
+  const { isDark, toggleTheme } = useThemeContext(); 
   const [userName, setUserName] = useState('');
   const [roles, setRoles] = useState<string[]>([]);
-  const [darkMode, setDarkMode] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
   useEffect(() => {
@@ -31,41 +33,38 @@ export default function ProfileScreen() {
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('user');
-
-    // Navigate to login AND trigger layout re-check
+    DeviceEventEmitter.emit('authChanged');
     router.replace('/(tabs)/login');
-    setTimeout(() => {
-      router.push('/(tabs)/login');
-    }, 100);
   };
 
   const Section = ({ title }: { title: string }) => (
-    <Text style={styles.sectionTitle}>{title}</Text>
+    <Text style={[styles.sectionTitle, { color: '#a800b7' }]}>{title}</Text>
   );
 
   const Item = ({ label, onPress }: { label: string; onPress?: () => void }) => (
-    <TouchableOpacity onPress={onPress} style={styles.item}>
-      <Text style={styles.itemText}>{label}</Text>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.item, { backgroundColor: isDark ? '#1a1a1a' : '#f0f0f0' }]}
+    >
+      <Text style={[styles.itemText, { color: isDark ? '#fff' : '#000' }]}>{label}</Text>
     </TouchableOpacity>
   );
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.header}>
-        Hello, <Text style={styles.username}>{userName}</Text>
-      </Text>
+    <ScrollView style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}>
+      <Text style={[styles.header, { color: isDark ? '#fff' : '#000' }]}>Hello, <Text style={styles.username}>{userName}</Text></Text>
 
       <Section title="Account" />
       <Item label="Edit Profile" />
       <Item label="Change Password" />
 
       <Section title="Preferences" />
-      <View style={styles.item}>
-        <Text style={styles.itemText}>Dark Mode</Text>
-        <Switch value={darkMode} onValueChange={() => setDarkMode(!darkMode)} />
+      <View style={[styles.item, { backgroundColor: isDark ? '#1a1a1a' : '#f0f0f0' }]}>
+        <Text style={[styles.itemText, { color: isDark ? '#fff' : '#000' }]}>Dark Mode</Text>
+        <Switch value={isDark} onValueChange={toggleTheme} />
       </View>
-      <View style={styles.item}>
-        <Text style={styles.itemText}>Notifications</Text>
+      <View style={[styles.item, { backgroundColor: isDark ? '#1a1a1a' : '#f0f0f0' }]}>
+        <Text style={[styles.itemText, { color: isDark ? '#fff' : '#000' }]}>Notifications</Text>
         <Switch
           value={notificationsEnabled}
           onValueChange={() => setNotificationsEnabled(!notificationsEnabled)}
@@ -86,26 +85,21 @@ export default function ProfileScreen() {
   );
 }
 
-const PURPLE = '#a800b7';
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
     padding: 16,
   },
   header: {
     fontSize: 24,
-    color: '#fff',
     marginBottom: 20,
     fontWeight: 'bold',
   },
   username: {
-    color: PURPLE,
+    color: '#a800b7',
   },
   sectionTitle: {
     fontSize: 18,
-    color: PURPLE,
     fontWeight: '600',
     marginTop: 24,
     marginBottom: 12,
@@ -113,13 +107,11 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#1a1a1a',
     padding: 14,
     borderRadius: 10,
     marginBottom: 10,
   },
   itemText: {
-    color: '#fff',
     fontSize: 15,
   },
   logoutButton: {
