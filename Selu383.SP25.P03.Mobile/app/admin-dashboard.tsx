@@ -24,7 +24,7 @@ export default function AdminDashboard() {
   const handleLogout = async () => {
     await AsyncStorage.removeItem('user');
     await AsyncStorage.removeItem('userRole');
-    router.replace('/'); // Takes them back to the login tab
+    router.replace('/'); 
   };
 
   const handleComingSoon = (feature: string) => {
