@@ -12,7 +12,7 @@ namespace Selu383.SP25.P03.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;  
+        private readonly SignInManager<User> signInManager;
         private readonly RoleManager<Role> roleManager;
         private readonly DataContext dataContext;
         private DbSet<Role> roles;
@@ -20,12 +20,12 @@ namespace Selu383.SP25.P03.Api.Controllers
         public UsersController(
             RoleManager<Role> roleManager,
             UserManager<User> userManager,
-            SignInManager<User> signInManager, 
+            SignInManager<User> signInManager,
             DataContext dataContext)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
-            this.signInManager = signInManager;  
+            this.signInManager = signInManager;
             this.dataContext = dataContext;
             roles = dataContext.Set<Role>();
         }
@@ -98,7 +98,9 @@ namespace Selu383.SP25.P03.Api.Controllers
                 return BadRequest(result.Errors);
             }
 
-            await signInManager.SignOutAsync(); 
+            await signInManager.SignOutAsync();  
+
+           
 
             return Ok(new { message = "Password changed successfully" });
         }
