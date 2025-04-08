@@ -78,6 +78,30 @@ namespace Selu383.SP25.P03.Api.Controllers
                 Roles = (await userManager.GetRolesAsync(user)).ToArray()
             };
         }
+
+        [HttpPost("change-password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var result = await userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok(new { message = "Password changed successfully" });
+        }
+    }
+
+    public class ChangePasswordDto
+    {
+        public string CurrentPassword { get; set; }
+        public string NewPassword { get; set; }
     }
 }
-
