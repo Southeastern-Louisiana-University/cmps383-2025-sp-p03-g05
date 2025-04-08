@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Link, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import "./Home.css";
 import MovieCarousel from "./MovieCarousel";
 import NavBar from "./NavBar";
