@@ -9,13 +9,13 @@ namespace Selu383.SP25.P03.Api.Controllers
     [ApiController]
     public class SeatController : ControllerBase
     {
-        private readonly DbSet<Seat> seats;
+        private readonly DbSet<Seats> seats;
         private readonly DataContext dataContext;
 
         public SeatController(DataContext dataContext)
         {
             this.dataContext = dataContext;
-            seats = dataContext.Set<Seat>();
+            seats = dataContext.Set<Seats>();
         }
 
         [HttpGet("{theaterId}")]
