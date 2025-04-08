@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import {Movie} from "./types"
-import "./MovieCarousel.css"
+import { Movie } from "./types";
+import "./MovieCarousel.css";
 
 // const movies = [
 //   { title: "Monster House", image: "https://th.bing.com/th/id/OIP.1umjRUVLTbPQCPVU_q1HPgHaK-?rs=1&pid=ImgDetMain" },
@@ -31,7 +31,9 @@ const MovieCarousel = () => {
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + movies.length) % movies.length);
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + movies.length) % movies.length
+    );
   };
 
   useEffect(() => {
@@ -42,8 +44,15 @@ const MovieCarousel = () => {
   }, []);
 
   return (
-    <Box sx={{ position: "relative", width: "100vw", height: "70vh", margin: "auto", overflow: "hidden" }}>
-      
+    <Box
+      sx={{
+        position: "relative",
+        width: "100vw",
+        height: "70vh",
+        margin: "auto",
+        overflow: "hidden",
+      }}
+    >
       {/* Movie Poster Display */}
       {movies.map((movie, index) => (
         <Box
@@ -59,8 +68,8 @@ const MovieCarousel = () => {
             position: "absolute",
             transition: "opacity 0.5s ease-in-out",
             "&:hover": {
-              "& .titleOverlay": { opacity: 1 }
-            }
+              "& .titleOverlay": { opacity: 1 },
+            },
           }}
         >
           {/* Movie Title Overlay */}
@@ -77,12 +86,13 @@ const MovieCarousel = () => {
               textAlign: "center",
               padding: "10px",
               opacity: 0,
-              transition: "opacity 0.3s ease-in-out"
+              transition: "opacity 0.3s ease-in-out",
             }}
           >
             <div className="flex justify-center items-center min-h-screen">
               <div className="text-center bg-white p-6 rounded-2xl shadow-lg max-w-md">
-                <h2 className="text-lg font-bold mb-2">{movie.title}</h2> {/* Adjusted size */}
+                <h2 className="text-lg font-bold mb-2">{movie.title}</h2>{" "}
+                {/* Adjusted size */}
                 <div className="text-base text-gray-700 mb-1">
                   {movie.genre} &bull; {movie.agerating}
                 </div>
@@ -93,29 +103,37 @@ const MovieCarousel = () => {
       ))}
 
       {/* Navigation Buttons */}
-      <IconButton 
+      <IconButton
         onClick={prevSlide}
         sx={{
-          position: "absolute", top: "50%", left: 10, transform: "translateY(-50%)",
-          backgroundColor: "rgba(0,0,0,0.5)", color: "#fff", "&:hover": { backgroundColor: "rgba(0,0,0,0.7)" }
+          position: "absolute",
+          top: "50%",
+          left: 10,
+          transform: "translateY(-50%)",
+          backgroundColor: "rgba(0,0,0,0.5)",
+          color: "#fff",
+          "&:hover": { backgroundColor: "rgba(0,0,0,0.7)" },
         }}
       >
         <ArrowBackIos />
       </IconButton>
 
-      <IconButton 
+      <IconButton
         onClick={nextSlide}
         sx={{
-          position: "absolute", top: "50%", right: 10, transform: "translateY(-50%)",
-          backgroundColor: "rgba(0,0,0,0.5)", color: "#fff", "&:hover": { backgroundColor: "rgba(0,0,0,0.7)" }
+          position: "absolute",
+          top: "50%",
+          right: 10,
+          transform: "translateY(-50%)",
+          backgroundColor: "rgba(0,0,0,0.5)",
+          color: "#fff",
+          "&:hover": { backgroundColor: "rgba(0,0,0,0.7)" },
         }}
       >
         <ArrowForwardIos />
       </IconButton>
-
     </Box>
   );
 };
 
 export default MovieCarousel;
-

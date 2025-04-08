@@ -27,8 +27,7 @@ namespace Selu383.SP25.P03.Api.Controllers
                 .Select(Showtime => new ShowtimesGetDto
                 {
                     Id = Showtime.Id,
-                    Time = Showtime.Time,
-                    ShowDate = Showtime.ShowDate,
+                    StartTime = Showtime.StartTime,
                     MovieId = Showtime.MovieId,
                     TheaterId = Showtime.TheaterId,
                     Format = Showtime.Format,
@@ -47,8 +46,7 @@ namespace Selu383.SP25.P03.Api.Controllers
                 .Select(Showtime => new ShowtimesGetDto
                 {
                     Id = Showtime.Id,
-                    Time = Showtime.Time,
-                    ShowDate = Showtime.ShowDate,
+                    StartTime = Showtime.StartTime,
                     MovieId = Showtime.MovieId,
                     TheaterId = Showtime.TheaterId,
                     Format = Showtime.Format,
@@ -73,8 +71,7 @@ namespace Selu383.SP25.P03.Api.Controllers
             //accept a screen and a schedule 
             //schedule describes when and what will be shown on the specific screen
 
-            showtimeToUpdate.Time = updateDto.Time;
-            showtimeToUpdate.ShowDate = updateDto.ShowDate;
+            showtimeToUpdate.StartTime = updateDto.StartTime;
             showtimeToUpdate.Format = updateDto.Format;
             showtimeToUpdate.Available = updateDto.Available;
 
@@ -82,8 +79,7 @@ namespace Selu383.SP25.P03.Api.Controllers
 
             var showtimeReturn = new ShowtimesGetDto
             {
-                Time = showtimeToUpdate.Time,
-                ShowDate = showtimeToUpdate.ShowDate,
+                StartTime = showtimeToUpdate.StartTime,
                 Format = showtimeToUpdate.Format,
                 Available = showtimeToUpdate.Available
 
