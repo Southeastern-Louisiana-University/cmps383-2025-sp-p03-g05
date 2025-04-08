@@ -34,7 +34,7 @@ function MoviesList() {
       >
         {movies.map((movie) => (
           <Grid2 size={3}>
-            <Link href={`/movies/${movie.id}`}>
+            <Link href={`/movies/${movie.id}`} underline="none">
               <Card
                 key={movie.id}
                 sx={{
