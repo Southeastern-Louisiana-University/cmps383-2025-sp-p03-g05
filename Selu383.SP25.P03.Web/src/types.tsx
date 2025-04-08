@@ -5,6 +5,7 @@ type Movie = {
     year: number;
     agerating: string;
     poster: string;
+    description: string;
   };
 
 

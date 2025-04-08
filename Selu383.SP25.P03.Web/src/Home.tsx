@@ -13,6 +13,7 @@ function Home() {
     {NavBar()}
       <div className="background">
         <div className="middleBanner">
+          <div></div>
           {/* <hr style={{ width: "100%", border: "2px solid black", margin: "20px 0" }} /> */}
           {/* <Typography
             variant="h3"
