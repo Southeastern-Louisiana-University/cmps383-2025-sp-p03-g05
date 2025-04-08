@@ -29,7 +29,7 @@ function MovieDetails() {
             <Typography variant="h2">{movie.title}</Typography>
             <Typography variant="body1">{movie.description}</Typography>
             {/*Button Or "See Showtimes" */}
-            <Button variant="contained">Get Tickets</Button>
+            <Button variant="contained" href="/seats">Get Tickets</Button>
           </Box>
         </Stack>
       </>
