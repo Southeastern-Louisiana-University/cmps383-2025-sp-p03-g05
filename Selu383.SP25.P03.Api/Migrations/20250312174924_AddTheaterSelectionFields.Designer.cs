@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Selu383.SP25.P03.Api.Data;
 
@@ -11,9 +12,11 @@ using Selu383.SP25.P03.Api.Data;
 namespace Selu383.SP25.P03.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250312174924_AddTheaterSelectionFields")]
+    partial class AddTheaterSelectionFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,103 +113,6 @@ namespace Selu383.SP25.P03.Api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Seats", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Col")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsTaken")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Row")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TheaterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TheaterId");
-
-                    b.ToTable("Seats");
-                });
-
-            modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Food.Food", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Foods");
-                });
-
-            modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Showtimes.Showtime", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Available")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Format")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly>("ShowDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("TheaterId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeOnly>("Time")
-                        .HasColumnType("time");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TheaterId");
-
-                    b.ToTable("Showtimes");
-                });
-
             modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Theaters.Theater", b =>
                 {
                     b.Property<int>("Id")
@@ -235,37 +141,6 @@ namespace Selu383.SP25.P03.Api.Migrations
                     b.HasIndex("ManagerId");
 
                     b.ToTable("Theaters");
-                });
-
-            modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Tickets.Ticket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("AmountPaid")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PurchaseDate")
-                        .HasColumnType("datetime2");
-
-                    b.PrimitiveCollection<string>("SeatIds")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TicketNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Users.Role", b =>
@@ -417,26 +292,6 @@ namespace Selu383.SP25.P03.Api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Seats", b =>
-                {
-                    b.HasOne("Selu383.SP25.P03.Api.Features.Theaters.Theater", "Theater")
-                        .WithMany()
-                        .HasForeignKey("TheaterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Theater");
-                });
-
-            modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Showtimes.Showtime", b =>
-                {
-                    b.HasOne("Selu383.SP25.P03.Api.Features.Theaters.Theater", null)
-                        .WithMany("Showtimes")
-                        .HasForeignKey("TheaterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Theaters.Theater", b =>
                 {
                     b.HasOne("Selu383.SP25.P03.Api.Features.Users.User", "Manager")
@@ -463,11 +318,6 @@ namespace Selu383.SP25.P03.Api.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Theaters.Theater", b =>
-                {
-                    b.Navigation("Showtimes");
                 });
 
             modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Users.Role", b =>
