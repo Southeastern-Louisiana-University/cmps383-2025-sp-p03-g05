@@ -12,7 +12,7 @@ const movies = [
 
 const MovieCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const Movie = 
+  //const Movie = 
   const [movies, setMovies] = useState<Movie[]>([]);
 
   const nextSlide = () => {
