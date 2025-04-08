@@ -7,6 +7,7 @@ using Selu383.SP25.P03.Api.Features.Seats;
 using Selu383.SP25.P03.Api.Features.Tickets;
 using Selu383.SP25.P03.Api.Features.Showtimes;
 
+using Selu383.SP25.P03.Api.Features.Movies;
 
 namespace Selu383.SP25.P03.Api.Data
 {
@@ -23,6 +24,7 @@ namespace Selu383.SP25.P03.Api.Data
         public DbSet<Showtime> Showtimes { get; set; }
 
 
+        public DbSet<Movie> Movies { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -1,0 +1,12 @@
+.MovieCardBackground{
+    background-color: #1a1a1a;
+    width: 50vw;
+    height: 30vh;
+}
+
+.showTimeButton{
+    background-color: #a800b7;
+    width: 100px;
+    height: 100px;
+    color: whitesmoke;
+}
