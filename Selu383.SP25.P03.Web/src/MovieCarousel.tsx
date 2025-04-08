@@ -1,21 +1,31 @@
 import { useEffect, useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import Movie from "./types"
+import {Movie} from "./types"
+import "./MovieCarousel.css"
 
-const movies = [
-  { title: "Monster House", image: "https://th.bing.com/th/id/OIP.1umjRUVLTbPQCPVU_q1HPgHaK-?rs=1&pid=ImgDetMain" },
-  { title: "Jaws", image: "https://th.bing.com/th/id/OIP.8QS0RrtS6QJ5lDIU4Iy1GgHaLI?rs=1&pid=ImgDetMain" },
-  { title: "Interstellar", image: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" },
-  { title: "Avatar", image: "https://image.tmdb.org/t/p/w500/kyeqWdyUXW608qlYkRqosgbbJyK.jpg" },
-  { title: "Titanic", image: "https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg" }
-];
+// const movies = [
+//   { title: "Monster House", image: "https://th.bing.com/th/id/OIP.1umjRUVLTbPQCPVU_q1HPgHaK-?rs=1&pid=ImgDetMain" },
+//   { title: "Jaws", image: "https://th.bing.com/th/id/OIP.8QS0RrtS6QJ5lDIU4Iy1GgHaLI?rs=1&pid=ImgDetMain" },
+//   { title: "Interstellar", image: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" },
+//   { title: "Avatar", image: "https://image.tmdb.org/t/p/w500/kyeqWdyUXW608qlYkRqosgbbJyK.jpg" },
+//   { title: "Titanic", image: "https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg" }
+// ];
 
 const MovieCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const Movie = 
   const [movies, setMovies] = useState<Movie[]>([]);
 
+  // Automatically advance slide every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % movies.length);
+    }, 5000); // Change slides every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup when component unmounts
+  }, [movies.length]);
+
+  // Manual navigation should reset the timer
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % movies.length);
   };
@@ -32,21 +42,20 @@ const MovieCarousel = () => {
   }, []);
 
   return (
-    <Box sx={{ position: "relative", width: "300px", height: "450px", margin: "auto", overflow: "hidden" }}>
+    <Box sx={{ position: "relative", width: "100vw", height: "70vh", margin: "auto", overflow: "hidden" }}>
       
       {/* Movie Poster Display */}
       {movies.map((movie, index) => (
-        <div>
-
         <Box
           key={index}
           sx={{
             display: index === currentIndex ? "block" : "none",
             width: "100%",
             height: "100%",
-            backgroundImage: `url(${movie.image})`,
-            backgroundSize: "cover",
+            backgroundImage: `url(${movie.poster})`,
+            backgroundSize: "contain",
             backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
             position: "absolute",
             transition: "opacity 0.5s ease-in-out",
             "&:hover": {
@@ -71,13 +80,19 @@ const MovieCarousel = () => {
               transition: "opacity 0.3s ease-in-out"
             }}
           >
-            {movie.title}
+            <div className="flex justify-center items-center min-h-screen">
+              <div className="text-center bg-white p-6 rounded-2xl shadow-lg max-w-md">
+                <h2 className="text-lg font-bold mb-2">{movie.title}</h2> {/* Adjusted size */}
+                <div className="text-base text-gray-700 mb-1">
+                  {movie.genre} &bull; {movie.agerating}
+                </div>
+              </div>
+            </div>
           </Typography>
         </Box>
-        </div>
       ))}
 
-      {/* Left Button */}
+      {/* Navigation Buttons */}
       <IconButton 
         onClick={prevSlide}
         sx={{
@@ -88,7 +103,6 @@ const MovieCarousel = () => {
         <ArrowBackIos />
       </IconButton>
 
-      {/* Right Button */}
       <IconButton 
         onClick={nextSlide}
         sx={{
@@ -98,6 +112,7 @@ const MovieCarousel = () => {
       >
         <ArrowForwardIos />
       </IconButton>
+
     </Box>
   );
 };

@@ -21,7 +21,7 @@ function App() {
         <Route path="/location" element={<LocationPopup/>} />
         <Route path="/theaters" element={<TheaterList/>}/>
         <Route path= "/theaters/:id" element={<TheaterDetails/>}/>
-        <Route path="/movies" element={MoviesList()}/>
+        {/* <Route path="/movies" element={MoviesList()}/> */}
       </Routes>
     </Router>
   );
