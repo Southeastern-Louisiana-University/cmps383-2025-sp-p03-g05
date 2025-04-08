@@ -94,7 +94,7 @@ const MovieCarousel = () => {
                 <h2 className="text-lg font-bold mb-2">{movie.title}</h2>{" "}
                 {/* Adjusted size */}
                 <div className="text-base text-gray-700 mb-1">
-                  {movie.genre} &bull; {movie.agerating}
+                  {movie.genre} &bull; {movie.ageRating}
                 </div>
               </div>
             </div>
