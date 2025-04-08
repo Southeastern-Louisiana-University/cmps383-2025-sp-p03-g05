@@ -1,45 +1,31 @@
-//import React from "react";
 import {
-  AppBar,
-  Toolbar,
   Box,
-  Button,
-  Link,
   Container,
   Typography,
   Stack,
 } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom"; // Use React Router's Link
 import { useState } from "react";
 
-const menuItems = (
-  <>
-    <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
-      See a Movie
-    </Typography>
-
-    <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
-      Find a Theatre
-    </Typography>
-
-    <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
-      Food & Drinks
-    </Typography>
-    <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
-      Sign In
-    </Typography>
-  </>
-);
-
 const NavBar = () => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const menuItems = (
+    <>
+      <Typography component={RouterLink} to="/" fontWeight={600} color="#a800b7">
+        See a Movie
+      </Typography>
+      <Typography component={RouterLink} to="/" fontWeight={600} color="#a800b7">
+        Find a Theatre
+      </Typography>
+      <Typography component={RouterLink} to="/" fontWeight={600} color="#a800b7">
+        Food & Drinks
+      </Typography>
+      <Typography component={RouterLink} to="/login" fontWeight={600} color="#a800b7">
+        Sign In
+      </Typography>
+    </>
+  );
 
   return (
     <Stack>
@@ -56,17 +42,31 @@ const NavBar = () => {
             direction="row"
             justifyContent="space-between"
             alignItems="center"
-            sx={{
-              padding: "8px 0",
-            }}
+            sx={{ padding: "8px 0" }}
           >
-            {/* logo*/}
-            <Box component={Link} href="/" color="#a800b7">
+            {/* Logo + Brand name */}
+            <Box
+              component={RouterLink}
+              to="/"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                color: "#a800b7",
+                textDecoration: "none",
+              }}
+            >
+              <img
+                src="/LDC.png"
+                alt="Lions Den Logo"
+                style={{ height: 40 }}
+              />
               <Typography fontWeight={600} variant="h5">
                 Lions Den Cinemas
               </Typography>
             </Box>
 
+            {/* Menu Items */}
             <Stack
               direction="row"
               gap={4}
@@ -87,11 +87,11 @@ const NavBar = () => {
             >
               {menuItems}
             </Stack>
-            
           </Stack>
         </Container>
       </Box>
     </Stack>
   );
 };
+
 export default NavBar;
