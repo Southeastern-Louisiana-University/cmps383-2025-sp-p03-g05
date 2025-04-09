@@ -1,128 +1,217 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  ScrollView,
+} from 'react-native';
 
-const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+type FoodItem = {
+  id: number;
+  name: string;
+  price: number;
+  category: 'food' | 'drink';
+  quantity: number;
+};
 
-  const handleLogin = () => {
-    if (!email || !password) {
-      setError('Please enter both email and password');
-      return;
+const FoodAndDrinksScreen: React.FC = () => {
+  const [items, setItems] = useState<FoodItem[]>([]);
+
+  useEffect(() => {
+    fetchFoodItems();
+  }, []);
+
+  const fetchFoodItems = () => {
+    const mockData: FoodItem[] = [
+      { id: 1, name: 'Popcorn', price: 4.99, category: 'food', quantity: 0 },
+      { id: 2, name: 'Nachos', price: 5.75, category: 'food', quantity: 0 },
+      { id: 3, name: 'Hot Dog', price: 3.99, category: 'food', quantity: 0 },
+      { id: 4, name: 'Ice Cream', price: 2.99, category: 'food', quantity: 0 },
+      { id: 5, name: 'Coke', price: 2.5, category: 'drink', quantity: 0 },
+      { id: 6, name: 'Water Bottle', price: 1.25, category: 'drink', quantity: 0 },
+      { id: 7, name: 'Sprite', price: 2.5, category: 'drink', quantity: 0 },
+    ];
+
+    setItems(mockData);
+  };
+
+  const incrementQuantity = (id: number) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const decrementQuantity = (id: number) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id && item.quantity > 0
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
+
+  const handleReadyForPayment = () => {
+    const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+    if (totalItems === 0) {
+      Alert.alert('Cart is empty', 'Please select at least one item.');
+    } else {
+      Alert.alert('Ready for Payment', 'Proceeding to payment...');
     }
-    setError('');
-    console.log('Login attempt with:', email, password);
-    // TODO: Handle real login logic here
   };
 
-  const handleCreateAccount = () => {
-    console.log('Navigating to Create Account screen');
-    // TODO: Implement navigation to the Create Account screen
+  const renderCategory = (category: 'food' | 'drink') => {
+    const categoryItems = items.filter((item) => item.category === category);
+
+    return (
+      <View>
+        <Text style={styles.categoryHeader}>
+          {category === 'food' ? '🍔 Food' : '🥤 Drinks'}
+        </Text>
+        {categoryItems.map((item) => (
+          <View key={item.id} style={styles.itemRow}>
+            <View style={styles.itemDetails}>
+              <Text style={styles.itemName}>{item.name}</Text>
+              <Text style={styles.itemPrice}>${item.price.toFixed(2)}</Text>
+            </View>
+            <View style={styles.quantityControls}>
+              <TouchableOpacity
+                style={styles.qBtn}
+                onPress={() => decrementQuantity(item.id)}
+              >
+                <Text style={styles.qBtnText}>-</Text>
+              </TouchableOpacity>
+              <Text style={styles.quantityText}>{item.quantity}</Text>
+              <TouchableOpacity
+                style={styles.qBtn}
+                onPress={() => incrementQuantity(item.id)}
+              >
+                <Text style={styles.qBtnText}>+</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ))}
+      </View>
+    );
   };
+
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = items.reduce(
+    (sum, item) => sum + item.quantity * item.price,
+    0
+  );
 
   return (
-    <KeyboardAvoidingView 
-      style={styles.container} 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <Text style={styles.title}>Welcome Back</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder='Email'
-        keyboardType='email-address'
-        value={email}
-        onChangeText={setEmail}
-        placeholderTextColor="#aaa"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder='Password'
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-        placeholderTextColor="#aaa"
-      />
-
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-
-      <Pressable style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Sign In</Text>
-      </Pressable>
-
+    <View style={styles.container}>
+      <Text style={styles.header}>Food & Drinks Menu</Text>
+      <ScrollView>
+        {renderCategory('food')}
+        {renderCategory('drink')}
+      </ScrollView>
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Don't have an account?</Text>
-        <Pressable onPress={handleCreateAccount}>
-          <Text style={styles.link}>Create an Account</Text>
-        </Pressable>
+        <Text style={styles.totalText}>Total Items: {totalItems}</Text>
+        <Text style={styles.totalText}>Total: ${totalPrice.toFixed(2)}</Text>
+
+        <TouchableOpacity
+          style={styles.paymentButton}
+          onPress={handleReadyForPayment}
+        >
+          <Text style={styles.paymentButtonText}>Ready for Payment</Text>
+        </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
+
+export default FoodAndDrinksScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7f7f7',
-    justifyContent: 'center',
-    paddingHorizontal: 30,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#a800b7',
-    textAlign: 'center',
-    marginBottom: 40,
-    letterSpacing: 1,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 12,
-    padding: 15,
-    fontSize: 16,
-    marginBottom: 20,
+    padding: 20,
     backgroundColor: '#fff',
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 2,
   },
-  error: {
-    color: 'red',
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
     textAlign: 'center',
-    marginBottom: 10,
-    fontSize: 14,
   },
-  button: {
-    backgroundColor: '#a800b7',
-    padding: 14,
-    borderRadius: 10,
-    alignItems: 'center',
+  categoryHeader: {
+    fontSize: 20,
+    fontWeight: '600',
     marginTop: 20,
-    elevation: 5,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   },
-  buttonText: {
+  itemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    borderBottomColor: '#eee',
+    borderBottomWidth: 1,
+  },
+  itemDetails: {
+    flex: 1,
+  },
+  itemName: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  itemPrice: {
+    color: '#555',
+    marginTop: 2,
+  },
+  quantityControls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  qBtn: {
+    backgroundColor: '#007bff',
+    padding: 6,
+    borderRadius: 5,
+    width: 30,
+    alignItems: 'center',
+  },
+  qBtnText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: 'bold',
+  },
+  quantityText: {
+    marginHorizontal: 12,
+    fontSize: 16,
+    fontWeight: '500',
   },
   footer: {
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
     marginTop: 20,
     alignItems: 'center',
   },
-  footerText: {
+  totalText: {
     fontSize: 16,
-    color: '#555',
-  },
-  link: {
-    fontSize: 16,
-    color: '#a800b7',
     fontWeight: '600',
-    marginTop: 5,
+    marginVertical: 4,
+  },
+  paymentButton: {
+    marginTop: 15,
+    backgroundColor: '#28a745',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  paymentButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
-
-export default LoginScreen;
