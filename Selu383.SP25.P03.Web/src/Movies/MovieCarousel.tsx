@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import { Movie } from "./types";
+import { Movie } from "../types";
 import "./MovieCarousel.css";
 
 // const movies = [

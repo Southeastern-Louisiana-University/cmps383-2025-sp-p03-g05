@@ -7,8 +7,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import NavBar from "./NavBar";
-import { Movie } from "./types.tsx";
+import NavBar from "../NavBar.tsx";
+import { Movie } from "../types.tsx";
 
 function MoviesList() {
   const [movies, setMovies] = useState<Movie[]>([]);

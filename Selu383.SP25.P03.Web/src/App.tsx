@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from "./LoginPage";
+import LoginPage from "./Login/LoginPage";
 import RegisterPage from "./RegisterPage";
 import "./App.css"; 
 import SeatSelector from "./SeatSelector";
 import "./SeatSelector.css"
-import HomePage from "./Home"
-import LocationPopup from "./LocationPopup";
-import TheaterList from "./TheatersList";
-import TheaterDetails from "./TheaterPage";
+import HomePage from "./Home/Home"
+import LocationPopup from "./Location/LocationPopup";
+import TheaterList from "./Location/TheatersList";
+import TheaterDetails from "./Location/TheaterPage";
 import MoviesList from "./MovieSelections";
-import MovieDetails from "./MoviePage";
+import MovieDetails from "./Movies/MoviePage";
 
 function App() {
   return (
