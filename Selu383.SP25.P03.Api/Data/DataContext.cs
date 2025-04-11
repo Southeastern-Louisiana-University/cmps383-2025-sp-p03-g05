@@ -6,6 +6,7 @@ using Selu383.SP25.P03.Api.Features.Theaters;
 using Selu383.SP25.P03.Api.Features.Seats;
 using Selu383.SP25.P03.Api.Features.Tickets;
 using Selu383.SP25.P03.Api.Features.Showtimes;
+using Selu383.SP25.P03.Api.Features.Food;
 
 using Selu383.SP25.P03.Api.Features.Movies;
 
@@ -18,17 +19,18 @@ namespace Selu383.SP25.P03.Api.Data
         }
 
         public DbSet<Theater> Theaters { get; set; }
-
-        public DbSet<Seat> Seats { get; set; }
+        public DbSet<Seats> Seats { get; set; }           
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Showtime> Showtimes { get; set; }
-
+        public DbSet<Food> Foods { get; set; }          
 
         public DbSet<Movie> Movies { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
+
+     
             builder.Entity<UserRole>().HasKey(x => new { x.UserId, x.RoleId });
 
             builder.Entity<User>()
@@ -45,6 +47,18 @@ namespace Selu383.SP25.P03.Api.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
+           
+            builder.Entity<Seats>()
+                .Property(s => s.Row)
+                .IsRequired();
+
+            builder.Entity<Seats>()
+                .Property(s => s.Number)
+                .IsRequired();
+
+            builder.Entity<Food>()
+                .Property(f => f.Price)
+                .HasColumnType("decimal(10,2)");
         }
     }
 }

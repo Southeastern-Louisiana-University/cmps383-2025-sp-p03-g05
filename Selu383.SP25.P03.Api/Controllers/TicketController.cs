@@ -11,14 +11,14 @@ namespace Selu383.SP25.P03.Api.Controllers
     public class TicketController : ControllerBase
     {
         private readonly DbSet<Ticket> tickets;
-        private readonly DbSet<Seat> seats;
+        private readonly DbSet<Seats> seats;
         private readonly DataContext dataContext;
 
         public TicketController(DataContext dataContext)
         {
             this.dataContext = dataContext;
             tickets = dataContext.Set<Ticket>();
-            seats = dataContext.Set<Seat>();
+            seats = dataContext.Set<Seats>();
         }
 
         [HttpPost("purchase")]
