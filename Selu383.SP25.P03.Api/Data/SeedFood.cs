@@ -4,15 +4,16 @@ using Selu383.SP25.P03.Api.Features.Food;
 
 namespace Selu383.SP25.P03.Api.Data
 {
-    public static class FoodSeeder
+    public static class SeedFood
     {
-        public static void SeedFood(DataContext context)
-
+        public static void Initalize(IServiceProvider serviceProvider)
         {
-            if (context.Foods.Any())
+            using (var context = new DataContext(serviceProvider.GetRequiredService<DbContextOptions<DataContext>>()))
             {
-                return;
-            }
+                if (context.Foods.Any())
+                {
+                    return;
+                }
 
                 var foods = new List<Food>
                 {
@@ -39,7 +40,9 @@ namespace Selu383.SP25.P03.Api.Data
 
                 context.Foods.AddRange(foods);
                 context.SaveChanges();
+
             }
         }
     }
+}
 
