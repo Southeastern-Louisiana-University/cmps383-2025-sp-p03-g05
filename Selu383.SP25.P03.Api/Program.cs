@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Selu383.SP25.P03.Api.Data;
 using Selu383.SP25.P03.Api.Features.Users;
+using Stripe;
 
 namespace Selu383.SP25.P03.Api
 {
@@ -67,6 +68,9 @@ namespace Selu383.SP25.P03.Api
 
 
             var app = builder.Build();
+
+            var stripeSecretKey = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
+            StripeConfiguration.ApiKey = stripeSecretKey;
 
             using (var scope = app.Services.CreateScope())
             {
