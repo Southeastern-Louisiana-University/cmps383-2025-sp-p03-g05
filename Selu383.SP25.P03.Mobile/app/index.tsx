@@ -1,120 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, Dimensions, Image } from 'react-native';
 
-
+// Seed food data (with images included)
 const foodData = [
-  {
-    id: 1,
-    name: "Popcorn",
-    description: "Classic buttery popcorn",
-    price: 5.99,
-    category: "Snacks",
-    quantity: 0,
-  },
-  {
-    id: 2,
-    name: "Nachos",
-    description: "Cheesy nachos with jalapeños",
-    price: 6.99,
-    category: "Snacks",
-    quantity: 0,
-  },
-  {
-    id: 3,
-    name: "Hotdog",
-    description: "Grilled hotdog with mustard",
-    price: 4.99,
-    category: "Snacks",
-    quantity: 0,
-  },
-  {
-    id: 4,
-    name: "Soft Pretzel",
-    description: "Warm salted soft pretzel",
-    price: 3.99,
-    category: "Snacks",
-    quantity: 0,
-  },
-  {
-    id: 5,
-    name: "Cheese Sticks",
-    description: "Crispy fried mozzarella sticks",
-    price: 5.49,
-    category: "Snacks",
-    quantity: 0,
-  },
-  {
-    id: 6,
-    name: "Chicken Tenders",
-    description: "Golden fried chicken tenders",
-    price: 7.49,
-    category: "Snacks",
-    quantity: 0,
-  },
-  {
-    id: 7,
-    name: "M&M's",
-    description: "Milk chocolate candy",
-    price: 2.99,
-    category: "Candy",
-    quantity: 0,
-  },
-  {
-    id: 8,
-    name: "Skittles",
-    description: "Fruit-flavored candy",
-    price: 2.99,
-    category: "Candy",
-    quantity: 0,
-  },
-  {
-    id: 9,
-    name: "Twizzlers",
-    description: "Strawberry flavored licorice",
-    price: 2.99,
-    category: "Candy",
-    quantity: 0,
-  },
-  {
-    id: 10,
-    name: "Reese’s Pieces",
-    description: "Peanut butter candy",
-    price: 3.49,
-    category: "Candy",
-    quantity: 0,
-  },
-  {
-    id: 11,
-    name: "Coke",
-    description: "Chilled Coca-Cola",
-    price: 3.49,
-    category: "Drinks",
-    quantity: 0,
-  },
-  {
-    id: 12,
-    name: "Sprite",
-    description: "Refreshing lemon-lime soda",
-    price: 3.49,
-    category: "Drinks",
-    quantity: 0,
-  },
-  {
-    id: 13,
-    name: "Water",
-    description: "Bottled spring water",
-    price: 2.49,
-    category: "Drinks",
-    quantity: 0,
-  },
-  {
-    id: 14,
-    name: "Iced Tea",
-    description: "Cold sweetened iced tea",
-    price: 3.49,
-    category: "Drinks",
-    quantity: 0,
-  }
+  { id: 1, name: "Popcorn", description: "Classic buttery popcorn", price: 5.99, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2016/12/31/22/47/popcorn-1085072_960_720.jpg", quantity: 0 },
+  { id: 2, name: "Nachos", description: "Cheesy nachos with jalapeños", price: 6.99, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2016/10/23/10/17/chili-1761046_960_720.jpg", quantity: 0 },
+  { id: 3, name: "Hotdog", description: "Grilled hotdog with mustard", price: 4.99, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2015/08/21/11/04/hot-dog-897309_960_720.jpg", quantity: 0 },
+  { id: 4, name: "Soft Pretzel", description: "Warm salted soft pretzel", price: 3.99, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2017/09/05/15/01/pretzel-2715272_960_720.jpg", quantity: 0 },
+  { id: 5, name: "Cheese Sticks", description: "Crispy fried mozzarella sticks", price: 5.49, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2016/06/02/02/12/cheese-1439861_960_720.jpg", quantity: 0 },
+  { id: 6, name: "Chicken Tenders", description: "Golden fried chicken tenders", price: 7.49, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2018/02/01/18/54/chicken-3124179_960_720.jpg", quantity: 0 },
+  { id: 7, name: "M&M's", description: "Milk chocolate candy", price: 2.99, category: "Candy", imageUrl: "https://images.unsplash.com/photo-1615332587121-72d7a9c2a308", quantity: 0 },
+  { id: 8, name: "Skittles", description: "Fruit-flavored candy", price: 2.99, category: "Candy", imageUrl: "https://images.unsplash.com/photo-1601221328884-e7f2b863e2ce", quantity: 0 },
+  { id: 9, name: "Twizzlers", description: "Strawberry flavored licorice", price: 2.99, category: "Candy", imageUrl: "https://images.unsplash.com/photo-1626947343469-7e149924c7d2", quantity: 0 },
+  { id: 10, name: "Reese’s Pieces", description: "Peanut butter candy", price: 3.49, category: "Candy", imageUrl: "https://images.unsplash.com/photo-1625937320210-2bb4bc944af8", quantity: 0 },
+  { id: 11, name: "Coke", description: "Chilled Coca-Cola", price: 3.49, category: "Drinks", imageUrl: "https://www.depositphotos.com/11482235/stock-photo-soft-drinks.html", quantity: 0 },
+  { id: 12, name: "Sprite", description: "Refreshing lemon-lime soda", price: 3.49, category: "Drinks", imageUrl: "https://www.depositphotos.com/11582248/stock-photo-soft-drinks.html", quantity: 0 },
+  { id: 13, name: "Water", description: "Bottled spring water", price: 2.49, category: "Drinks", imageUrl: "https://cdn.pixabay.com/photo/2016/06/04/13/56/water-1437412_960_720.jpg", quantity: 0 },
+  { id: 14, name: "Iced Tea", description: "Cold sweetened iced tea", price: 3.49, category: "Drinks", imageUrl: "https://cdn.pixabay.com/photo/2016/06/10/19/55/iced-tea-1445934_960_720.jpg", quantity: 0 }
 ];
 
 interface FoodDrinkItem {
@@ -123,6 +25,7 @@ interface FoodDrinkItem {
   description: string;
   price: number;
   category: string;
+  imageUrl: string;
   quantity: number;
 }
 
@@ -136,9 +39,8 @@ interface CartItem {
 const FoodAndDrinkScreen: React.FC = () => {
   const [items, setItems] = useState<FoodDrinkItem[]>(foodData);
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [isPaymentModalVisible, setPaymentModalVisible] = useState(false);
-
-  const { width } = Dimensions.get('window');  // Get screen width
+  const [currentCategory, setCurrentCategory] = useState<string | null>(""); // Track current category
+  const { width } = Dimensions.get('window'); // Get screen width
 
   const addToCart = (item: FoodDrinkItem) => {
     const existingItem = cart.find((cartItem) => cartItem.id === item.id);
@@ -153,10 +55,6 @@ const FoodAndDrinkScreen: React.FC = () => {
     } else {
       setCart([...cart, { ...item, quantity: 1 }]);
     }
-  };
-
-  const removeFromCart = (itemId: number) => {
-    setCart(cart.filter((cartItem) => cartItem.id !== itemId));
   };
 
   const incrementQuantity = (itemId: number) => {
@@ -183,76 +81,77 @@ const FoodAndDrinkScreen: React.FC = () => {
   };
 
   // Separate items by category
-  const foodItems = items.filter(item => item.category === "Snacks" || item.category === "Candy");
-  const drinkItems = items.filter(item => item.category === "Drinks");
+  const filterItemsByCategory = (category: string) => {
+    return items.filter(item => item.category === category);
+  };
 
-  // Show or hide payment modal
-  const handlePayment = () => {
-    setPaymentModalVisible(true);
+  // Handle Category Click
+  const handleCategoryClick = (category: string) => {
+    setCurrentCategory(category);
+  };
+
+  // Handle Back to Menu
+  const handleBackToMenu = () => {
+    setCurrentCategory(""); // Return to the main menu
   };
 
   return (
     <View style={styles.container}>
-      {/* Snacks & Candy Section */}
-      <Text style={styles.sectionHeader}>Snacks & Candy</Text>
-      <FlatList
-        data={foodItems}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
-        renderItem={({ item }) => (
-          <View style={[styles.card, { width: width * 0.45 }]}>
-            <View style={styles.cardDetails}>
-              <Text style={styles.cardName}>{item.name}</Text>
-              <Text style={styles.cardDescription}>{item.description}</Text>
-              <Text style={styles.cardPrice}>${item.price.toFixed(2)}</Text>
-              <View style={styles.quantityControls}>
-                <TouchableOpacity onPress={() => decrementQuantity(item.id)} style={styles.quantityBtn}>
-                  <Text style={styles.quantityText}>-</Text>
-                </TouchableOpacity>
-                <Text style={styles.quantityText}>{item.quantity}</Text>
-                <TouchableOpacity onPress={() => incrementQuantity(item.id)} style={styles.quantityBtn}>
-                  <Text style={styles.quantityText}>+</Text>
-                </TouchableOpacity>
-              </View>
-              <TouchableOpacity style={styles.addToCartBtn} onPress={() => addToCart(item)}>
-                <Text style={styles.addToCartText}>Add to Cart</Text>
-              </TouchableOpacity>
-            </View>
+      {/* Main Menu (Category Selection) */}
+      {currentCategory === "" ? (
+        <>
+          <Text style={styles.sectionHeader}>Food and Drinks</Text>
+          <View style={styles.menu}>
+            <TouchableOpacity style={styles.categoryCard} onPress={() => handleCategoryClick("Snacks")}>
+              <Text style={styles.categoryText}>Snacks</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.categoryCard} onPress={() => handleCategoryClick("Candy")}>
+              <Text style={styles.categoryText}>Candy</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.categoryCard} onPress={() => handleCategoryClick("Drinks")}>
+              <Text style={styles.categoryText}>Drinks</Text>
+            </TouchableOpacity>
           </View>
-        )}
-        contentContainerStyle={styles.itemsList}
-      />
+        </>
+      ) : (
+        <>
+          {/* Category Section (Snacks, Candy, Drinks) */}
+          <TouchableOpacity style={styles.backBtn} onPress={handleBackToMenu}>
+            <Text style={styles.backText}>Back to Menu</Text>
+          </TouchableOpacity>
 
-      {/* Drinks Section */}
-      <Text style={styles.sectionHeader}>Drinks</Text>
-      <FlatList
-        data={drinkItems}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
-        renderItem={({ item }) => (
-          <View style={[styles.card, { width: width * 0.45 }]}>
-            <View style={styles.cardDetails}>
-              <Text style={styles.cardName}>{item.name}</Text>
-              <Text style={styles.cardDescription}>{item.description}</Text>
-              <Text style={styles.cardPrice}>${item.price.toFixed(2)}</Text>
-              <View style={styles.quantityControls}>
-                <TouchableOpacity onPress={() => decrementQuantity(item.id)} style={styles.quantityBtn}>
-                  <Text style={styles.quantityText}>-</Text>
-                </TouchableOpacity>
-                <Text style={styles.quantityText}>{item.quantity}</Text>
-                <TouchableOpacity onPress={() => incrementQuantity(item.id)} style={styles.quantityBtn}>
-                  <Text style={styles.quantityText}>+</Text>
-                </TouchableOpacity>
+          <Text style={styles.sectionHeader}>{currentCategory}</Text>
+          <FlatList
+            data={filterItemsByCategory(currentCategory)}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={[styles.card, { width: width * 0.45 }]}>
+                <Image source={{ uri: item.imageUrl }} style={styles.cardImage} />
+                <View style={styles.cardDetails}>
+                  <Text style={styles.cardName}>{item.name}</Text>
+                  <Text style={styles.cardDescription}>{item.description}</Text>
+                  <Text style={styles.cardPrice}>${item.price.toFixed(2)}</Text>
+                  <View style={styles.quantityControls}>
+                    <TouchableOpacity onPress={() => decrementQuantity(item.id)} style={styles.quantityBtn}>
+                      <Text style={styles.quantityText}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.quantityText}>{item.quantity}</Text>
+                    <TouchableOpacity onPress={() => incrementQuantity(item.id)} style={styles.quantityBtn}>
+                      <Text style={styles.quantityText}>+</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <TouchableOpacity style={styles.addToCartBtn} onPress={() => addToCart(item)}>
+                    <Text style={styles.addToCartText}>Add to Cart</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <TouchableOpacity style={styles.addToCartBtn} onPress={() => addToCart(item)}>
-                <Text style={styles.addToCartText}>Add to Cart</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-        contentContainerStyle={styles.itemsList}
-      />
+            )}
+            contentContainerStyle={styles.itemsList}
+          />
+        </>
+      )}
 
+      {/* Cart Section */}
       <View style={styles.cart}>
         {cart.length === 0 ? (
           <Text style={styles.cartWarning}>Your cart is empty. Please add items to the cart.</Text>
@@ -282,23 +181,13 @@ const FoodAndDrinkScreen: React.FC = () => {
           <Text>Total Price: ${calculateTotalPrice()}</Text>
         </View>
 
-        {/* Pay Here Button */}
+        {/* Continue to Purchase Button */}
         {cart.length > 0 && (
-          <TouchableOpacity style={styles.payBtn} onPress={handlePayment}>
-            <Text style={styles.payText}>Pay Here</Text>
+          <TouchableOpacity style={styles.payBtn} onPress={() => alert("Proceeding to checkout...")}>
+            <Text style={styles.payText}>Continue to Purchase</Text>
           </TouchableOpacity>
         )}
       </View>
-
-      {/* Payment Modal (just a simple popup for now) */}
-      {isPaymentModalVisible && (
-        <View style={styles.paymentModal}>
-          <Text style={styles.modalText}>Payment Process Initiated</Text>
-          <TouchableOpacity onPress={() => setPaymentModalVisible(false)} style={styles.closeBtn}>
-            <Text style={styles.closeText}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      )}
     </View>
   );
 };
@@ -315,6 +204,34 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     color: '#333',
   },
+  menu: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 30,
+  },
+  categoryCard: {
+    backgroundColor: '#007BFF',
+    padding: 20,
+    borderRadius: 10,
+    width: '30%',
+    alignItems: 'center',
+  },
+  categoryText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  backBtn: {
+    backgroundColor: 'gray',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 15,
+    alignItems: 'center',
+  },
+  backText: {
+    color: '#fff',
+    fontSize: 16,
+  },
   itemsList: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -323,21 +240,31 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 15,
     padding: 15,
-    marginBottom: 20,
+    marginRight: 15,
+    marginBottom: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 3.5,
     elevation: 5,
     margin: 5,
+    minHeight: 250,
+  },
+  cardImage: {
+    width: '100%',
+    height: 150,
+    borderRadius: 10,
+    marginBottom: 10,
   },
   cardDetails: {
     alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    flex: 1,
   },
   cardName: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
   },
@@ -358,7 +285,7 @@ const styles = StyleSheet.create({
   },
   quantityBtn: {
     backgroundColor: '#007BFF',
-    padding: 5,
+    padding: 8,
     borderRadius: 5,
     marginHorizontal: 5,
   },
@@ -368,7 +295,7 @@ const styles = StyleSheet.create({
   },
   addToCartBtn: {
     backgroundColor: '#007BFF',
-    padding: 10,
+    padding: 12,
     borderRadius: 5,
     marginTop: 10,
     width: '100%',
@@ -424,33 +351,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   payText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  paymentModal: {
-    position: 'absolute',
-    top: '40%',
-    left: '10%',
-    right: '10%',
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 999,
-  },
-  modalText: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  closeBtn: {
-    backgroundColor: 'red',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 10,
-  },
-  closeText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
