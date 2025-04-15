@@ -1,217 +1,460 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  ScrollView,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, Dimensions } from 'react-native';
 
-type FoodItem = {
+
+const foodData = [
+  {
+    id: 1,
+    name: "Popcorn",
+    description: "Classic buttery popcorn",
+    price: 5.99,
+    category: "Snacks",
+    quantity: 0,
+  },
+  {
+    id: 2,
+    name: "Nachos",
+    description: "Cheesy nachos with jalapeños",
+    price: 6.99,
+    category: "Snacks",
+    quantity: 0,
+  },
+  {
+    id: 3,
+    name: "Hotdog",
+    description: "Grilled hotdog with mustard",
+    price: 4.99,
+    category: "Snacks",
+    quantity: 0,
+  },
+  {
+    id: 4,
+    name: "Soft Pretzel",
+    description: "Warm salted soft pretzel",
+    price: 3.99,
+    category: "Snacks",
+    quantity: 0,
+  },
+  {
+    id: 5,
+    name: "Cheese Sticks",
+    description: "Crispy fried mozzarella sticks",
+    price: 5.49,
+    category: "Snacks",
+    quantity: 0,
+  },
+  {
+    id: 6,
+    name: "Chicken Tenders",
+    description: "Golden fried chicken tenders",
+    price: 7.49,
+    category: "Snacks",
+    quantity: 0,
+  },
+  {
+    id: 7,
+    name: "M&M's",
+    description: "Milk chocolate candy",
+    price: 2.99,
+    category: "Candy",
+    quantity: 0,
+  },
+  {
+    id: 8,
+    name: "Skittles",
+    description: "Fruit-flavored candy",
+    price: 2.99,
+    category: "Candy",
+    quantity: 0,
+  },
+  {
+    id: 9,
+    name: "Twizzlers",
+    description: "Strawberry flavored licorice",
+    price: 2.99,
+    category: "Candy",
+    quantity: 0,
+  },
+  {
+    id: 10,
+    name: "Reese’s Pieces",
+    description: "Peanut butter candy",
+    price: 3.49,
+    category: "Candy",
+    quantity: 0,
+  },
+  {
+    id: 11,
+    name: "Coke",
+    description: "Chilled Coca-Cola",
+    price: 3.49,
+    category: "Drinks",
+    quantity: 0,
+  },
+  {
+    id: 12,
+    name: "Sprite",
+    description: "Refreshing lemon-lime soda",
+    price: 3.49,
+    category: "Drinks",
+    quantity: 0,
+  },
+  {
+    id: 13,
+    name: "Water",
+    description: "Bottled spring water",
+    price: 2.49,
+    category: "Drinks",
+    quantity: 0,
+  },
+  {
+    id: 14,
+    name: "Iced Tea",
+    description: "Cold sweetened iced tea",
+    price: 3.49,
+    category: "Drinks",
+    quantity: 0,
+  }
+];
+
+interface FoodDrinkItem {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  quantity: number;
+}
+
+interface CartItem {
   id: number;
   name: string;
   price: number;
-  category: 'food' | 'drink';
   quantity: number;
-};
+}
 
-const FoodAndDrinksScreen: React.FC = () => {
-  const [items, setItems] = useState<FoodItem[]>([]);
+const FoodAndDrinkScreen: React.FC = () => {
+  const [items, setItems] = useState<FoodDrinkItem[]>(foodData);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isPaymentModalVisible, setPaymentModalVisible] = useState(false);
 
-  useEffect(() => {
-    fetchFoodItems();
-  }, []);
+  const { width } = Dimensions.get('window');  // Get screen width
 
-  const fetchFoodItems = () => {
-    const mockData: FoodItem[] = [
-      { id: 1, name: 'Popcorn', price: 4.99, category: 'food', quantity: 0 },
-      { id: 2, name: 'Nachos', price: 5.75, category: 'food', quantity: 0 },
-      { id: 3, name: 'Hot Dog', price: 3.99, category: 'food', quantity: 0 },
-      { id: 4, name: 'Ice Cream', price: 2.99, category: 'food', quantity: 0 },
-      { id: 5, name: 'Coke', price: 2.5, category: 'drink', quantity: 0 },
-      { id: 6, name: 'Water Bottle', price: 1.25, category: 'drink', quantity: 0 },
-      { id: 7, name: 'Sprite', price: 2.5, category: 'drink', quantity: 0 },
-    ];
-
-    setItems(mockData);
-  };
-
-  const incrementQuantity = (id: number) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  };
-
-  const decrementQuantity = (id: number) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id && item.quantity > 0
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
-
-  const handleReadyForPayment = () => {
-    const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-    if (totalItems === 0) {
-      Alert.alert('Cart is empty', 'Please select at least one item.');
+  const addToCart = (item: FoodDrinkItem) => {
+    const existingItem = cart.find((cartItem) => cartItem.id === item.id);
+    if (existingItem) {
+      setCart(
+        cart.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        )
+      );
     } else {
-      Alert.alert('Ready for Payment', 'Proceeding to payment...');
+      setCart([...cart, { ...item, quantity: 1 }]);
     }
   };
 
-  const renderCategory = (category: 'food' | 'drink') => {
-    const categoryItems = items.filter((item) => item.category === category);
+  const removeFromCart = (itemId: number) => {
+    setCart(cart.filter((cartItem) => cartItem.id !== itemId));
+  };
 
-    return (
-      <View>
-        <Text style={styles.categoryHeader}>
-          {category === 'food' ? '🍔 Food' : '🥤 Drinks'}
-        </Text>
-        {categoryItems.map((item) => (
-          <View key={item.id} style={styles.itemRow}>
-            <View style={styles.itemDetails}>
-              <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemPrice}>${item.price.toFixed(2)}</Text>
-            </View>
-            <View style={styles.quantityControls}>
-              <TouchableOpacity
-                style={styles.qBtn}
-                onPress={() => decrementQuantity(item.id)}
-              >
-                <Text style={styles.qBtnText}>-</Text>
-              </TouchableOpacity>
-              <Text style={styles.quantityText}>{item.quantity}</Text>
-              <TouchableOpacity
-                style={styles.qBtn}
-                onPress={() => incrementQuantity(item.id)}
-              >
-                <Text style={styles.qBtnText}>+</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        ))}
-      </View>
+  const incrementQuantity = (itemId: number) => {
+    setCart(
+      cart.map((cartItem) =>
+        cartItem.id === itemId ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
+      )
     );
   };
 
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce(
-    (sum, item) => sum + item.quantity * item.price,
-    0
-  );
+  const decrementQuantity = (itemId: number) => {
+    setCart(
+      cart.map((cartItem) =>
+        cartItem.id === itemId && cartItem.quantity > 1
+          ? { ...cartItem, quantity: cartItem.quantity - 1 }
+          : cartItem
+      )
+    );
+  };
+
+  // Calculate total price of the cart
+  const calculateTotalPrice = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+  };
+
+  // Separate items by category
+  const foodItems = items.filter(item => item.category === "Snacks" || item.category === "Candy");
+  const drinkItems = items.filter(item => item.category === "Drinks");
+
+  // Show or hide payment modal
+  const handlePayment = () => {
+    setPaymentModalVisible(true);
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Food & Drinks Menu</Text>
-      <ScrollView>
-        {renderCategory('food')}
-        {renderCategory('drink')}
-      </ScrollView>
-      <View style={styles.footer}>
-        <Text style={styles.totalText}>Total Items: {totalItems}</Text>
-        <Text style={styles.totalText}>Total: ${totalPrice.toFixed(2)}</Text>
+      {/* Snacks & Candy Section */}
+      <Text style={styles.sectionHeader}>Snacks & Candy</Text>
+      <FlatList
+        data={foodItems}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        renderItem={({ item }) => (
+          <View style={[styles.card, { width: width * 0.45 }]}>
+            <View style={styles.cardDetails}>
+              <Text style={styles.cardName}>{item.name}</Text>
+              <Text style={styles.cardDescription}>{item.description}</Text>
+              <Text style={styles.cardPrice}>${item.price.toFixed(2)}</Text>
+              <View style={styles.quantityControls}>
+                <TouchableOpacity onPress={() => decrementQuantity(item.id)} style={styles.quantityBtn}>
+                  <Text style={styles.quantityText}>-</Text>
+                </TouchableOpacity>
+                <Text style={styles.quantityText}>{item.quantity}</Text>
+                <TouchableOpacity onPress={() => incrementQuantity(item.id)} style={styles.quantityBtn}>
+                  <Text style={styles.quantityText}>+</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity style={styles.addToCartBtn} onPress={() => addToCart(item)}>
+                <Text style={styles.addToCartText}>Add to Cart</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+        contentContainerStyle={styles.itemsList}
+      />
 
-        <TouchableOpacity
-          style={styles.paymentButton}
-          onPress={handleReadyForPayment}
-        >
-          <Text style={styles.paymentButtonText}>Ready for Payment</Text>
-        </TouchableOpacity>
+      {/* Drinks Section */}
+      <Text style={styles.sectionHeader}>Drinks</Text>
+      <FlatList
+        data={drinkItems}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        renderItem={({ item }) => (
+          <View style={[styles.card, { width: width * 0.45 }]}>
+            <View style={styles.cardDetails}>
+              <Text style={styles.cardName}>{item.name}</Text>
+              <Text style={styles.cardDescription}>{item.description}</Text>
+              <Text style={styles.cardPrice}>${item.price.toFixed(2)}</Text>
+              <View style={styles.quantityControls}>
+                <TouchableOpacity onPress={() => decrementQuantity(item.id)} style={styles.quantityBtn}>
+                  <Text style={styles.quantityText}>-</Text>
+                </TouchableOpacity>
+                <Text style={styles.quantityText}>{item.quantity}</Text>
+                <TouchableOpacity onPress={() => incrementQuantity(item.id)} style={styles.quantityBtn}>
+                  <Text style={styles.quantityText}>+</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity style={styles.addToCartBtn} onPress={() => addToCart(item)}>
+                <Text style={styles.addToCartText}>Add to Cart</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+        contentContainerStyle={styles.itemsList}
+      />
+
+      <View style={styles.cart}>
+        {cart.length === 0 ? (
+          <Text style={styles.cartWarning}>Your cart is empty. Please add items to the cart.</Text>
+        ) : (
+          <View style={styles.cartItems}>
+            {cart.map((item) => (
+              <View key={item.id} style={styles.cartItem}>
+                <Text>{item.name} - ${item.price.toFixed(2)} x {item.quantity}</Text>
+                <View style={styles.quantityControls}>
+                  <TouchableOpacity onPress={() => decrementQuantity(item.id)} style={styles.quantityBtn}>
+                    <Text style={styles.quantityText}>-</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.quantityText}>{item.quantity}</Text>
+                  <TouchableOpacity onPress={() => incrementQuantity(item.id)} style={styles.quantityBtn}>
+                    <Text style={styles.quantityText}>+</Text>
+                  </TouchableOpacity>
+                </View>
+                <TouchableOpacity onPress={() => removeFromCart(item.id)} style={styles.removeBtn}>
+                  <Text style={styles.removeText}>Remove</Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+          </View>
+        )}
+
+        <View style={styles.totalPrice}>
+          <Text>Total Price: ${calculateTotalPrice()}</Text>
+        </View>
+
+        {/* Pay Here Button */}
+        {cart.length > 0 && (
+          <TouchableOpacity style={styles.payBtn} onPress={handlePayment}>
+            <Text style={styles.payText}>Pay Here</Text>
+          </TouchableOpacity>
+        )}
       </View>
+
+      {/* Payment Modal (just a simple popup for now) */}
+      {isPaymentModalVisible && (
+        <View style={styles.paymentModal}>
+          <Text style={styles.modalText}>Payment Process Initiated</Text>
+          <TouchableOpacity onPress={() => setPaymentModalVisible(false)} style={styles.closeBtn}>
+            <Text style={styles.closeText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
-
-export default FoodAndDrinksScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
-  header: {
+  sectionHeader: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
-    textAlign: 'center',
+    marginVertical: 10,
+    color: '#333',
   },
-  categoryHeader: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginTop: 20,
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  itemRow: {
+  itemsList: {
     flexDirection: 'row',
-    alignItems: 'center',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    paddingVertical: 10,
-    borderBottomColor: '#eee',
-    borderBottomWidth: 1,
+    paddingBottom: 20,
   },
-  itemDetails: {
-    flex: 1,
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.5,
+    elevation: 5,
+    margin: 5,
   },
-  itemName: {
+  cardDetails: {
+    alignItems: 'flex-start',
+  },
+  cardName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  cardDescription: {
+    fontSize: 14,
+    color: '#777',
+    marginBottom: 5,
+  },
+  cardPrice: {
     fontSize: 16,
-    fontWeight: '500',
-  },
-  itemPrice: {
-    color: '#555',
-    marginTop: 2,
+    color: '#333',
+    marginBottom: 10,
   },
   quantityControls: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 10,
   },
-  qBtn: {
-    backgroundColor: '#007bff',
-    padding: 6,
+  quantityBtn: {
+    backgroundColor: '#007BFF',
+    padding: 5,
     borderRadius: 5,
-    width: 30,
-    alignItems: 'center',
-  },
-  qBtnText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
+    marginHorizontal: 5,
   },
   quantityText: {
-    marginHorizontal: 12,
-    fontSize: 16,
-    fontWeight: '500',
+    fontSize: 20,
+    color: '#fff',
   },
-  footer: {
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
+  addToCartBtn: {
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    width: '100%',
+    alignItems: 'center',
+  },
+  addToCartText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  cart: {
+    marginTop: 30,
+  },
+  cartWarning: {
+    color: 'red',
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  cartItems: {
+    marginBottom: 20,
+  },
+  cartItem: {
+    padding: 15,
+    backgroundColor: '#f1f1f1',
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  removeBtn: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    width: '100%',
+    alignItems: 'center',
+  },
+  removeText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  totalPrice: {
+    fontSize: 18,
+    fontWeight: 'bold',
     marginTop: 20,
     alignItems: 'center',
   },
-  totalText: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginVertical: 4,
-  },
-  paymentButton: {
-    marginTop: 15,
+  payBtn: {
     backgroundColor: '#28a745',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 20,
+    width: '100%',
+    alignItems: 'center',
   },
-  paymentButtonText: {
+  payText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  paymentModal: {
+    position: 'absolute',
+    top: '40%',
+    left: '10%',
+    right: '10%',
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 999,
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  closeBtn: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  closeText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
 });
+
+export default FoodAndDrinkScreen;
