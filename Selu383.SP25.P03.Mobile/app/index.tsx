@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Dimensions, Image } from 'react-native';
 
-// Seed food data (with images included)
+
 const foodData = [
-  { id: 1, name: "Popcorn", description: "Classic buttery popcorn", price: 5.99, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2016/12/31/22/47/popcorn-1085072_960_720.jpg", quantity: 0 },
-  { id: 2, name: "Nachos", description: "Cheesy nachos with jalapeños", price: 6.99, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2016/10/23/10/17/chili-1761046_960_720.jpg", quantity: 0 },
-  { id: 3, name: "Hotdog", description: "Grilled hotdog with mustard", price: 4.99, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2015/08/21/11/04/hot-dog-897309_960_720.jpg", quantity: 0 },
-  { id: 4, name: "Soft Pretzel", description: "Warm salted soft pretzel", price: 3.99, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2017/09/05/15/01/pretzel-2715272_960_720.jpg", quantity: 0 },
-  { id: 5, name: "Cheese Sticks", description: "Crispy fried mozzarella sticks", price: 5.49, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2016/06/02/02/12/cheese-1439861_960_720.jpg", quantity: 0 },
-  { id: 6, name: "Chicken Tenders", description: "Golden fried chicken tenders", price: 7.49, category: "Snacks", imageUrl: "https://cdn.pixabay.com/photo/2018/02/01/18/54/chicken-3124179_960_720.jpg", quantity: 0 },
-  { id: 7, name: "M&M's", description: "Milk chocolate candy", price: 2.99, category: "Candy", imageUrl: "https://images.unsplash.com/photo-1615332587121-72d7a9c2a308", quantity: 0 },
-  { id: 8, name: "Skittles", description: "Fruit-flavored candy", price: 2.99, category: "Candy", imageUrl: "https://images.unsplash.com/photo-1601221328884-e7f2b863e2ce", quantity: 0 },
-  { id: 9, name: "Twizzlers", description: "Strawberry flavored licorice", price: 2.99, category: "Candy", imageUrl: "https://images.unsplash.com/photo-1626947343469-7e149924c7d2", quantity: 0 },
-  { id: 10, name: "Reese’s Pieces", description: "Peanut butter candy", price: 3.49, category: "Candy", imageUrl: "https://images.unsplash.com/photo-1625937320210-2bb4bc944af8", quantity: 0 },
-  { id: 11, name: "Coke", description: "Chilled Coca-Cola", price: 3.49, category: "Drinks", imageUrl: "https://www.depositphotos.com/11482235/stock-photo-soft-drinks.html", quantity: 0 },
-  { id: 12, name: "Sprite", description: "Refreshing lemon-lime soda", price: 3.49, category: "Drinks", imageUrl: "https://www.depositphotos.com/11582248/stock-photo-soft-drinks.html", quantity: 0 },
-  { id: 13, name: "Water", description: "Bottled spring water", price: 2.49, category: "Drinks", imageUrl: "https://cdn.pixabay.com/photo/2016/06/04/13/56/water-1437412_960_720.jpg", quantity: 0 },
-  { id: 14, name: "Iced Tea", description: "Cold sweetened iced tea", price: 3.49, category: "Drinks", imageUrl: "https://cdn.pixabay.com/photo/2016/06/10/19/55/iced-tea-1445934_960_720.jpg", quantity: 0 }
+  { id: 1, name: "Popcorn", description: "Classic buttery popcorn", price: 5.99, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 2, name: "Nachos", description: "Cheesy nachos with jalapeños", price: 6.99, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 3, name: "Hotdog", description: "Grilled hotdog with mustard", price: 4.99, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 4, name: "Soft Pretzel", description: "Warm salted soft pretzel", price: 3.99, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 5, name: "Cheese Sticks", description: "Crispy fried mozzarella sticks", price: 5.49, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 6, name: "Chicken Tenders", description: "Golden fried chicken tenders", price: 7.49, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 7, name: "M&M's", description: "Milk chocolate candy", price: 2.99, category: "Candy", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 8, name: "Skittles", description: "Fruit-flavored candy", price: 2.99, category: "Candy", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 9, name: "Twizzlers", description: "Strawberry flavored licorice", price: 2.99, category: "Candy", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 10, name: "Reese’s Pieces", description: "Peanut butter candy", price: 3.49, category: "Candy", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 11, name: "Coke", description: "Chilled Coca-Cola", price: 3.49, category: "Drinks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 12, name: "Sprite", description: "Refreshing lemon-lime soda", price: 3.49, category: "Drinks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 13, name: "Water", description: "Bottled spring water", price: 2.49, category: "Drinks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
+  { id: 14, name: "Iced Tea", description: "Cold sweetened iced tea", price: 3.49, category: "Drinks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 }
 ];
 
 interface FoodDrinkItem {
@@ -39,8 +39,8 @@ interface CartItem {
 const FoodAndDrinkScreen: React.FC = () => {
   const [items, setItems] = useState<FoodDrinkItem[]>(foodData);
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [currentCategory, setCurrentCategory] = useState<string | null>(""); // Track current category
-  const { width } = Dimensions.get('window'); // Get screen width
+  const [currentCategory, setCurrentCategory] = useState<string | null>(""); 
+  const { width } = Dimensions.get('window'); 
 
   const addToCart = (item: FoodDrinkItem) => {
     const existingItem = cart.find((cartItem) => cartItem.id === item.id);
@@ -85,14 +85,14 @@ const FoodAndDrinkScreen: React.FC = () => {
     return items.filter(item => item.category === category);
   };
 
-  // Handle Category Click
+  
   const handleCategoryClick = (category: string) => {
     setCurrentCategory(category);
   };
 
-  // Handle Back to Menu
+  
   const handleBackToMenu = () => {
-    setCurrentCategory(""); // Return to the main menu
+    setCurrentCategory(""); 
   };
 
   return (
@@ -103,12 +103,15 @@ const FoodAndDrinkScreen: React.FC = () => {
           <Text style={styles.sectionHeader}>Food and Drinks</Text>
           <View style={styles.menu}>
             <TouchableOpacity style={styles.categoryCard} onPress={() => handleCategoryClick("Snacks")}>
+              <Image source={{ uri: "https://via.placeholder.com/400x200" }} style={styles.categoryImage} />
               <Text style={styles.categoryText}>Snacks</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.categoryCard} onPress={() => handleCategoryClick("Candy")}>
+              <Image source={{ uri: "https://via.placeholder.com/400x200" }} style={styles.categoryImage} />
               <Text style={styles.categoryText}>Candy</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.categoryCard} onPress={() => handleCategoryClick("Drinks")}>
+              <Image source={{ uri: "https://via.placeholder.com/400x200" }} style={styles.categoryImage} />
               <Text style={styles.categoryText}>Drinks</Text>
             </TouchableOpacity>
           </View>
@@ -125,7 +128,7 @@ const FoodAndDrinkScreen: React.FC = () => {
             data={filterItemsByCategory(currentCategory)}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View style={[styles.card, { width: width * 0.45 }]}>
+              <View style={[styles.card, { width: width * 0.9, marginBottom: 15 }]}>
                 <Image source={{ uri: item.imageUrl }} style={styles.cardImage} />
                 <View style={styles.cardDetails}>
                   <Text style={styles.cardName}>{item.name}</Text>
@@ -205,19 +208,27 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   menu: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'column', 
+    alignItems: 'center',
     marginTop: 30,
   },
   categoryCard: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#fff',
     padding: 20,
-    borderRadius: 10,
-    width: '30%',
+    borderRadius: 15,
+    width: '80%',
+    marginBottom: 20, 
     alignItems: 'center',
+    elevation: 5,
+  },
+  categoryImage: {
+    width: '100%',
+    height: 100,
+    borderRadius: 10,
+    marginBottom: 10,
   },
   categoryText: {
-    color: '#fff',
+    color: '#007BFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -233,16 +244,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   itemsList: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingBottom: 20,
+    marginBottom: 20,
   },
   card: {
     backgroundColor: '#fff',
     borderRadius: 15,
     padding: 15,
-    marginRight: 15,
     marginBottom: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -250,7 +257,6 @@ const styles = StyleSheet.create({
     shadowRadius: 3.5,
     elevation: 5,
     margin: 5,
-    minHeight: 250,
   },
   cardImage: {
     width: '100%',
