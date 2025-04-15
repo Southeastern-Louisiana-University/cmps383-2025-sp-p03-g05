@@ -26,7 +26,7 @@ export default function RegisterScreen() {
     }
 
     try {
-      const response = await fetch('http://10.0.2.2:5249/api/authentication/register', {
+      const response = await fetch('https://selu383-sp25-p03-g05.azurewebsites.net/api/authentication/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

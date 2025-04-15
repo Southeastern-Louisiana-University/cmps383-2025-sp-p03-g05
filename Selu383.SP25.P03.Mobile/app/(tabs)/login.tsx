@@ -36,7 +36,7 @@ export default function LoginTab() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://10.0.2.2:5249/api/authentication/login', {
+      const response = await fetch('https://selu383-sp25-p03-g05.azurewebsites.net/api/authentication/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userName: username, password }),

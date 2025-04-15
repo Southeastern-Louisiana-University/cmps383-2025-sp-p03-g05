@@ -16,18 +16,18 @@ export default function ChangePassword() {
 
     try {
       await axios.post(
-        "https://your-api-url.com/api/users/change-password", // replace with your actual backend URL
+        "https://selu383-sp25-p03-g05.azurewebsites.net/api/users/change-password", 
         {
           currentPassword,
           newPassword,
         },
         {
-          withCredentials: true, // sends the cookie!
+          withCredentials: true, 
         }
       );
 
       Alert.alert("Success", "Password changed successfully!");
-      router.back(); // Go back to profile
+      router.back(); 
     } catch (err: any) {
       console.error(err.response?.data || err);
       Alert.alert(
