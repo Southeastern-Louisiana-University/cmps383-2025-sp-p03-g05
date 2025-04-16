@@ -38,8 +38,12 @@ interface CartItem {
 const FoodAndDrinkScreen: React.FC = () => {
   const [items, setItems] = useState<FoodDrinkItem[]>(foodData);
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [currentCategory, setCurrentCategory] = useState<string | null>(""); 
-  const { width } = Dimensions.get('window'); 
+  const removeFromCart = (id: number) => {
+    setCart((prevCart) => prevCart.filter(item => item.id !== id));
+  };
+  
+  const [currentCategory, setCurrentCategory] = useState<string>("");
+ const { width } = Dimensions.get('window'); 
 
   const addToCart = (item: FoodDrinkItem) => {
     const existingItem = cart.find((cartItem) => cartItem.id === item.id);
