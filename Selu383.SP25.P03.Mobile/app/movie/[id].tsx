@@ -1,29 +1,48 @@
 import { useLocalSearchParams } from "expo-router";
-import { movies } from "@/constants/mockMovies";
-import { Text, View, Image, StyleSheet, ScrollView } from "react-native";
-import { useEffect } from "react";
+import { Text, View, Image, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 export default function MovieDetail() {
   const { id } = useLocalSearchParams();
-  const movie = movies.find((m) => m.id === id);
-
   const navigation = useNavigation();
+  const [movie, setMovie] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (movie) {
-      navigation.setOptions({ title: movie.title });
-    }
-  }, [movie]);
+    const fetchMovie = async () => {
+      try {
+        const response = await fetch(`https://selu383-sp25-p03-g05.azurewebsites.net/api/movies/${id}`);
+        const data = await response.json();
+        setMovie(data);
+        navigation.setOptions({ title: data.title });
+      } catch (error) {
+        console.error('Error fetching movie:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (!movie) return <Text style={{ color: "white" }}>Movie not found</Text>;
+    if (id) {
+      fetchMovie();
+    }
+  }, [id]);
+
+  if (loading) return <ActivityIndicator size="large" color="#a800b7" style={{ marginTop: 20 }} />;
+  if (!movie) return <Text style={{ color: "white", textAlign: 'center', marginTop: 20 }}>Movie not found</Text>;
 
   return (
     <ScrollView style={styles.container}>
-      <Image source={{ uri: movie.image }} style={styles.poster} />
+      <View style={styles.posterWrapper}>
+        <Image
+          source={{ uri: movie.poster }}
+          style={styles.poster}
+          resizeMode="contain" // ✅ Ensures full poster is shown
+        />
+      </View>
       <Text style={styles.title}>{movie.title}</Text>
       <Text style={styles.info}>
-        {movie.duration} • {movie.ageRating} • ⭐ {movie.rating}
+        {movie.year} • {movie.ageRating} • {movie.genre}
       </Text>
       <Text style={styles.description}>{movie.description}</Text>
     </ScrollView>
@@ -36,11 +55,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     padding: 16,
   },
-  poster: {
+  posterWrapper: {
     width: "100%",
     height: 300,
     borderRadius: 12,
+    overflow: "hidden",
+    backgroundColor: "#000", 
     marginBottom: 16,
+  },
+  poster: {
+    width: "100%",
+    height: "100%",
   },
   title: {
     color: "#a800b7",

@@ -1,14 +1,14 @@
-import { View, FlatList, Text, StyleSheet, Image } from 'react-native';
-import { useThemeContext } from '../ThemeContext'; 
+import { View, FlatList, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
+import { useThemeContext } from '../ThemeContext';
 import React, { useState, useEffect } from 'react';
-
+import { useRouter } from 'expo-router';
 
 export default function HomePage() {
   const { isDark } = useThemeContext();
-  const [movies, setMovies] = useState<any[]>([]); 
+  const [movies, setMovies] = useState<any[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
-    
     const fetchMovies = async () => {
       try {
         const response = await fetch('https://selu383-sp25-p03-g05.azurewebsites.net/api/movies');
@@ -28,13 +28,24 @@ export default function HomePage() {
       <FlatList
         data={movies}
         renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Image source={{ uri: item.poster }} style={styles.poster} />
-            <Text style={[styles.movieTitle, { color: isDark ? '#fff' : '#000' }]}>{item.title}</Text>
-          </View>
+          <Pressable onPress={() => router.push(`/movie/${item.id}`)} style={styles.cardWrapper}>
+            <ImageBackground
+              source={{ uri: item.poster }}
+              style={styles.poster}
+              resizeMode="cover"
+            >
+              <View style={styles.titleOverlay}>
+                <Text style={styles.movieTitle} numberOfLines={1}>
+                  {item.title}
+                </Text>
+              </View>
+            </ImageBackground>
+          </Pressable>
         )}
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
+        contentContainerStyle={{ paddingHorizontal: 0, paddingBottom: 16 }}
         showsVerticalScrollIndicator={false}
       />
     </View>
@@ -44,30 +55,32 @@ export default function HomePage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 8,
     paddingTop: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 12,
+    paddingHorizontal: 16,
   },
-  card: {
-    flex: 1,
-    margin: 8,
-    alignItems: 'center',
-    backgroundColor: '#222',
-    borderRadius: 8,
-    padding: 8,
+  cardWrapper: {
+    width: '50%', 
   },
   poster: {
-    width: 150,
-    height: 225,
-    borderRadius: 8,
+    width: '100%',
+    aspectRatio: 2 / 3,
+    justifyContent: 'flex-end',
+    borderRadius: 0, 
+  },
+  titleOverlay: {
+    backgroundColor: '#000',
+    paddingVertical: 6,
+    paddingHorizontal: 8,
   },
   movieTitle: {
-    marginTop: 8,
-    fontSize: 16,
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: 'bold',
     textAlign: 'center',
   },
 });
