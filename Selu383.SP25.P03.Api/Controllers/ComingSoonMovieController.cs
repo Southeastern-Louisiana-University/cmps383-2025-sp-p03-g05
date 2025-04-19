@@ -9,13 +9,13 @@ namespace Selu383.SP25.P03.Api.Controllers
     [ApiController]
     public class ComingSoonMovieController : ControllerBase
     {
-        private readonly DbSet<ComingSoonMovies> comingSoonMovies;
+        private readonly DbSet<ComingSoonMovie> comingSoonMovies;
         private readonly DataContext dataContext;
 
         public ComingSoonMovieController(DataContext dataContext)
         {
             this.dataContext = dataContext;
-            comingSoonMovies = dataContext.Set<ComingSoonMovies>();
+            comingSoonMovies = dataContext.Set<ComingSoonMovie>();
         }
 
         [HttpGet]
@@ -36,7 +36,7 @@ namespace Selu383.SP25.P03.Api.Controllers
         [HttpPost]
         public ActionResult<ComingSoonMovieDto> CreateComingSoonMovie(ComingSoonMovieDto dto)
         {
-            var movie = new ComingSoonMovies
+            var movie = new ComingSoonMovie
             {
                 Title = dto.Title,
                 Genre = dto.Genre,

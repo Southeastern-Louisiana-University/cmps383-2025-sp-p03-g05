@@ -21,7 +21,7 @@ namespace Selu383.SP25.P03.Api.Data
         public DbSet<Seat> Seats { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
 
-        public DbSet<ComingSoonMovies> ComingSoonMovies { get; set; }
+        public DbSet<ComingSoonMovie> ComingSoonMovies { get; set; }
 
 
 

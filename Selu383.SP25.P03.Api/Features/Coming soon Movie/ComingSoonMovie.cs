@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Selu383.SP25.P03.Api.Features.ComingSoonMovies
 {
     [Table("ComingSoonMovies")]
-    public class ComingSoonMovies
+    public class ComingSoonMovie
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
