@@ -1,6 +1,8 @@
 //import React from "react";
 import { Box, Link, Container, Typography, Stack } from "@mui/material";
 
+//const { theater } = useSelectedTheater();
+
 const menuItems = (
   <>
     <Typography
@@ -14,7 +16,7 @@ const menuItems = (
 
     <Typography
       component={Link}
-      href="/location"
+      href="/theaters"
       fontWeight={600}
       color="#a800b7"
     >
@@ -58,7 +60,7 @@ const NavBar = () => {
 
           <Box component={Link} href="/" color="#a800b7" underline="none">
             <Typography fontWeight={600} variant="h5">
-              Lions Den Cinemas
+              Lion's Den Cinemas
             </Typography>
           </Box>
 

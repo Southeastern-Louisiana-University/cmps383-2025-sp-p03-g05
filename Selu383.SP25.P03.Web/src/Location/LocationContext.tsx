@@ -1,6 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-//RENAME TO THEATERS
 interface SelectedTheater {
   theaterName: string;
   theaterId: number;
@@ -15,18 +14,40 @@ const DefaultSelectedTheaterContextValue: SelectedTheaterContextValue = {
   setSelectedTheater: () => {},
 };
 
-export const SelectedTheaterContext = createContext<SelectedTheaterContextValue>(
-  DefaultSelectedTheaterContextValue
-);
+export const SelectedTheaterContext =
+  createContext<SelectedTheaterContextValue>(
+    DefaultSelectedTheaterContextValue
+  );
 
-export const useSelectedTheater = () => 
-    useContext(SelectedTheaterContext);
+export const useSelectedTheater = () => useContext(SelectedTheaterContext);
 
-export const SelectedTheaterProvider = ({ children }: React.PropsWithChildren) => {
-  const [location, setSelectedTheater] = useState<SelectedTheater | null >(null);
+export const SelectedTheaterProvider = ({
+  children,
+}: React.PropsWithChildren) => {
+  const [location, setLocationState] = useState<SelectedTheater | null>(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("selectedTheater");
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      setLocationState(parsed);
+    }
+  }, []);
+
+  const setSelectedTheater = (location: SelectedTheater | null) => {
+    if (location) {
+      localStorage.setItem("selectedTheater", JSON.stringify(location));
+    }
+    else {
+      localStorage.removeItem("selectedTheater");
+    }
+    setLocationState(location);
+  }
 
   return (
-    <SelectedTheaterContext.Provider value={{ theater: location, setSelectedTheater }}>
+    <SelectedTheaterContext.Provider
+      value={{ theater: location, setSelectedTheater }}
+    >
       {children}
     </SelectedTheaterContext.Provider>
   );

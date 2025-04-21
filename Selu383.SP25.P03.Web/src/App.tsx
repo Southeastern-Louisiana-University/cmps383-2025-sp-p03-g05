@@ -5,36 +5,29 @@ import "./App.css";
 import SeatSelector from "./SeatSelector";
 import "./SeatSelector.css";
 import HomePage from "./Home/Home";
-//import LocationPopup from "./Location/LocationPopup";
 import TheaterList from "./Location/TheatersList";
 import TheaterDetails from "./Location/TheaterPage";
 import MoviesList from "./Movies/MovieSelections";
 import MovieDetails from "./Movies/MoviePage";
 import MovieShowtimes from "./ShowtimesList";
-import { SelectedTheaterProvider } from "./Location/LocationContext";
-
 function App() {
-  //const location = useContext(LocationContext);
-
   return (
-    <SelectedTheaterProvider>
-      <Router>
-        <Routes>
-          <Route
-            path="/login"
-            element={<LoginPage onClose={() => console.log("Login closed")} />}
-          />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/seats" element={<SeatSelector />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/theaters" element={<TheaterList />} />
-          <Route path="/theaters/:id" element={<TheaterDetails />} />
-          <Route path="/movies" element={MoviesList()} />
-          <Route path="/movies/:id" element={<MovieDetails />} />
-          <Route path="/movies/:id/showtimes" element={<MovieShowtimes />} />
-        </Routes>
-      </Router>
-    </SelectedTheaterProvider>
+    <Router>
+      <Routes>
+        <Route
+          path="/login"
+          element={<LoginPage onClose={() => console.log("Login closed")} />}
+        />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/seats" element={<SeatSelector />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/theaters" element={<TheaterList />} />
+        <Route path="/theaters/:id" element={<TheaterDetails />} />
+        <Route path="/movies" element={<MoviesList />} />
+        <Route path="/movies/:id" element={<MovieDetails />} />
+        <Route path="/movies/:id/showtimes" element={<MovieShowtimes />} />
+      </Routes>
+    </Router>
   );
 }
 

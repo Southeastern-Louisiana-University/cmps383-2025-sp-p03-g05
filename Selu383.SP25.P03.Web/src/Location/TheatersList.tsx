@@ -1,14 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useSelectedTheater } from "./LocationContext";
-
-type Theater = {
-  id: number;
-  name: string;
-  address: string;
-  seatCount: number;
-  managerId: number;
-};
+import { Theater } from "../types";
 
 const TheaterList = () => {
   const [theaters, setTheaters] = useState<Theater[]>([]);
@@ -20,7 +13,9 @@ const TheaterList = () => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  const selected = useSelectedTheater();
+  const theaterContext = useSelectedTheater();
+  console.log("Selected theater: ", theaterContext);
+
 
   return (
     <>
@@ -36,15 +31,17 @@ const TheaterList = () => {
                 type="button"
                 sx={{ textTransform: "none" }}
                 onClick= {() => {
-                  console.log("foo")
-                  selected.setSelectedTheater({
+                  theaterContext.setSelectedTheater({
                     theaterId: theater.id,
                     theaterName: theater.name
                   })
+                  //sets the selected theater
                 }}
-
+                href="/"
+                //returns the user back to the homepage
               >
-                <Typography variant="body2">{theater.name} {selected.theater?.theaterId === theater.id ? "SELECTED" : ""}</Typography>
+                <Typography variant="body2">{theater.name} {theaterContext.theater?.theaterId === theater.id ? "SELECTED" : ""}</Typography>
+                {/* Will change, this was testing the context*/}
               </Button>
             </Stack>
           ))}
