@@ -12,7 +12,7 @@ using Selu383.SP25.P03.Api.Data;
 namespace Selu383.SP25.P03.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250419231700_AddComingSoonMovies")]
+    [Migration("20250422131148_AddComingSoonMovies")]
     partial class AddComingSoonMovies
     {
         /// <inheritdoc />
