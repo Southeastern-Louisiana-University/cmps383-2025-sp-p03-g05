@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Dimensions, Image } from 'react-native';
 
 const foodData = [
-  { id: 1, name: "Popcorn", description: "Classic buttery popcorn", price: 5.99, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 2, name: "Nachos", description: "Cheesy nachos with jalapeños", price: 6.99, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 3, name: "Hotdog", description: "Grilled hotdog with mustard", price: 4.99, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 4, name: "Soft Pretzel", description: "Warm salted soft pretzel", price: 3.99, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 5, name: "Cheese Sticks", description: "Crispy fried mozzarella sticks", price: 5.49, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 6, name: "Chicken Tenders", description: "Golden fried chicken tenders", price: 7.49, category: "Snacks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 7, name: "M&M's", description: "Milk chocolate candy", price: 2.99, category: "Candy", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 8, name: "Skittles", description: "Fruit-flavored candy", price: 2.99, category: "Candy", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 9, name: "Twizzlers", description: "Strawberry flavored licorice", price: 2.99, category: "Candy", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 10, name: "Reese’s Pieces", description: "Peanut butter candy", price: 3.49, category: "Candy", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 11, name: "Coke", description: "Chilled Coca-Cola", price: 3.49, category: "Drinks", imageUrl: "https://c8.alamy.com/comp/WX0H5W/bottles-of-global-soft-drink-brands-including-products-of-coca-cola-company-and-pepsico-WX0H5W.jpg", quantity: 0 },
-  { id: 12, name: "Sprite", description: "Refreshing lemon-lime soda", price: 3.49, category: "Drinks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 13, name: "Water", description: "Bottled spring water", price: 2.49, category: "Drinks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 },
-  { id: 14, name: "Iced Tea", description: "Cold sweetened iced tea", price: 3.49, category: "Drinks", imageUrl: "https://via.placeholder.com/200x150", quantity: 0 }
+  { id: 1, name: "Popcorn", description: "Classic buttery popcorn", price: 5.99, category: "Snacks", imageUrl: "https://www.100daysofrealfood.com/wp-content/uploads/2011/06/popcorn1.jpg", quantity: 0 },
+  { id: 2, name: "Nachos", description: "Cheesy nachos with jalapeños", price: 6.99, category: "Snacks", imageUrl: "https://www.tastyrewards.com/sites/default/files/2024-01/Ultimate%20Four%20Cheese%20Nachos.jpg", quantity: 0 },
+  { id: 3, name: "Hotdog", description: "Grilled hotdog with mustard", price: 4.99, category: "Snacks", imageUrl: "https://potatorolls.com/wp-content/uploads/2020/10/Basic-Hot-Dogs-960x640.jpg", quantity: 0 },
+  { id: 4, name: "Soft Pretzel", description: "Warm salted soft pretzel", price: 3.99, category: "Snacks", imageUrl: "https://sallysbakingaddiction.com/wp-content/uploads/2017/04/easy-homemade-soft-pretzels.jpg", quantity: 0 },
+  { id: 5, name: "Cheese Sticks", description: "Crispy fried mozzarella sticks", price: 5.49, category: "Snacks", imageUrl: "https://easyweeknightrecipes.com/wp-content/uploads/2024/04/Mozzarella-Sticks_0013.jpg", quantity: 0 },
+  { id: 6, name: "Chicken Tenders", description: "Golden fried chicken tenders", price: 7.49, category: "Snacks", imageUrl: "https://www.allrecipes.com/thmb/YwJvX75IUx8uQ7PKz2eTDjCoLvY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/16669-fried-chicken-tenders-DDMFS-4x3-219f03b885be40139c8d93bef21d0a50.jpg", quantity: 0 },
+  { id: 7, name: "M&M's", description: "Milk chocolate candy", price: 2.99, category: "Candy", imageUrl: "https://i.ebayimg.com/images/g/JPkAAOSwMONgEygQ/s-l400.jpg", quantity: 0 },
+  { id: 8, name: "Skittles", description: "Fruit-flavored candy", price: 2.99, category: "Candy", imageUrl: "https://compote.slate.com/images/79fb3cf9-c3a6-403c-b29a-d9bb6f086a36.jpeg?crop=1560%2C1040%2Cx0%2Cy0", quantity: 0 },
+  { id: 9, name: "Twizzlers", description: "Strawberry flavored licorice", price: 2.99, category: "Candy", imageUrl: "https://rebellwrap.vtexassets.com/arquivos/ids/1129213-800-auto?v=638185540871400000&width=800&height=auto&aspect=true", quantity: 0 },
+  { id: 10, name: "Reese’s Pieces", description: "Peanut butter candy", price: 3.49, category: "Candy", imageUrl: "https://itsugar.com/cdn/shop/files/Screenshot2024-04-25at4.45.20PM.png?v=1714755068&width=709", quantity: 0 },
+  { id: 11, name: "Coke", description: "Chilled Coca-Cola", price: 3.49, category: "Drinks", imageUrl: "https://www.basicfun.com/wp-content/uploads/2023/07/34081_CocaCola_Item_F_Coke.jpg", quantity: 0 },
+  { id: 12, name: "Sprite", description: "Refreshing lemon-lime soda", price: 3.49, category: "Drinks", imageUrl: "https://i5.walmartimages.com/asr/23b7de79-cfc6-4764-a720-957aa667ec76.1708f37e94750898290d92adf357f112.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF", quantity: 0 },
+  { id: 13, name: "Water", description: "Bottled spring water", price: 2.49, category: "Drinks", imageUrl: "https://kidspressmagazine.com/wp-content/uploads/2014/04/dreamstime_xl_12522351.jpg", quantity: 0 },
+  { id: 14, name: "Iced Tea", description: "Cold sweetened iced tea", price: 3.49, category: "Drinks", imageUrl: "https://bakingmehungry.com/wp-content/uploads/2024/05/lipton-iced-tea-recipe-8.jpg", quantity: 0 }
 ];
 
 interface FoodDrinkItem {
@@ -41,9 +41,9 @@ const FoodAndDrinkScreen: React.FC = () => {
   const removeFromCart = (id: number) => {
     setCart((prevCart) => prevCart.filter(item => item.id !== id));
   };
-  
+
   const [currentCategory, setCurrentCategory] = useState<string>("");
- const { width } = Dimensions.get('window'); 
+  const { width } = Dimensions.get('window'); 
 
   const addToCart = (item: FoodDrinkItem) => {
     const existingItem = cart.find((cartItem) => cartItem.id === item.id);
@@ -78,12 +78,10 @@ const FoodAndDrinkScreen: React.FC = () => {
     );
   };
 
-  
   const calculateTotalPrice = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
 
-  
   const filterItemsByCategory = (category: string) => {
     return items.filter(item => item.category === category);
   };
@@ -135,15 +133,6 @@ const FoodAndDrinkScreen: React.FC = () => {
                   <Text style={styles.cardName}>{item.name}</Text>
                   <Text style={styles.cardDescription}>{item.description}</Text>
                   <Text style={styles.cardPrice}>${item.price.toFixed(2)}</Text>
-                  <View style={styles.quantityControls}>
-                    <TouchableOpacity onPress={() => decrementQuantity(item.id)} style={styles.quantityBtn}>
-                      <Text style={styles.quantityText}>-</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.quantityText}>{item.quantity}</Text>
-                    <TouchableOpacity onPress={() => incrementQuantity(item.id)} style={styles.quantityBtn}>
-                      <Text style={styles.quantityText}>+</Text>
-                    </TouchableOpacity>
-                  </View>
                   <TouchableOpacity style={styles.addToCartBtn} onPress={() => addToCart(item)}>
                     <Text style={styles.addToCartText}>Add to Cart</Text>
                   </TouchableOpacity>
@@ -194,7 +183,6 @@ const FoodAndDrinkScreen: React.FC = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -242,13 +230,6 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.7)', 
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
-  },
-  categoryArrow: {
-    position: 'absolute',
-    bottom: 15,
-    right: 20,
-    fontSize: 30,
-    color: '#fff',
   },
   backBtn: {
     backgroundColor: 'gray',
@@ -302,21 +283,6 @@ const styles = StyleSheet.create({
     color: '#333',
     marginBottom: 10,
   },
-  quantityControls: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  quantityBtn: {
-    backgroundColor: '#007BFF',
-    padding: 8,
-    borderRadius: 5,
-    marginHorizontal: 5,
-  },
-  quantityText: {
-    fontSize: 20,
-    color: '#fff',
-  },
   addToCartBtn: {
     backgroundColor: '#007BFF',
     padding: 12,
@@ -333,11 +299,6 @@ const styles = StyleSheet.create({
   cart: {
     marginTop: 30,
   },
-  cartWarning: {
-    color: 'red',
-    textAlign: 'center',
-    fontSize: 16,
-  },
   cartItems: {
     marginBottom: 20,
   },
@@ -346,6 +307,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f1f1',
     borderRadius: 10,
     marginBottom: 15,
+  },
+  quantityControls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  quantityBtn: {
+    backgroundColor: '#007BFF',
+    padding: 8,
+    borderRadius: 5,
+    marginHorizontal: 5,
+  },
+  quantityText: {
+    fontSize: 20,
+    color: '#000', 
   },
   removeBtn: {
     backgroundColor: 'red',
@@ -380,6 +356,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
 
 export default FoodAndDrinkScreen;
