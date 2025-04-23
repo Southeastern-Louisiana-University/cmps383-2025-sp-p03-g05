@@ -8,10 +8,14 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import NavBar from "../NavBar.tsx";
-import { Movie } from "../types.tsx";
+import { Movie, Theater } from "../types.tsx";
+import { useSelectedTheater } from "../Location/LocationContext.tsx";
 
-function MoviesList() {
+function NowShowing() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [currentTheater, setCurrentTheater] = useState<Theater>();
+
+  const theaterContext  = useSelectedTheater();
 
   useEffect(() => {
     fetch("/api/movies")
@@ -20,19 +24,31 @@ function MoviesList() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  useEffect(() => {
+    fetch(`/api/theaters/${theaterContext?.theater?.theaterId}`)
+      .then((response) => response.json())
+      .then((data) => setCurrentTheater(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [theaterContext]);
+
+  const filteredMovies = currentTheater?.showtimes
+    ? movies.filter((movie) =>
+        currentTheater.showtimes.some(
+          (showtime) => showtime.movieId === movie.id
+        )
+      )
+    : [];
+
   return (
     <>
       {NavBar()}
-      {/*<Typography variant="h3" sx={{ color: "#a800b7" }}>
-          Current Selections
-        </Typography>*/}
       <Grid2
         container
-        spacing={1}
+        spacing={4}
         justifyContent="center"
         sx={{ width: "100%", margin: 0 }}
       >
-        {movies.map((movie) => (
+        {filteredMovies.map((movie) => (
           <Grid2 size={3}>
             <Link href={`/movies/${movie.id}`} underline="none">
               <Card
@@ -44,6 +60,9 @@ function MoviesList() {
                   height: 600,
                   display: "flex",
                   flexDirection: "column",
+                  ":hover": {
+                    boxShadow: 20,
+                  },
                 }}
               >
                 <CardMedia sx={{ height: 500 }} image={movie.poster} />
@@ -63,4 +82,4 @@ function MoviesList() {
     </>
   );
 }
-export default MoviesList;
+export default NowShowing;

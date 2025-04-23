@@ -7,7 +7,7 @@ import "./SeatSelector.css";
 import HomePage from "./Home/Home";
 import TheaterList from "./Location/TheatersList";
 import TheaterDetails from "./Location/TheaterPage";
-import MoviesList from "./Movies/MovieSelections";
+import NowShowing from "./Movies/NowShowing";
 import MovieDetails from "./Movies/MoviePage";
 import MovieShowtimes from "./ShowtimesList";
 function App() {
@@ -23,7 +23,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/theaters" element={<TheaterList />} />
         <Route path="/theaters/:id" element={<TheaterDetails />} />
-        <Route path="/movies" element={<MoviesList />} />
+        <Route path="/movies" element={<NowShowing />} />
         <Route path="/movies/:id" element={<MovieDetails />} />
         <Route path="/movies/:id/showtimes" element={<MovieShowtimes />} />
       </Routes>

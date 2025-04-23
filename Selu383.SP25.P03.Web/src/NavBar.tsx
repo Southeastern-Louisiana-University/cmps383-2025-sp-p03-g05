@@ -52,11 +52,6 @@ const NavBar = () => {
             padding: "8px 0",
           }}
         >
-          {/*<Box
-            component="img"
-            sx={{ height: 50, width: 50 }}
-            src="./LDCDark.png"
-          ></Box>*/}
 
           <Box component={Link} href="/" color="#a800b7" underline="none">
             <Typography fontWeight={600} variant="h5">
