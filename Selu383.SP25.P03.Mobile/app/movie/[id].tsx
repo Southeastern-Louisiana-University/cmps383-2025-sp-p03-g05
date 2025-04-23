@@ -10,15 +10,21 @@ import {
   FlatList,
 } from "react-native";
 import { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
+
+export const screenOptions = {
+  title: 'Movie Details',
+};
 
 export default function MovieDetail() {
   const { id } = useLocalSearchParams();
-  const navigation = useNavigation();
+  const navigation = useRouter();
   const [movie, setMovie] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showtimes, setShowtimes] = useState<any[]>([]);
   const [theaters, setTheaters] = useState<any[]>([]);
+  const router = useRouter();
+
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -28,13 +34,13 @@ export default function MovieDetail() {
         );
         const data = await response.json();
         setMovie(data);
-        navigation.setOptions({ title: data.title });
       } catch (error) {
         console.error("Error fetching movie:", error);
       } finally {
         setLoading(false);
       }
     };
+
 
     const fetchShowtimes = async () => {
       try {
@@ -48,6 +54,7 @@ export default function MovieDetail() {
       }
     };
 
+
     const fetchTheaters = async () => {
       try {
         const response = await fetch(
@@ -60,12 +67,14 @@ export default function MovieDetail() {
       }
     };
 
+
     if (id) {
       fetchMovie();
       fetchShowtimes();
       fetchTheaters();
     }
   }, [id]);
+
 
   if (loading)
     return (
@@ -77,6 +86,7 @@ export default function MovieDetail() {
         Movie not found
       </Text>
     );
+
 
   const groupedByTheater = theaters.map((theater: any) => {
     const theaterShowtimes = showtimes.filter(
@@ -93,6 +103,7 @@ export default function MovieDetail() {
     };
   });
 
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.posterWrapper}>
@@ -108,6 +119,7 @@ export default function MovieDetail() {
       </Text>
       <Text style={styles.description}>{movie.description}</Text>
 
+
       {groupedByTheater.map((theater, idx) => {
         const hasShowtimes = Object.keys(theater.formats).length > 0;
         if (!hasShowtimes) return null;
@@ -120,10 +132,14 @@ export default function MovieDetail() {
                 <View style={styles.timeContainer}>
                   {shows.map((s: any) => (
                     <Pressable
-                      key={s.id}
-                      style={styles.timeButton}
-                      onPress={() => console.log("Selected showtime:", s)}
-                    >
+                    key={s.id}
+                    style={styles.timeButton}
+                    onPress={() => {
+                      console.log("Selected showtime:", s);
+                      console.log("Navigating to theater ID:", s.theaterId);
+                      navigation.push(`/seat-selector/${s.theaterId}`);
+                    }}
+                  >
                       <Text style={styles.timeText}>
                         {new Date(s.startTime).toLocaleTimeString([], {
                           hour: "numeric",
@@ -141,6 +157,7 @@ export default function MovieDetail() {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
