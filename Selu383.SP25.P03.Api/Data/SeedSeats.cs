@@ -9,6 +9,12 @@ namespace Selu383.SP25.P03.Api.Data
         {
             using (var context = new DataContext(serviceProvider.GetRequiredService<DbContextOptions<DataContext>>()))
             {
+
+                if (context.Theaters.Any())
+                {
+                    return; 
+                }
+
                 context.Seats.AddRange(
                     Enumerable.Range(0, 10).SelectMany(row =>
                         Enumerable.Range(1, 15).Select(col => new Seat
