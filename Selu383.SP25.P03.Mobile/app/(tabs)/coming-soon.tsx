@@ -1,38 +1,52 @@
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { comingSoonMovies } from '@/constants/comingSoonMovies';
+import { View, FlatList, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import { useThemeContext } from '../ThemeContext';
 
 export default function ComingSoon() {
-  const router = useRouter();
   const { isDark } = useThemeContext();
+  const router = useRouter();
+  const [movies, setMovies] = useState<any[]>([]);
 
-  if (!Array.isArray(comingSoonMovies)) {
-    return (
-      <Text style={{ color: isDark ? '#fff' : '#000', padding: 20 }}>
-        No upcoming movies
-      </Text>
-    );
-  }
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await fetch('https://selu383-sp25-p03-g05.azurewebsites.net/api/comingsoon');
+        const data = await response.json();
+        setMovies(data);
+      } catch (error) {
+        console.error('Error fetching coming soon movies:', error);
+      }
+    };
+
+    fetchMovies();
+  }, []);
 
   return (
-    <View style={[styles.container, { backgroundColor: isDark ? '#000' : '#f5f5f5' }]}>
-      <Text style={[styles.heading, { color: isDark ? '#fff' : '#000' }]}>Coming Soon</Text>
+    <View style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}>
+      <Text style={[styles.title, { color: isDark ? '#fff' : '#000' }]}>Coming Soon</Text>
       <FlatList
-        data={comingSoonMovies}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
+        data={movies}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => router.push(`/movie/${item.id}`)}
-            style={[styles.card, { backgroundColor: isDark ? '#111' : '#fff' }]}
-          >
-            <Image source={{ uri: item.image }} style={styles.image} />
-            <Text style={[styles.title, { color: isDark ? '#fff' : '#000' }]}>
-              {item.title}
-            </Text>
-          </TouchableOpacity>
+          <Pressable onPress={() => router.push(`/movie/${item.id}`)} style={styles.cardWrapper}>
+            <ImageBackground
+              source={{ uri: item.poster }}
+              style={styles.poster}
+              resizeMode="cover"
+            >
+              <View style={styles.titleOverlay}>
+                <Text style={styles.movieTitle} numberOfLines={1}>
+                  {item.title}
+                </Text>
+              </View>
+            </ImageBackground>
+          </Pressable>
         )}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
+        contentContainerStyle={{ paddingHorizontal: 0, paddingBottom: 16 }}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
@@ -41,31 +55,32 @@ export default function ComingSoon() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-  },
-  heading: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  card: {
-    flex: 1,
-    borderRadius: 12,
-    margin: 8,
-    overflow: 'hidden',
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-  },
-  image: {
-    height: 200,
-    width: '100%',
+    paddingTop: 16,
   },
   title: {
+    fontSize: 24,
     fontWeight: 'bold',
-    fontSize: 14,
-    padding: 8,
+    marginBottom: 12,
+    paddingHorizontal: 16,
+  },
+  cardWrapper: {
+    width: '50%',
+  },
+  poster: {
+    width: '100%',
+    aspectRatio: 2 / 3,
+    justifyContent: 'flex-end',
+    borderRadius: 0,
+  },
+  titleOverlay: {
+    backgroundColor: '#000',
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+  },
+  movieTitle: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
