@@ -3,6 +3,7 @@
     public class TicketDto
     {
         public int Id { get; set; }
+        public int ShowtimeId { get; set; }
         public string TicketNumber { get; set; }
         public List<int> SeatIds { get; set; }
         public double AmountPaid { get; set; }

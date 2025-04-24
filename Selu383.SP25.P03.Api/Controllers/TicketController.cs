@@ -57,6 +57,7 @@ namespace Selu383.SP25.P03.Api.Controllers
             var ticketDto = new TicketDto
             {
                 Id = ticket.Id,
+                ShowtimeId = ticket.showtimeId,
                 TicketNumber = ticket.TicketNumber,
                 SeatIds = ticket.SeatIds,
                 AmountPaid = ticket.AmountPaid,
