@@ -7,6 +7,7 @@ using Selu383.SP25.P03.Api.Features.Seats;
 using Selu383.SP25.P03.Api.Features.Tickets;
 using Selu383.SP25.P03.Api.Features.Showtimes;
 using Selu383.SP25.P03.Api.Features.Food;
+using Selu383.SP25.P03.Api.Features.ComingSoonMovies;
 
 using Selu383.SP25.P03.Api.Features.Movies;
 
@@ -25,6 +26,10 @@ namespace Selu383.SP25.P03.Api.Data
         public DbSet<Food> Foods { get; set; }          
 
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<ComingSoonMovie> ComingSoonMovies { get; set; }
+
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
