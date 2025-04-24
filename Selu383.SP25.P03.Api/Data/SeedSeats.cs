@@ -10,7 +10,7 @@ namespace Selu383.SP25.P03.Api.Data
             using (var context = new DataContext(serviceProvider.GetRequiredService<DbContextOptions<DataContext>>()))
             {
 
-                if (context.Theaters.Any())
+                if (context.Seats.Any())
                 {
                     return; 
                 }
@@ -19,7 +19,7 @@ namespace Selu383.SP25.P03.Api.Data
                     Enumerable.Range(0, 10).SelectMany(row =>
                         Enumerable.Range(1, 15).Select(col => new Seat
                         {
-                            TheaterId = 1,
+                            TheaterId = context.Theaters.First(x => x.Name == "Lion's Den Cinemas - New York").Id,
                             Row = ((char)('A' + row)).ToString(),
                             Col = col,
                             IsTaken = false
@@ -31,7 +31,7 @@ namespace Selu383.SP25.P03.Api.Data
                     Enumerable.Range(0, 10).SelectMany(row =>
                         Enumerable.Range(1, 20).Select(col => new Seat
                         {
-                            TheaterId = 2,
+                            TheaterId = context.Theaters.First(x => x.Name == "Lion's Den Cinemas - New Orleans").Id,
                             Row = ((char)('A' + row)).ToString(),
                             Col = col,
                             IsTaken = false
@@ -43,7 +43,7 @@ namespace Selu383.SP25.P03.Api.Data
                     Enumerable.Range(0, 12).SelectMany(row =>
                         Enumerable.Range(1, 25).Select(col => new Seat
                         {
-                            TheaterId = 3,
+                            TheaterId = context.Theaters.First(x => x.Name == "Lion's Den Cinemas - Los Angeles").Id,
                             Row = ((char)('A' + row)).ToString(),
                             Col = col,
                             IsTaken = false
