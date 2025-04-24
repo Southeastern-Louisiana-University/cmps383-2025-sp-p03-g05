@@ -20,7 +20,7 @@ namespace Selu383.SP25.P03.Api.Data
         }
 
         public DbSet<Theater> Theaters { get; set; }
-        public DbSet<Seats> Seats { get; set; }           
+        public DbSet<Seat> Seats { get; set; }           
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Showtime> Showtimes { get; set; }
         public DbSet<Food> Foods { get; set; }          
@@ -35,7 +35,7 @@ namespace Selu383.SP25.P03.Api.Data
             base.OnModelCreating(builder);
 
 
-     
+
             builder.Entity<UserRole>().HasKey(x => new { x.UserId, x.RoleId });
 
             builder.Entity<User>()
@@ -53,13 +53,10 @@ namespace Selu383.SP25.P03.Api.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
            
-            builder.Entity<Seats>()
+            builder.Entity<Seat>()
                 .Property(s => s.Row)
                 .IsRequired();
 
-            builder.Entity<Seats>()
-                .Property(s => s.Number)
-                .IsRequired();
 
             builder.Entity<Food>()
                 .Property(f => f.Price)

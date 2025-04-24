@@ -22,7 +22,7 @@ namespace Selu383.SP25.P03.Api.Controllers
             this.dataContext = dataContext;
             this.userManager = userManager;
             tickets = dataContext.Set<Ticket>();
-            seats = dataContext.Set<Seats>();
+            seats = dataContext.Set<Seat>();
         }
 
         [HttpPost("purchase")]

@@ -1,5 +1,4 @@
 ﻿using Selu383.SP25.P03.Api.Features.Theaters;
-using System.ComponentModel.DataAnnotations;
 
 namespace Selu383.SP25.P03.Api.Features.Seats
 {
