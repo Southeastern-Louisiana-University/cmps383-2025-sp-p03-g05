@@ -10,7 +10,7 @@ namespace Selu383.SP25.P03.Api.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.DropTable(name: "Seats");
         }
 
         /// <inheritdoc />
