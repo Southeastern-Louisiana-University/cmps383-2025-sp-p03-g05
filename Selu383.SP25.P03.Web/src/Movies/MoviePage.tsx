@@ -28,8 +28,19 @@ function MovieDetails() {
           <Box>
             <Typography variant="h2">{movie.title}</Typography>
             <Typography variant="body1">{movie.description}</Typography>
-            {/*Button Or "See Showtimes" */}
-            <Button variant="contained" href="/seats">Get Tickets</Button>
+            <Button
+              variant="contained"
+              href={`/movies/${movie.id}/showtimes`}
+              sx={{
+                backgroundColor: "#a800b7",
+                "&:hover": {
+                  backgroundColor: "#8a009b",
+                  color: "white",
+                },
+              }}
+            >
+              See Showtimes
+            </Button>
           </Box>
         </Stack>
       </>

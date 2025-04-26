@@ -22,13 +22,20 @@ const TheaterList = () => {
       {/*remember to run the backend in Visual Studio to test this section*/}
       {NavBar()}
       <div>
-        <h2>Select a Theater</h2>
+        <h2 style={{ textAlign: "center" }}>Select a Theater</h2>
         <ul>
           <Stack spacing={2} alignItems="center">
             {theaters.map((theater) => (
               <Button
                 variant="contained"
-                sx={{ textTransform: "none", backgroundColor: "#a800b7" }}
+                sx={{
+                  textTransform: "none",
+                  backgroundColor: "#a800b7",
+                  "&:hover": {
+                    backgroundColor: "#8a009b",
+                    color: "white",
+                  },
+                }}
                 onClick={() => {
                   theaterContext.setSelectedTheater({
                     theaterId: theater.id,

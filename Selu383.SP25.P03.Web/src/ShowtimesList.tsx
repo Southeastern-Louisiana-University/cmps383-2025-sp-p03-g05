@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { Theater, Showtime, Movie } from "./types.tsx";
 import NavBar from "./NavBar.tsx";
 import { useSelectedTheater } from "./Location/LocationContext.tsx";
+import { Button } from "@mui/material";
 
 function MovieShowtimes() {
   const { id } = useParams();
@@ -46,6 +47,24 @@ function MovieShowtimes() {
     ? showtimes.filter((showtime) => showtime.theaterId === currentTheater.id)
     : [];
 
+  const groupedShowtimes: Record<string, typeof filteredShowtimes> = {};
+
+  filteredShowtimes.forEach((showtime: Showtime) => {
+    const date = new Date(showtime.startTime).toLocaleDateString([], {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    });
+    //for each showtime that has been filtered by the movie id and theater id
+    //create a new date object with its
+
+    if (!groupedShowtimes[date]) {
+      groupedShowtimes[date] = [];
+    }
+
+    groupedShowtimes[date].push(showtime);
+  });
+
   return (
     <>
       {NavBar()}
@@ -54,20 +73,33 @@ function MovieShowtimes() {
           <h2>
             Showtimes for {movie.title} at {currentTheater.name}{" "}
           </h2>
-          <ul>
-            {filteredShowtimes.map((showtime) => (
-              <li key={showtime.id}>
-                {new Date(showtime.startTime).toLocaleTimeString([], {
-                  year: "numeric",
-                  month: "long",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: true
-                })}
-              </li>
-            ))}
-          </ul>
+
+          {Object.entries(groupedShowtimes).map(([date, showtimes]) => (
+            <div key={date}>
+              <h3>{date}</h3>
+              <ul>
+                {showtimes.map((showtime) => (
+                  <Button
+                    variant="contained"
+                    key={showtime.id}
+                    href="/seats"
+                    sx={{ backgroundColor: "#a800b7",
+                      '&:hover': {
+                        backgroundColor: "#8a009b",
+                        color: "white"
+                      }
+                    }}
+                  >
+                    {new Date(showtime.startTime).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}
+                  </Button>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       ) : (
         <p>
