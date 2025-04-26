@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Movie } from "./types.tsx";
-import NavBar from "./NavBar.tsx";
+import { Movie } from "../types.tsx";
+import NavBar from "../NavBar.tsx";
 import { Box, Button, Stack, Typography } from "@mui/material";
 
 function MovieDetails() {

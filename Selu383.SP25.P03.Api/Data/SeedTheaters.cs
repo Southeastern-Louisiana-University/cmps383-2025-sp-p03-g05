@@ -9,12 +9,13 @@ namespace Selu383.SP25.P03.Api.Data
         {
             using (var context = new DataContext(serviceProvider.GetRequiredService<DbContextOptions<DataContext>>()))
             {
-                // Look for any theaters.
+               
                 if (context.Theaters.Any())
                 {
                     return;   // DB has been seeded
                     //testing deployment
                 }
+
                 context.Theaters.AddRange(
                     new Theater
                     {
@@ -35,6 +36,7 @@ namespace Selu383.SP25.P03.Api.Data
                         SeatCount = 300
                     }
                 );
+
                 context.SaveChanges();
             }
         }

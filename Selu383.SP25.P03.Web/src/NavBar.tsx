@@ -1,6 +1,8 @@
 //import React from "react";
 import { Box, Link, Container, Typography, Stack } from "@mui/material";
 
+//const { theater } = useSelectedTheater();
+
 const menuItems = (
   <>
     <Typography
@@ -14,7 +16,7 @@ const menuItems = (
 
     <Typography
       component={Link}
-      href="/location"
+      href="/theaters"
       fontWeight={600}
       color="#a800b7"
     >
@@ -50,15 +52,10 @@ const NavBar = () => {
             padding: "8px 0",
           }}
         >
-          {/*<Box
-            component="img"
-            sx={{ height: 50, width: 50 }}
-            src="./LDCDark.png"
-          ></Box>*/}
 
           <Box component={Link} href="/" color="#a800b7" underline="none">
             <Typography fontWeight={600} variant="h5">
-              Lions Den Cinemas
+              Lion's Den Cinemas
             </Typography>
           </Box>
 

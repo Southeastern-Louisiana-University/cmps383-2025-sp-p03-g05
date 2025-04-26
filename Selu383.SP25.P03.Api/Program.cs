@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Selu383.SP25.P03.Api.Data;
 using Selu383.SP25.P03.Api.Features.Users;
+using Stripe;
 
 namespace Selu383.SP25.P03.Api
 {
@@ -12,7 +13,6 @@ namespace Selu383.SP25.P03.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DataContext") ?? throw new InvalidOperationException("Connection string 'DataContext' not found.")));
 
@@ -69,13 +69,19 @@ namespace Selu383.SP25.P03.Api
 
             var app = builder.Build();
 
+            var stripeSecretKey = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
+            StripeConfiguration.ApiKey = stripeSecretKey;
+
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<DataContext>();
                 await db.Database.MigrateAsync();
+                SeedFood.Initalize(scope.ServiceProvider);
                 SeedTheaters.Initialize(scope.ServiceProvider);
                 SeedMovies.Initialize(scope.ServiceProvider);
                 SeedShowtimes.Initialize(scope.ServiceProvider);
+                SeedComingSoonMovies.Initialize(scope.ServiceProvider);
+                SeedSeats.Initialize(scope.ServiceProvider);
                 await SeedRoles.Initialize(scope.ServiceProvider);
                 await SeedUsers.Initialize(scope.ServiceProvider);
             }
