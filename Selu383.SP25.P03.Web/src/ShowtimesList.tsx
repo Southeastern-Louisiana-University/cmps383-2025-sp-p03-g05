@@ -59,10 +59,11 @@ function MovieShowtimes() {
               <li key={showtime.id}>
                 {new Date(showtime.startTime).toLocaleTimeString([], {
                   year: "numeric",
-                  month: "2-digit",
+                  month: "long",
                   day: "2-digit",
                   hour: "2-digit",
                   minute: "2-digit",
+                  hour12: true
                 })}
               </li>
             ))}
