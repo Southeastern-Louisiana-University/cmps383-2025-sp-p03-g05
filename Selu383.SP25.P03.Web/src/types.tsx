@@ -19,7 +19,6 @@ export type Theater = {
 
 export type Showtime = {
     id: number;
-    time: string;
     startTime: string;
     movieId: number;
     theaterId: number;
