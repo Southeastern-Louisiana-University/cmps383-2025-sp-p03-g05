@@ -1,13 +1,28 @@
-type Movie = {
+export type Movie = {
     id: number;
     title: string;
     genre: string;
     year: number;
-    agerating: string;
+    ageRating: string
     poster: string;
-    description: string;
+    description: string
+}
+
+export type Theater = {
+    id: number;
+    name: string;
+    address: string;
+    seatCount: number;
+    managerId: number;
+    showtimes: Array<Showtime>;
   };
 
-
-
-  export type {Movie}
+export type Showtime = {
+    id: number;
+    time: string;
+    startTime: string;
+    movieId: number;
+    theaterId: number;
+    format: string;
+    available: boolean;
+  };

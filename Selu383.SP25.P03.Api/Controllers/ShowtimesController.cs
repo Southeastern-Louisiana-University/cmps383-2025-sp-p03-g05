@@ -37,12 +37,12 @@ namespace Selu383.SP25.P03.Api.Controllers
             return Ok(data);
         }
 
-        [HttpGet("{theaterId}/{movieId}")]
-        public IActionResult GetShowtimesTheaterMovie(int theaterId, int movieId)
+        [HttpGet("{movieId}")]
+        public IActionResult GetShowtimesMovie(int movieId)
         {
             var data = dataContext
                 .Set<Showtime>()
-                .Where(x => (x.TheaterId == theaterId) && (x.MovieId == movieId))
+                .Where(x => (x.MovieId == movieId))
                 .Select(Showtime => new ShowtimesGetDto
                 {
                     Id = Showtime.Id,

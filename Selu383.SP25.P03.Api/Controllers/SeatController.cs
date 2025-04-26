@@ -19,17 +19,21 @@ namespace Selu383.SP25.P03.Api.Controllers
         }
 
         [HttpGet("{theaterId}")]
-        public IQueryable<SeatDto> GetSeats(int theaterId)
+        public IActionResult GetSeats(int theaterId)
         {
-            return seats.Where(s => s.TheaterId == theaterId)
-                        .Select(s => new SeatDto
-                        {
-                            Id = s.Id,
-                            TheaterId = s.TheaterId,
-                            Row = s.Row,
-                            Col = s.Col,
-                            IsTaken = s.IsTaken
-                        });
+            var result = seats
+                .Where(s => s.TheaterId == theaterId)
+                .Select(s => new SeatDto
+                {
+                    Id = s.Id,
+                    TheaterId = s.TheaterId,
+                    Row = s.Row,
+                    Col = s.Col,
+                    IsTaken = s.IsTaken
+                })
+                .ToList(); 
+
+            return Ok(result);
         }
 
         [HttpPost("reserve")]

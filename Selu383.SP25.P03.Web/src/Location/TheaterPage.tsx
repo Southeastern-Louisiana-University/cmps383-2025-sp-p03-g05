@@ -1,22 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
-type Theater = {
-  id: number;
-  name: string;
-  address: string;
-  seatCount: number;
-  managerId: number;
-  showtimes: Array<Showtime>;
-};
-
-type Showtime = {
-  id: number;
-  time: string;
-  startTime: string;
-  format: string;
-  available: boolean;
-};
+import {Theater} from "../types.tsx"
 
 function TheaterDetails() {
   const { id } = useParams();
@@ -27,7 +11,7 @@ function TheaterDetails() {
       .then((response) => response.json())
       .then((data) => setTheater(data))
       .catch((error) => console.error("Error fetching theater:", error));
-  }, [id]);
+  }, []);
 
   if (theater) {
     console.log("Showtimes: ", theater?.showtimes);

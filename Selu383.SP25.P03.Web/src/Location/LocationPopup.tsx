@@ -39,13 +39,16 @@ const LocationPopup: React.FC = () => {
             .slice(0, 3); // Show top 3 closest
 
           setNearbyTheaters(sorted);
+          console.log("Works")
         },
         () => {
           setError("Location permission denied or unavailable.");
+          console.log("not working");
         }
       );
     } else {
       setError("Geolocation is not supported in this browser.");
+      console.log("not working");
     }
   }, []);
 

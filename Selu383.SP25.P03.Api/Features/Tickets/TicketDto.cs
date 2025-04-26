@@ -3,10 +3,15 @@
     public class TicketDto
     {
         public int Id { get; set; }
+        public int ShowtimeId { get; set; }
         public string TicketNumber { get; set; }
         public List<int> SeatIds { get; set; }
         public double AmountPaid { get; set; }
         public string Email { get; set; }
         public DateTime PurchaseDate { get; set; }
+
+        public int UserId { get; set; }  
+        public string UserName { get; set; }  
     }
+
 }
