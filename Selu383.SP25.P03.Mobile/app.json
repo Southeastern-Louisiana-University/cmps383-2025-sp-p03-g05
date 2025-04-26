@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Selu383-SP25-P03-Mobile-g0m",
-    "slug": "Selu383-SP25-P03-Mobile-g0m",
+    "name": "Selu383-SP25-P03-Mobile-g05",
+    "slug": "Selu383-SP25-P03-Mobile-g05",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -12,7 +12,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.selu383.sp25.p02.g05",
+      "package": "com.selu383.sp25.p03.g05",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"

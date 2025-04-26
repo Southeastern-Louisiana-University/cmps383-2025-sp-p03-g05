@@ -36,7 +36,7 @@ const LocationPopup: React.FC = () => {
               distance: getDistance(lat, lon, theater.lat, theater.lon),
             }))
             .sort((a: NearbyTheater, b: NearbyTheater) => a.distance - b.distance)
-            .slice(0, 3); // Show top 3 closest
+            .slice(0, 3); // Top 3 closest theaters
 
           setNearbyTheaters(sorted);
           console.log("Works")
@@ -52,24 +52,23 @@ const LocationPopup: React.FC = () => {
     }
   }, []);
 
-  if (error) {
-    return <div className="popup-content"><p>{error}</p></div>;
-  }
-
-  if (!userCoords || nearbyTheaters.length === 0) {
-    return <div className="popup-content"><p>Detecting your location...</p></div>;
-  }
-
   return (
     <div className="popup-content">
       <h2>🎬 Theaters Near You</h2>
-      {nearbyTheaters.map((theater, index) => (
-        <div key={index} className="theater-card">
-          <h3>{theater.name}</h3>
-          <p>{theater.address}</p>
-          <p>📍 {theater.distance.toFixed(2)} km away</p>
-        </div>
-      ))}
+
+      {error && <p>{error}</p>}
+
+      {!userCoords || nearbyTheaters.length === 0 ? (
+        <p>Detecting your location...</p>
+      ) : (
+        nearbyTheaters.map((theater, index) => (
+          <div key={index} className="theater-card">
+            <h3>{theater.name}</h3>
+            <p>{theater.address}</p>
+            <p><span className="pin-icon"></span>{theater.distance.toFixed(2)} miles away</p>
+          </div>
+        ))
+      )}
     </div>
   );
 };
