@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {Theater, Showtime} from "../types.tsx"
+import {Theater} from "../types.tsx"
 
 function TheaterDetails() {
   const { id } = useParams();

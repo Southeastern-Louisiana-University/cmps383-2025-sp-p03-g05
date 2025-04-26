@@ -15,7 +15,7 @@ function NowShowing() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [currentTheater, setCurrentTheater] = useState<Theater>();
 
-  const theaterContext  = useSelectedTheater();
+  const theaterContext = useSelectedTheater();
 
   useEffect(() => {
     fetch("/api/movies")
