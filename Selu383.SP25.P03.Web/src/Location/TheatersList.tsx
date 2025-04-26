@@ -24,7 +24,7 @@ const TheaterList = () => {
       <div>
         <h2>Select a Theater</h2>
         <ul>
-          <Stack spacing={2}>
+          <Stack spacing={2} alignItems="center">
             {theaters.map((theater) => (
               <Button
                 variant="contained"
