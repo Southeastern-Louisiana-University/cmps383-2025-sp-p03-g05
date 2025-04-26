@@ -146,7 +146,7 @@ namespace Selu383.SP25.P03.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ComingSoonMovies");
+                    b.ToTable("ComingSoonMovies", (string)null);
                 });
 
             modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Food.Food", b =>
@@ -178,7 +178,7 @@ namespace Selu383.SP25.P03.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Foods");
+                    b.ToTable("Foods", (string)null);
                 });
 
             modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Movies.Movie", b =>
@@ -217,7 +217,7 @@ namespace Selu383.SP25.P03.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Seats.Seat", b =>
@@ -245,7 +245,7 @@ namespace Selu383.SP25.P03.Api.Migrations
 
                     b.HasIndex("TheaterId");
 
-                    b.ToTable("Seats");
+                    b.ToTable("Seats", (string)null);
                 });
 
             modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Showtimes.Showtime", b =>
@@ -276,7 +276,7 @@ namespace Selu383.SP25.P03.Api.Migrations
 
                     b.HasIndex("TheaterId");
 
-                    b.ToTable("Showtimes");
+                    b.ToTable("Showtimes", (string)null);
                 });
 
             modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Theaters.Theater", b =>
@@ -306,7 +306,7 @@ namespace Selu383.SP25.P03.Api.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("Theaters");
+                    b.ToTable("Theaters", (string)null);
                 });
 
             modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Tickets.Ticket", b =>
@@ -345,7 +345,7 @@ namespace Selu383.SP25.P03.Api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("Selu383.SP25.P03.Api.Features.Users.Role", b =>

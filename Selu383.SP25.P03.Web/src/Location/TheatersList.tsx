@@ -24,8 +24,8 @@ const TheaterList = () => {
       <div>
         <h2>Select a Theater</h2>
         <ul>
-        <Stack spacing={2}>
-          {theaters.map((theater) => (
+          <Stack spacing={2}>
+            {theaters.map((theater) => (
               <Button
                 variant="contained"
                 sx={{ textTransform: "none", backgroundColor: "#a800b7" }}
@@ -42,7 +42,7 @@ const TheaterList = () => {
               >
                 <Typography variant="body2">{theater.name}</Typography>
               </Button>
-          ))}
+            ))}
           </Stack>
         </ul>
       </div>
