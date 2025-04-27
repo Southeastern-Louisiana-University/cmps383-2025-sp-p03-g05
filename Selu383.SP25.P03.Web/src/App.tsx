@@ -9,6 +9,7 @@ import TheaterList from "./Location/TheatersList";
 import TheaterDetails from "./Location/TheaterPage";
 import NowShowing from "./Movies/NowShowing";
 import MovieDetails from "./Movies/MoviePage";
+import ComingSoonMovies from "./Movies/ComingSoon";
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
         <Route path="/theaters/:id" element={<TheaterDetails />} />
         <Route path="/movies" element={<NowShowing />} />
         <Route path="/movies/:id" element={<MovieDetails />} />
+        <Route path="/comingsoon" element={<ComingSoonMovies />} />
       </Routes>
     </Router>
   );
