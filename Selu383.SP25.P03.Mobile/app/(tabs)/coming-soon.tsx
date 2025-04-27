@@ -28,10 +28,11 @@ export default function ComingSoon() {
       <FlatList
         data={movies}
         renderItem={({ item }) => (
-          <Pressable onPress={() => router.push(`/movie/${item.id}`)} style={styles.cardWrapper}>
+          <Pressable onPress={() => router.push(`../coming-soon/${item.id}`)} style={styles.cardWrapper}>
             <ImageBackground
               source={{ uri: item.poster }}
               style={styles.poster}
+              imageStyle={{ borderRadius: 8 }}  
               resizeMode="cover"
             >
               <View style={styles.titleOverlay}>
@@ -45,7 +46,7 @@ export default function ComingSoon() {
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         columnWrapperStyle={{ justifyContent: 'space-between' }}
-        contentContainerStyle={{ paddingHorizontal: 0, paddingBottom: 16 }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 16 }}
         showsVerticalScrollIndicator={false}
       />
     </View>
@@ -64,16 +65,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   cardWrapper: {
-    width: '50%',
+    width: '48%', 
+    marginBottom: 12,
   },
   poster: {
     width: '100%',
     aspectRatio: 2 / 3,
     justifyContent: 'flex-end',
-    borderRadius: 0,
+    overflow: 'hidden',
   },
   titleOverlay: {
-    backgroundColor: '#000',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     paddingVertical: 6,
     paddingHorizontal: 8,
   },
