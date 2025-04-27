@@ -1,9 +1,11 @@
-//import React from "react";
 import { Box, Link, Container, Typography, Stack } from "@mui/material";
 import  { useState } from 'react';
 import LoginDialog from './LoginDialog'
 
-const [open, setOpen] = useState(false);
+
+const NavBar = () => {
+
+  const [open, setOpen] = useState(false);
 
 const handleOpenDialog = () => {
   setOpen(true);
@@ -50,10 +52,6 @@ const menuItems = (
     <LoginDialog open={open} handleCloseDialog={handleCloseDialog} onSubmit={handleSubmit} />
   </>
 );
-
-
-const NavBar = () => {
-
   
   return (
     <Box

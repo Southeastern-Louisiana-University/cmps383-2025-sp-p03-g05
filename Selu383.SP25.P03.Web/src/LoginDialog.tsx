@@ -22,7 +22,7 @@ const LoginPopup: React.FC<LoginFormProps> = ({ open, handleCloseDialog, onSubmi
   //const [open, setOpen] = useState(false);
   
   // State for form inputs
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   // // Handle opening the dialog
@@ -38,12 +38,37 @@ const LoginPopup: React.FC<LoginFormProps> = ({ open, handleCloseDialog, onSubmi
   // Handle form submission
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSubmit(email, password);
+    onSubmit(username, password);
     handleCloseDialog();
     // Reset form
-    setEmail('');
+    setUsername('');
     setPassword('');
   };
+
+  const handleSubmitTest = async(event: React.FormEvent, username:string, password:string) => {
+    try{
+      event.preventDefault();
+      const response = await fetch("/api/users", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      console.log(response);
+      if (!response.ok) {
+        throw new Error('Login failed!');
+      }
+  
+      const data = await response.json();
+
+      return data;
+    }catch (error) {
+      console.error("Error submitting form:", error);
+      throw error;
+    }
+  }
 
   return (
     <div>
@@ -55,22 +80,22 @@ const LoginPopup: React.FC<LoginFormProps> = ({ open, handleCloseDialog, onSubmi
       {/* Dialog popup */}
       <Dialog open={open} onClose={handleCloseDialog}>
         <DialogTitle>Login</DialogTitle>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitTest}>
           <DialogContent>
             <DialogContentText>
-              Please enter your email and password to log in.
+              Please enter your Username and password to log in.
             </DialogContentText>
             <Box sx={{ mt: 2 }}>
               <TextField
                 autoFocus
                 margin="dense"
-                id="email"
-                label="Email Address"
-                type="email"
+                id="username"
+                label="Username"
+                type="username"
                 fullWidth
                 variant="outlined"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
               <TextField

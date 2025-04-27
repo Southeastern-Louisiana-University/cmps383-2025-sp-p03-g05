@@ -1,5 +1,5 @@
 import "./Home.css";
-import MovieCarousel from "./MovieCarousel";
+import MovieCarousel from "./Movies/MovieCarousel";
 import NavBar from "./NavBar";
 //import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 //import { Margin } from "@mui/icons-material";
@@ -8,7 +8,7 @@ import NavBar from "./NavBar";
 
 function Home() {
 
-  
+
   return (
     <>
     {NavBar()}
