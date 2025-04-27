@@ -1,168 +1,260 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { View, Text, StyleSheet, ScrollView, Pressable, TouchableOpacity } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 
-
-interface Seat {
-  id: number;
-  row: string;
-  col: number;
-  isTaken: boolean;
-}
-
+type Seat = {
+  id: string; 
+  isBooked: boolean;
+};
 
 export default function SeatSelector() {
-  const { theaterId } = useLocalSearchParams();
-  const [seats, setSeats] = useState<Seat[] | null>(null);
-  const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
-  const router = useRouter();
-
+  const { theaterID } = useLocalSearchParams();
+  const [seatsLayout, setSeatsLayout] = useState<(Seat | null)[][]>([]);
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchSeats = async () => {
-      try {
-        const response = await fetch(`https://selu383-sp25-p03-g05.azurewebsites.net/api/seats/${theaterId}`);
-        const data = await response.json();
-        console.log("Fetched seats:", data);
-        setSeats(data);
-      } catch (error) {
-        console.error('Failed to fetch seats:', error);
-      }
-    };
-    if (theaterId) {
-      fetchSeats();
+    if (theaterID) {
+      generateSeatsForTheater(theaterID as string);
     }
-  }, [theaterId]);
+  }, [theaterID]);
 
+  const generateSeatsForTheater = (theaterId: string) => {
+    let layout: (Seat | null)[][] = [];
+  
+    if (theaterId === '1') {
+      for (let row = 0; row < 10; row++) {
+        let currentRow: (Seat | null)[] = [];
+        let seatNumber = 1;
+        for (let col = 1; col <= 15; col++) {
+          if (col === 8) {
+            currentRow.push(null); 
+          } else {
+            currentRow.push({
+              id: `${String.fromCharCode(65 + row)}${seatNumber++}`,
+              isBooked: false,
+            });
+          }
+        }
+        layout.push(currentRow);
+      }
+    } else if (theaterId === '2') {
+      for (let row = 0; row < 10; row++) {
+        let currentRow: (Seat | null)[] = [];
+        let seatNumber = 1;
+        for (let col = 1; col <= 20; col++) {
+          if (col === 11) {
+            currentRow.push(null); 
+          } else {
+            currentRow.push({
+              id: `${String.fromCharCode(65 + row)}${seatNumber++}`,
+              isBooked: false,
+            });
+          }
+        }
+        layout.push(currentRow);
+      }
+    } else if (theaterId === '3') {
+      for (let row = 0; row < 12; row++) {
+        let currentRow: (Seat | null)[] = [];
+        let seatNumber = 1;
+        for (let col = 1; col <= 25; col++) {
+          if (col === 9 || col === 18) {
+            currentRow.push(null); 
+          } else {
+            currentRow.push({
+              id: `${String.fromCharCode(65 + row)}${seatNumber++}`,
+              isBooked: false,
+            });
+          }
+        }
+        layout.push(currentRow);
+      }
+    }
+  
+    setSeatsLayout(layout);
+  };
+  
 
-  const toggleSeat = (seatId: number) => {
+  const toggleSeat = (seatId: string) => {
     setSelectedSeats(prev =>
       prev.includes(seatId) ? prev.filter(id => id !== seatId) : [...prev, seatId]
     );
   };
 
+  const renderSeats = () => {
+    if (seatsLayout.length === 0) return <Text style={{ color: 'white' }}>No seats available.</Text>;
 
-  const renderRows = () => {
-    if (!Array.isArray(seats)) {
-      return (
-        <Text style={{ color: 'white' }}>No seat data found for this theater.</Text>
-      );
-    }
-
-
-    const rows = Array.from(new Set(seats.map(seat => seat.row)));
-    return rows.map(row => (
-      <View key={row} style={styles.row}>
-        <Text style={styles.rowLabel}>{row}</Text>
-        <View style={styles.rowSeats}>
-          {seats
-            .filter(seat => seat.row === row)
-            .sort((a, b) => a.col - b.col)
-            .map(seat => (
-              <TouchableOpacity
+    return seatsLayout.map((row, rowIndex) => (
+      <View key={rowIndex} style={styles.row}>
+        <Text style={styles.rowLabel}>{String.fromCharCode(65 + rowIndex)}</Text>
+        <View style={styles.seatRow}>
+          {row.map((seat, index) => {
+            if (seat === null) {
+              return <View key={`space-${index}`} style={styles.space} />;
+            }
+            return (
+              <Pressable
                 key={seat.id}
-                onPress={() => !seat.isTaken && toggleSeat(seat.id)}
-                style={[styles.seat,
-                  seat.isTaken ? styles.seatTaken : selectedSeats.includes(seat.id) ? styles.seatSelected : styles.seatAvailable]}
+                onPress={() => toggleSeat(seat.id)}
+                style={[
+                  styles.seat,
+                  seat.isBooked
+                    ? styles.seatBooked
+                    : selectedSeats.includes(seat.id)
+                    ? styles.seatSelected
+                    : styles.seatAvailable,
+                ]}
               >
-                <Text style={styles.seatText}>{seat.col}</Text>
-              </TouchableOpacity>
-            ))}
+                <Text style={styles.seatText}>
+                  {seat.id.replace(/^[A-Z]/, '')}
+                </Text>
+              </Pressable>
+            );
+          })}
         </View>
       </View>
     ));
   };
 
-
-  const handleReserve = async () => {
-    try {
-      const response = await fetch('https://selu383-sp25-p03-g05.azurewebsites.net/api/seats/reserve', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(selectedSeats),
-      });
-      const result = await response.json();
-      alert(result.message);
-      setSelectedSeats([]);
-    } catch (error) {
-      alert('Reservation failed.');
-      console.error(error);
-    }
-  };
-
-
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Select Your Seats</Text>
-      {renderRows()}
-      <TouchableOpacity style={styles.reserveButton} onPress={handleReserve}>
-        <Text style={styles.reserveText}>Confirm Reservation</Text>
+    <ScrollView 
+      contentContainerStyle={styles.container}
+      maximumZoomScale={3}
+      minimumZoomScale={1}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.screen}>
+        <Text style={styles.screenText}>SCREEN</Text>
+      </View>
+
+      <ScrollView horizontal showsHorizontalScrollIndicator={true}>
+        <View style={styles.seatsArea}>
+          {renderSeats()}
+        </View>
+      </ScrollView>
+
+      <View style={styles.legendContainer}>
+        <View style={styles.legendItem}>
+          <View style={[styles.legendBox, { backgroundColor: '#1e293b' }]} />
+          <Text style={styles.legendText}>Available</Text>
+        </View>
+        <View style={styles.legendItem}>
+          <View style={[styles.legendBox, { backgroundColor: '#444' }]} />
+          <Text style={styles.legendText}>Booked</Text>
+        </View>
+        <View style={styles.legendItem}>
+          <View style={[styles.legendBox, { backgroundColor: '#a800b7' }]} />
+          <Text style={styles.legendText}>Selected</Text>
+        </View>
+      </View>
+
+      <TouchableOpacity style={styles.reserveButton}>
+        <Text style={styles.reserveText}>Add to Cart</Text>
       </TouchableOpacity>
     </ScrollView>
   );
 }
 
-
-const PURPLE = '#a800b7';
-const GRAY = '#9e9e9e';
-const GREEN = '#4caf50';
-const ORANGE = '#ff9800';
-
-
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    paddingTop: 20,
+    paddingBottom: 40,
     alignItems: 'center',
-    backgroundColor: '#000',
+    backgroundColor: '#121212',
+    minHeight: '100%',
   },
-  title: {
-    fontSize: 24,
+  screen: {
+    width: '70%',
+    height: 30,
+    marginBottom: 30,
+    backgroundColor: '#aaa',
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.4,
+    shadowRadius: 5,
+  },
+  screenText: {
     fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#fff',
+    color: '#1a1a1a',
+    letterSpacing: 1,
+  },
+  seatsArea: {
+    alignItems: 'center',
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 10,
   },
   rowLabel: {
     width: 20,
     marginRight: 8,
-    fontWeight: 'bold',
     color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 12,
+    textAlign: 'center',
   },
-  rowSeats: {
+  seatRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    alignItems: 'center',
   },
   seat: {
-    width: 30,
-    height: 30,
-    margin: 4,
-    alignItems: 'center',
+    width: 28,
+    height: 28,
+    marginHorizontal: 2,
+    marginVertical: 4,
+    borderRadius: 6,
     justifyContent: 'center',
-    borderRadius: 4,
+    alignItems: 'center',
   },
   seatAvailable: {
-    backgroundColor: GREEN,
+    backgroundColor: '#1e293b',
   },
-  seatTaken: {
-    backgroundColor: GRAY,
+  seatBooked: {
+    backgroundColor: '#444',
+    opacity: 0.5,
   },
   seatSelected: {
-    backgroundColor: ORANGE,
+    backgroundColor: '#a800b7',
   },
   seatText: {
     color: '#fff',
+    fontSize: 8,
+    fontWeight: 'bold',
+  },
+  space: {
+    width: 20,
+    height: 20,
+    marginHorizontal: 6,
+  },
+  legendContainer: {
+    flexDirection: 'row',
+    marginTop: 30,
+    marginBottom: 20,
+    gap: 20,
+    justifyContent: 'center',
+  },
+  legendItem: {
+    alignItems: 'center',
+  },
+  legendBox: {
+    width: 20,
+    height: 20,
+    borderRadius: 5,
+    marginBottom: 4,
+  },
+  legendText: {
+    color: '#ccc',
     fontSize: 12,
   },
   reserveButton: {
-    backgroundColor: PURPLE,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 6,
-    marginTop: 30,
+    backgroundColor: '#a800b7',
+    paddingVertical: 14,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+    marginTop: 10,
   },
   reserveText: {
     color: '#fff',
@@ -170,5 +262,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-
