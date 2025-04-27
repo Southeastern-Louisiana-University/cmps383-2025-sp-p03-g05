@@ -35,3 +35,8 @@ export type ComingSoon = {
   poster: string;
   description: string;
 };
+
+export type Seat = {
+  id: string;
+  isBooked: boolean;
+};

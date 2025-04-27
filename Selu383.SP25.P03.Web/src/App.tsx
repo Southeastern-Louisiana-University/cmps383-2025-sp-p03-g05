@@ -19,7 +19,7 @@ function App() {
           element={<LoginPage onClose={() => console.log("Login closed")} />}
         />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/seats" element={<SeatSelector />} />
+        <Route path="/seats/:theaterId" element={<SeatSelector />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/theaters" element={<TheaterList />} />
         <Route path="/theaters/:id" element={<TheaterDetails />} />

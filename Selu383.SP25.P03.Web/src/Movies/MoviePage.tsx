@@ -82,7 +82,7 @@ function MovieDetails() {
                     <Button
                       variant="contained"
                       key={showtime.id}
-                      href="/seats"
+                      href={`/seats/${theaterContext.theater?.theaterId}`}
                       sx={{
                         backgroundColor: "#a800b7",
                         "&:hover": {
