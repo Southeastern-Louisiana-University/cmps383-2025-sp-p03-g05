@@ -1,21 +1,21 @@
 import { View, FlatList, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
-import { useThemeContext } from '../ThemeContext';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
+import { useThemeContext } from '../ThemeContext';
 
-export default function HomePage() {
+export default function ComingSoon() {
   const { isDark } = useThemeContext();
-  const [movies, setMovies] = useState<any[]>([]);
   const router = useRouter();
+  const [movies, setMovies] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch('https://selu383-sp25-p03-g05.azurewebsites.net/api/movies');
+        const response = await fetch('https://selu383-sp25-p03-g05.azurewebsites.net/api/comingsoon');
         const data = await response.json();
         setMovies(data);
       } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error('Error fetching coming soon movies:', error);
       }
     };
 
@@ -24,14 +24,15 @@ export default function HomePage() {
 
   return (
     <View style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}>
-      <Text style={[styles.title, { color: isDark ? '#fff' : '#000' }]}>Now Showing</Text>
+      <Text style={[styles.title, { color: isDark ? '#fff' : '#000' }]}>Coming Soon</Text>
       <FlatList
         data={movies}
         renderItem={({ item }) => (
-          <Pressable onPress={() => router.push(`/movie/${item.id}`)} style={styles.cardWrapper}>
+          <Pressable onPress={() => router.push(`../coming-soon/${item.id}`)} style={styles.cardWrapper}>
             <ImageBackground
               source={{ uri: item.poster }}
               style={styles.poster}
+              imageStyle={{ borderRadius: 8 }}  
               resizeMode="cover"
             >
               <View style={styles.titleOverlay}>
@@ -45,7 +46,7 @@ export default function HomePage() {
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         columnWrapperStyle={{ justifyContent: 'space-between' }}
-        contentContainerStyle={{ paddingHorizontal: 0, paddingBottom: 16 }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 16 }}
         showsVerticalScrollIndicator={false}
       />
     </View>
@@ -64,16 +65,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   cardWrapper: {
-    width: '50%', 
+    width: '48%', 
+    marginBottom: 12,
   },
   poster: {
     width: '100%',
     aspectRatio: 2 / 3,
     justifyContent: 'flex-end',
-    borderRadius: 0, 
+    overflow: 'hidden',
   },
   titleOverlay: {
-    backgroundColor: '#000',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     paddingVertical: 6,
     paddingHorizontal: 8,
   },

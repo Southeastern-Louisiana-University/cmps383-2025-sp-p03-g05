@@ -1,8 +1,6 @@
 //import React from "react";
 import { Box, Link, Container, Typography, Stack } from "@mui/material";
 
-//const { theater } = useSelectedTheater();
-
 const menuItems = (
   <>
     <Typography
@@ -12,6 +10,9 @@ const menuItems = (
       color="#a800b7"
     >
       Now Showing
+    </Typography>
+    <Typography component={Link} href="/comingsoon" fontWeight={600} color="#a800b7">
+      Coming Soon
     </Typography>
 
     <Typography
@@ -34,53 +35,54 @@ const menuItems = (
 
 const NavBar = () => {
   return (
-    <Box
-      sx={{
-        width: "100%",
-        backgroundColor: "#121212",
-        boxShadow: "0px 4px 4px rgba(0,0,0,0.1)",
-        padding: "20px 0px",
-        "& a": { textDecoration: "none" },
-      }}
-    >
-      <Container>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{
-            padding: "8px 0",
-          }}
-        >
-
-          <Box component={Link} href="/" color="#a800b7" underline="none">
-            <Typography fontWeight={600} variant="h5">
-              Lion's Den Cinemas
-            </Typography>
-          </Box>
-
+    <>
+      <Box
+        sx={{
+          width: "100%",
+          backgroundColor: "#121212",
+          boxShadow: "0px 4px 4px rgba(0,0,0,0.1)",
+          padding: "20px 0px",
+          "& a": { textDecoration: "none" },
+        }}
+      >
+        <Container>
           <Stack
             direction="row"
-            gap={4}
+            justifyContent="space-between"
             alignItems="center"
             sx={{
-              "& a:hover": {
-                transition: "ease-in-out 0.2s",
-              },
-              display: {
-                xs: "none",
-                sm: "none",
-                md: "none",
-                lg: "flex",
-                xl: "flex",
-              },
+              padding: "8px 0",
             }}
           >
-            {menuItems}
+            <Box component={Link} href="/" color="#a800b7" underline="none">
+              <Typography fontWeight={600} variant="h5">
+                Lion's Den Cinemas
+              </Typography>
+            </Box>
+
+            <Stack
+              direction="row"
+              gap={4}
+              alignItems="center"
+              sx={{
+                "& a:hover": {
+                  transition: "ease-in-out 0.2s",
+                },
+                display: {
+                  xs: "none",
+                  sm: "none",
+                  md: "none",
+                  lg: "flex",
+                  xl: "flex",
+                },
+              }}
+            >
+              {menuItems}
+            </Stack>
           </Stack>
-        </Stack>
-      </Container>
-    </Box>
+        </Container>
+      </Box>
+    </>
   );
 };
 export default NavBar;

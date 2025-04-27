@@ -1,14 +1,17 @@
-﻿namespace Selu383.SP25.P03.Api.Features.Food
+﻿namespace Selu383.SP25.P03.Api.Features.Foods
 {
-    public class Food
+    public class FoodDto
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
+
         public string Description { get; set; }
-        public string ImageUrl { get; set; }
+
         public decimal Price { get; set; }
+
         public string Category { get; set; }
 
-        // Test
+        public string ImageUrl { get; set; }
     }
 }

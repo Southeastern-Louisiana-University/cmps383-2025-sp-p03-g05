@@ -19,9 +19,7 @@ function Home() {
           <div></div>
           {MovieCarousel()}
         </div>
-        <div className="bottomBanner">
-          <button className="showTimeButton">ShowTimes</button>
-        </div>
+        <div className="bottomBanner"></div>
         <Box
           sx={{
             backgroundColor: "#1a1a1a",

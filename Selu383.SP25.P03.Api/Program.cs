@@ -84,6 +84,7 @@ namespace Selu383.SP25.P03.Api
                 SeedSeats.Initialize(scope.ServiceProvider);
                 await SeedRoles.Initialize(scope.ServiceProvider);
                 await SeedUsers.Initialize(scope.ServiceProvider);
+                
             }
 
             // Configure the HTTP request pipeline.

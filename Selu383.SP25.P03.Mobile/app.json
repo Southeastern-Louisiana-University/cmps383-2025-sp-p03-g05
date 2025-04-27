@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Selu383-SP25-P03-Mobile-g0m",
-    "slug": "Selu383-SP25-P03-Mobile-g0m",
+    "name": "Selu383-SP25-P03-Mobile-g05",
+    "slug": "Selu383-SP25-P03-Mobile-g05",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -12,7 +12,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.selu383.sp25.p02.g05",
+      "package": "com.selu383.sp25.p03.g05",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -44,8 +44,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "e95139bf-8895-4900-ac44-691cb1fabdcc",
-        "owner": "sona.bhatta@selu.edu"
+        "projectId": "6e889f7d-ee95-40ba-8f4a-e86842ed5b64"
       }
     }
   }
