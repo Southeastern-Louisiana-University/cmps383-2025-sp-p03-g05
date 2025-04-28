@@ -1,7 +1,27 @@
-//import React from "react";
 import { Box, Link, Container, Typography, Stack } from "@mui/material";
+import  { useState } from 'react';
+import LoginDialog from './LoginDialog'
+
+
+const NavBar = () => {
+
+  const [open, setOpen] = useState(false);
+
+const handleOpenDialog = () => {
+  setOpen(true);
+};
+
+const handleCloseDialog = () => {
+  setOpen(false);
+};
+
+const handleSubmit = (email: string, password: string) => {
+  alert(`Logged in with ${email} and password ${password}`);
+};
+
 
 const menuItems = (
+
   <>
     <Typography
       component={Link}
@@ -27,13 +47,13 @@ const menuItems = (
     <Typography component={Link} href="/" fontWeight={600} color="#a800b7">
       Food & Drinks
     </Typography>
-    <Typography component={Link} href="/login" fontWeight={600} color="#a800b7">
+    <Typography component={Link} onClick={handleOpenDialog} fontWeight={600} color="#a800b7" >
       Sign In
     </Typography>
+    <LoginDialog open={open} handleCloseDialog={handleCloseDialog} onSubmit={handleSubmit} />
   </>
 );
-
-const NavBar = () => {
+  
   return (
     <>
       <Box
@@ -86,3 +106,5 @@ const NavBar = () => {
   );
 };
 export default NavBar;
+
+
