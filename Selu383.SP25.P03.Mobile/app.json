@@ -16,8 +16,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.selu383.sp25.p03.g0m"
+      }
     },
     "web": {
       "bundler": "metro",
@@ -46,6 +45,7 @@
       "eas": {
         "projectId": "6e889f7d-ee95-40ba-8f4a-e86842ed5b64"
       }
-    }
+    },
+    "owner": "sonabhatta"
   }
 }
