@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Button,
@@ -10,120 +9,103 @@ import {
   TextField,
   Box
 } from '@mui/material';
+import { useRouter } from 'next/router'; // Assuming Next.js (adjust if not)
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Install if needed
+import { DeviceEventEmitter, Alert } from 'react-native'; // Install if needed
 
 interface LoginFormProps {
-  onSubmit: (email: string, password: string) => void;
   open: boolean;
   handleCloseDialog: () => void;
 }
 
-const LoginPopup: React.FC<LoginFormProps> = ({ open, handleCloseDialog, onSubmit }) => {
-  // State for controlling the dialog
-  //const [open, setOpen] = useState(false);
-  
-  // State for form inputs
+const LoginPopup: React.FC<LoginFormProps> = ({ open, handleCloseDialog }) => {
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // // Handle opening the dialog
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // // Handle closing the dialog
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-
-  // Handle form submission
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    onSubmit(username, password);
-    handleCloseDialog();
-    // Reset form
-    setUsername('');
-    setPassword('');
-  };
-
-  const handleSubmitTest = async(event: React.FormEvent, username:string, password:string) => {
-    try{
-      event.preventDefault();
-      const response = await fetch("/api/users", {
+    try {
+      const response = await fetch('https://selu383-sp25-p03-g05.azurewebsites.net/api/authentication/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userName: username, password }),
+        credentials: 'include', // Important for cookies/session
       });
 
-      console.log(response);
       if (!response.ok) {
-        throw new Error('Login failed!');
+        const error = await response.json();
+        Alert.alert('Login failed', error.message || 'Invalid username or password');
+        return;
       }
-  
-      const data = await response.json();
 
-      return data;
-    }catch (error) {
-      console.error("Error submitting form:", error);
-      throw error;
+      const user = await response.json();
+      const role = user.roles?.[0] || 'User';
+
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+      await AsyncStorage.setItem('userRole', role);
+
+      DeviceEventEmitter.emit('authChanged');
+
+      if (role === 'Admin') {
+        router.replace('/admin-dashboard');
+      } else {
+        // If not admin, just close the login dialog
+        handleCloseDialog();
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      Alert.alert('Error', 'Something went wrong. Check backend connection.');
     }
-  }
+  };
 
   return (
-    <div>
-      {/* Button that triggers the login popup
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        Login
-      </Button> */}
-      
-      {/* Dialog popup */}
-      <Dialog open={open} onClose={handleCloseDialog}>
-        <DialogTitle>Login</DialogTitle>
-        <form onSubmit={handleSubmitTest}>
-          <DialogContent>
-            <DialogContentText>
-              Please enter your Username and password to log in.
-            </DialogContentText>
-            <Box sx={{ mt: 2 }}>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="username"
-                label="Username"
-                type="username"
-                fullWidth
-                variant="outlined"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-              <TextField
-                margin="dense"
-                id="password"
-                label="Password"
-                type="password"
-                fullWidth
-                variant="outlined"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDialog}>Cancel</Button>
-            <Button type="submit" variant="contained" color="primary">
-              Login
-            </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
-    </div>
+    <Dialog open={open} onClose={handleCloseDialog}>
+      <DialogTitle>Login</DialogTitle>
+      <form onSubmit={handleLogin}>
+        <DialogContent>
+          <DialogContentText>
+            Please enter your Username and Password to log in.
+          </DialogContentText>
+          <Box sx={{ mt: 2 }}>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="username"
+              label="Username"
+              type="text"
+              fullWidth
+              variant="outlined"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <TextField
+              margin="dense"
+              id="password"
+              label="Password"
+              type="password"
+              fullWidth
+              variant="outlined"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button type="submit" variant="contained" color="primary">
+            Login
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 };
 
 export default LoginPopup;
+
 
 // // Example usage
 // const App = () => {
