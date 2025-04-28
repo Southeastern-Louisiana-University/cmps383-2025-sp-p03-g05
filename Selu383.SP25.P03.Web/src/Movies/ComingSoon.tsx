@@ -22,7 +22,7 @@ function ComingSoonMovies() {
 
   return (
     <>
-      {NavBar()}
+      <NavBar />
       <Grid2
         container
         spacing={4}

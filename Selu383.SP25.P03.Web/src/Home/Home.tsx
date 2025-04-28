@@ -13,11 +13,11 @@ function Home() {
 
   return (
     <>
-      {NavBar()}
+      <NavBar />
       <div className="background">
         <div className="middleBanner">
           <div></div>
-          {MovieCarousel()}
+          <MovieCarousel />
         </div>
         <div className="bottomBanner"></div>
         <Box

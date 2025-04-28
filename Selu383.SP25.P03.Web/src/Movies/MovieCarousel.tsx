@@ -95,7 +95,7 @@ const MovieCarousel = () => {
                 {/* Adjusted size */}
                 <div className="text-base text-gray-700 mb-1">
                   {movie.genre} &bull; {movie.ageRating}
-          <Button href="/theaters">Buy Tickets </Button>
+                  <Button href="/theaters">Buy Tickets </Button>
                 </div>
               </div>
             </div>
@@ -133,7 +133,6 @@ const MovieCarousel = () => {
       >
         <ArrowForwardIos />
       </IconButton>
-
     </Box>
   );
 };
