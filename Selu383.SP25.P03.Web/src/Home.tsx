@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import "./Home.css";
 import MovieCarousel from "./Movies/MovieCarousel";
 import NavBar from "./NavBar";
@@ -16,12 +17,6 @@ function Home() {
         <div className="middleBanner">
           <div></div>
           {MovieCarousel()}
-        </div>
-        <div className="bottomBanner">
-            <button className="showTimeButton">
-                ShowTimes
-            </button>
-
         </div>
       </div>
     </>

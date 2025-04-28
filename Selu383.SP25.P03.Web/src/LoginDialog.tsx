@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 interface LoginDialogProps {
   open: boolean;
   handleCloseDialog: () => void;
+  onSubmit: (email: string, password: string) => void; // Add this line
 }
 
 const LoginPopup: React.FC<LoginDialogProps> = ({
