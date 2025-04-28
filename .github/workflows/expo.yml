@@ -47,8 +47,7 @@ jobs:
       - name: 🛳️ Make Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          repo_token: 2ILvQxn5Bd2zHDNy-N8opStAM_-VuPnT1s_EEuhS
-
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
           files: |
