@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { Movie } from "../types";
 import "./MovieCarousel.css";
@@ -95,6 +95,7 @@ const MovieCarousel = () => {
                 {/* Adjusted size */}
                 <div className="text-base text-gray-700 mb-1">
                   {movie.genre} &bull; {movie.ageRating}
+          <Button href="/theaters">Buy Tickets </Button>
                 </div>
               </div>
             </div>
@@ -132,6 +133,7 @@ const MovieCarousel = () => {
       >
         <ArrowForwardIos />
       </IconButton>
+
     </Box>
   );
 };
