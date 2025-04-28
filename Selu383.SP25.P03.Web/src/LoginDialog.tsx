@@ -12,9 +12,6 @@ import {
   Alert as MuiAlert,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-//import { useRouter } from "next/router"; // Assuming Next.js (adjust if not)
-//import AsyncStorage from "@react-native-async-storage/async-storage"; // Install if needed
-//import { DeviceEventEmitter, Alert } from "react-native"; // Install if needed
 
 interface LoginDialogProps {
   open: boolean;
