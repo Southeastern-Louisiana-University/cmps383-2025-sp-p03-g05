@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import "./Home.css";
 import MovieCarousel from "./Movies/MovieCarousel";
 import NavBar from "./NavBar";
