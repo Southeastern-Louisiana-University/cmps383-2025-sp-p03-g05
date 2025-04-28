@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
+import { useNavigation } from "@react-navigation/native"; 
+
 
 export const screenOptions = {
   title: 'Movie Details',
@@ -18,7 +20,7 @@ export const screenOptions = {
 
 export default function MovieDetail() {
   const { id } = useLocalSearchParams();
-  const navigation = useRouter();
+  const navigation = useNavigation();
   const [movie, setMovie] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showtimes, setShowtimes] = useState<any[]>([]);
@@ -34,12 +36,15 @@ export default function MovieDetail() {
         );
         const data = await response.json();
         setMovie(data);
+    
+        navigation.setOptions({ title: data.title }); // 🆕 Set title dynamically
       } catch (error) {
         console.error("Error fetching movie:", error);
       } finally {
         setLoading(false);
       }
     };
+    
 
 
     const fetchShowtimes = async () => {
@@ -137,7 +142,7 @@ export default function MovieDetail() {
                     onPress={() => {
                       console.log("Selected showtime:", s);
                       console.log("Navigating to theater ID:", s.theaterId);
-                      navigation.push(`/seat-selector/${s.theaterId}`);
+                      router.push(`/seat-selector/${s.theaterId}`);
                     }}
                   >
                       <Text style={styles.timeText}>
