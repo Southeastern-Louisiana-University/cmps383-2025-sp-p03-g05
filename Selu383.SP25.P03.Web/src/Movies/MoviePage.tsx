@@ -60,7 +60,7 @@ function MovieDetails() {
 
   return (
     <>
-      {NavBar()}
+      <NavBar />
       <Stack direction="row" spacing={2}>
         <Box
           component="img"
