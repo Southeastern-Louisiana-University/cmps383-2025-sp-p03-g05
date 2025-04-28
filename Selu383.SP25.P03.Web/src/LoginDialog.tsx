@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Button,
   Dialog,
@@ -7,59 +7,75 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
-  Box
-} from '@mui/material';
-import { useRouter } from 'next/router'; // Assuming Next.js (adjust if not)
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Install if needed
-import { DeviceEventEmitter, Alert } from 'react-native'; // Install if needed
+  Box,
+  Snackbar,
+  Alert as MuiAlert
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+//import { useRouter } from "next/router"; // Assuming Next.js (adjust if not)
+//import AsyncStorage from "@react-native-async-storage/async-storage"; // Install if needed
+//import { DeviceEventEmitter, Alert } from "react-native"; // Install if needed
 
-interface LoginFormProps {
+interface LoginDialogProps {
   open: boolean;
   handleCloseDialog: () => void;
 }
 
-const LoginPopup: React.FC<LoginFormProps> = ({ open, handleCloseDialog }) => {
-  const router = useRouter();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const LoginPopup: React.FC<LoginDialogProps> = ({ open, handleCloseDialog }) => {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [showError, setShowError] = useState(false);
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
+    setError(null);
     try {
-      const response = await fetch('https://selu383-sp25-p03-g05.azurewebsites.net/api/authentication/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userName: username, password }),
-        credentials: 'include', // Important for cookies/session
-      });
+      const response = await fetch(
+        "https://selu383-sp25-p03-g05.azurewebsites.net/api/authentication/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userName: username, password }),
+          credentials: "include", // Important for cookies/session
+        }
+      );
 
       if (!response.ok) {
-        const error = await response.json();
-        Alert.alert('Login failed', error.message || 'Invalid username or password');
+        const errorData = await response.json();
+        setError(errorData.message || "Invalid username or password");
+        setShowError(true);
         return;
       }
 
       const user = await response.json();
-      const role = user.roles?.[0] || 'User';
+      const role = user.roles?.[0] || "User";
 
-      await AsyncStorage.setItem('user', JSON.stringify(user));
-      await AsyncStorage.setItem('userRole', role);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("userRole", role);
 
-      DeviceEventEmitter.emit('authChanged');
 
-      if (role === 'Admin') {
-        router.replace('/admin-dashboard');
+
+      if (role === "Admin") {
+        navigate("/admin-dashboard");
       } else {
         // If not admin, just close the login dialog
         handleCloseDialog();
       }
     } catch (error) {
-      console.error('Login error:', error);
-      Alert.alert('Error', 'Something went wrong. Check backend connection.');
+      console.error("Login error:", error);
+      setError("Something went wrong. Check backend connection.");
+      setShowError(true);
     }
   };
 
+  const handleCloseError = () => {
+    setShowError(false);
+  };
+
   return (
+    <>
     <Dialog open={open} onClose={handleCloseDialog}>
       <DialogTitle>Login</DialogTitle>
       <form onSubmit={handleLogin}>
@@ -101,11 +117,16 @@ const LoginPopup: React.FC<LoginFormProps> = ({ open, handleCloseDialog }) => {
         </DialogActions>
       </form>
     </Dialog>
+    <Snackbar open={showError} autoHideDuration={6000} onClose={handleCloseError}>
+      <MuiAlert elevation={6} variant="filled" severity="error" onClose={handleCloseError}>
+        {error}
+      </MuiAlert>
+    </Snackbar>
+    </>
   );
 };
 
 export default LoginPopup;
-
 
 // // Example usage
 // const App = () => {
